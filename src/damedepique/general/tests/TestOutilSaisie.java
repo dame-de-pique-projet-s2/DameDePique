@@ -25,8 +25,8 @@ public class TestOutilSaisie {
 			joueurs[i] = new Joueur();
 			System.out.println("Avant : " + joueurs[i]);
 			OutilSaisie.changePseudo(joueurs[i], "Entrez un nouveau pseudo [" 
-												+ (i + 1) + "/" 
-					 							+ OutilTest.NB_TESTS + "] : ");
+			                                    + (i + 1) + "/" 
+					                            + OutilTest.NB_TESTS + "] : ");
 			
 			System.out.println("Après : " + joueurs[i] + "\n");
 		}
@@ -42,8 +42,8 @@ public class TestOutilSaisie {
 		
 		for (int i = 0 ; i < OutilTest.NB_TESTS ; i++) {
 			symbole = OutilSaisie.demandeSymbole("Entrez le symbole d'une "
-											+ "carte [" + (i + 1) + "/" 
-											+ OutilTest.NB_TESTS + "] : ");
+		                                    + "carte [" + (i + 1) + "/" 
+					                        + OutilTest.NB_TESTS + "] : ");
 			
 			System.out.println("Le symbole entré est : " + symbole + "\n");
 		}
@@ -58,9 +58,9 @@ public class TestOutilSaisie {
 		String ordre;
 		
 		for (int i = 0 ; i < OutilTest.NB_TESTS ; i++) {
-			ordre = OutilSaisie.demandeOrdre("Entrez l'ordre d'une "
-										  	+ "carte [" + (i + 1) + "/" 
-										  	+ OutilTest.NB_TESTS + "] : ");
+			ordre = OutilSaisie.demandeOrdre("Entrez l'ordre d'une " 
+		                                     + "carte [" + (i + 1) + "/" 
+					                         + OutilTest.NB_TESTS + "] : ");
 			
 			System.out.println("L'ordre entré est : " + ordre + "\n");
 		}
@@ -72,8 +72,25 @@ public class TestOutilSaisie {
 	 * Test de la méthode OutilSaisie.symboleEstValide(String)
 	 */
 	public static void testSymboleEstValide() {
-		// TODO A faire
-		OutilTest.afficherResultat(0, 0);
+		final String[] JEU_TEST = { "TreflE", "As", null, "36.:--!", "Coeur",
+                                    "carreauE", "pique", "CARREAU", "*1", "" };
+		
+		final boolean[] RESULTATS_ATTENDUS = { true, false, false, false, 
+                                               true, false, true, true, 
+                                               false, false };
+		
+		int nbEchecs = 0;
+		for (int i = 0 ; i < JEU_TEST.length ; i++) {
+			if (OutilSaisie.symboleEstValide(JEU_TEST[i]) 
+                != RESULTATS_ATTENDUS[i]) {
+				
+				nbEchecs++;
+			}
+		}
+		
+		OutilTest.afficherResultat(JEU_TEST.length, 
+                                   JEU_TEST.length - nbEchecs);
+		
 		OutilTest.continuer();
 	}
 	
@@ -81,8 +98,26 @@ public class TestOutilSaisie {
 	 * Test de la méthode OutilSaisie.ordreEstValide(String)
 	 */
 	public static void testOrdreEstValide() {
-		// TODO A faire
-		OutilTest.afficherResultat(0, 0);
+		final String[] JEU_TEST = { "2  ", "As", "ROI", null, " ", "", "Dame",
+                                    "VaLeT", ".-**/'", "10", "9", "12", "2", 
+                                    "5", "roi" };
+		
+		final boolean[] RESULTATS_ATTENDUS = { false, true, true, false, false, 
+                                               false, true, true, false, true, 
+                                               true, false, true, true, true };
+		
+		int nbEchecs = 0;
+		for (int i = 0 ; i < JEU_TEST.length ; i++) {
+			if (OutilSaisie.ordreEstValide(JEU_TEST[i])
+                != RESULTATS_ATTENDUS[i]) {
+				
+				nbEchecs++;
+			}
+		}
+		
+		OutilTest.afficherResultat(JEU_TEST.length, 
+                                   JEU_TEST.length - nbEchecs);
+		
 		OutilTest.continuer();
 	}
 	
@@ -92,7 +127,7 @@ public class TestOutilSaisie {
 	 */
 	public static void main(String[] args) {
 		
-		testChangePseudo();
+		// testChangePseudo();
 		// testDemandeSymbole();
 		// testDemandeOrdre();
 		// testSymboleEstValide();

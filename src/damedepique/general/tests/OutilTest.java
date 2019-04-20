@@ -40,10 +40,10 @@ public class OutilTest {
 	 */
 	public static void afficherResultat(int nbTestTotal, int nbTestCorrect) {
 		System.out.println(nbTestCorrect + " test(s) ont réussi sur un total "
-						   + "de " + nbTestTotal + " tests réalisés.\n\t"
-						   + "=> " + ((nbTestCorrect == nbTestTotal) 
-								   	   ? "Tous les tests sont corrects." 
-								   	   : "Au moins un test a échoué.") + "\n");
+	                       + "de " + nbTestTotal + " tests réalisés.\n\t"
+				           + "=> " + ((nbTestCorrect == nbTestTotal) 
+				        		       ? "Tous les tests sont corrects." 
+				        		       : "Au moins un test a échoué.") + "\n");
 	}
 	
 }

@@ -14,12 +14,12 @@ public class Carte {
 	
 	/** Tableau contenant les symboles possibles. */
 	public static final String[] SYMBOLES = { "Carreau", "Coeur", 
-											   "Pique", "Trefle" };
+			                                  "Pique", "Trefle" };
 	
 	/** Tableau contenant les ordres possibles. */
 	public static final String[] ORDRES = { "2", "3", "4", "5", "6", 
-											 "7", "8", "9", "10", 
-											 "Valet", "Dame", "Roi", "As" };
+			                                "7", "8", "9", "10", 
+			                                "Valet", "Dame", "Roi", "As" };
 	
 	/** Symbole pour une carte. */
 	private String symbole;

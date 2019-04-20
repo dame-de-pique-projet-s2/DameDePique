@@ -23,6 +23,10 @@ public class Paquet {
 		Carte[] cartes = new Carte[NB_CARTES];    // Paquet de 52 cartes.
 		
 		rang = 0;
+		/*
+		 * Attribution des quatre symboles à une partie des ordres.
+		 * 4 symboles x 13 ordres = 52 cartes.
+		 */
 		for (int i = 0 ; i < Carte.SYMBOLES.length ; i++) {
 			for (int j = 0 ; j < Carte.ORDRES.length ; j++) {
 				cartes[rang] = new Carte(Carte.SYMBOLES[i], Carte.ORDRES[j]);

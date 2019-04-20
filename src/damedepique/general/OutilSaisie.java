@@ -23,7 +23,7 @@ public class OutilSaisie {
 	 * Change le pseudo d'un joueur.
 	 * @param joueur Le joueur pour lequel il faut changer le pseudo.
 	 * @param message Le message à afficher pour demander le 
-	 * 				  nouveau pseudo au joueur.
+	 *                nouveau pseudo au joueur.
 	 */
 	public static void changePseudo(Joueur joueur, String message) {
 		String pseudo;      // Nouveau pseudo entré par le joueur.
@@ -58,7 +58,7 @@ public class OutilSaisie {
 	/**
 	 * Demande au joueur de rentrer un symbole.
 	 * @param message Le message à afficher pour demander 
-	 * 		  au joueur de rentrer un symbole.
+	 *        au joueur de rentrer un symbole.
 	 * @return Le symbole valide d'une carte.
 	 */
 	public static String demandeSymbole(String message) {
@@ -80,8 +80,8 @@ public class OutilSaisie {
 			 */
 			if (!correct) {
 				System.out.println("\nLe symbole que vous avez entré n'est "
-								   + "pas valide. \nSymboles possibles : "
-								   + Arrays.toString(Carte.SYMBOLES) + "\n");
+			                       + "pas valide. \nSymboles possibles : "
+						           + Arrays.toString(Carte.SYMBOLES) + "\n");
 			}
 		} while (!correct);
 		
@@ -91,7 +91,7 @@ public class OutilSaisie {
 	/**
 	 * Demande au joueur de rentrer un ordre.
 	 * @param message Le message à afficher pour demander 
-	 * 		  au joueur de rentrer un ordre.
+	 *        au joueur de rentrer un ordre.
 	 * @return L'ordre valide d'une carte.
 	 */
 	public static String demandeOrdre(String message) {
@@ -112,9 +112,9 @@ public class OutilSaisie {
 			 * les choix possibles contenus dans le tableau ORDRES.
 			 */
 			if (!correct) {
-				System.out.println("\nL'ordre que vous avez entré n'est "
-								   + "pas valide. \nOrdres possibles : "
-								   + Arrays.toString(Carte.ORDRES) + "\n");
+				System.out.println("\nL'ordre que vous avez entré n'est" 
+			                       + "pas valide. \nOrdres possibles : " 
+						           + Arrays.toString(Carte.ORDRES) + "\n");
 			}
 		} while (!correct);
 		
@@ -125,7 +125,7 @@ public class OutilSaisie {
 	 * Vérifie si un symbole donné est valide ou non.
 	 * @param aVerifier Le symbole à vérifier.
 	 * @return Vrai si le symbole est dans [ Carreau - Coeur - Pique - Trefle ]
-	 * 		   sinon la fonction retourne faux.
+	 *         sinon la fonction retourne faux.
 	 */
 	public static boolean symboleEstValide(String aVerifier) {
 		/*
@@ -165,8 +165,8 @@ public class OutilSaisie {
 	 * Vérifie si un ordre donné est valide ou non.
 	 * @param aVerifier L'ordre à vérifier.
 	 * @return Vrai si l'ordre est dans l'intervalle des valeurs
-	 * 		   [ 2 - 3 - .. - 10 - Valet - Dame - Roi - As ]
-	 * 		   sinon la fonction retourne faux.
+	 *         [ 2 - 3 - .. - 10 - Valet - Dame - Roi - As ]
+	 *         sinon la fonction retourne faux.
 	 */
 	public static boolean ordreEstValide(String aVerifier) {
 		/*
