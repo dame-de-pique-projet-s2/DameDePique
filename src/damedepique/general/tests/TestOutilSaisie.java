@@ -5,45 +5,26 @@
 
 package damedepique.general.tests;
 
-import damedepique.general.Joueur;
 import damedepique.general.OutilSaisie;
 
 /**
- * TODO Faire la description de la classe de test TestOutilSaisie.
+ * Cette classe contient toutes les méthodes de test de la 
+ * classe utilitaire OutilSaisie.
  * @author Julien B.
  * @version 1.0
  */
 public class TestOutilSaisie {
 	
 	/**
-	 * Test de la méthode OutilSaisie.changePseudo(Joueur, String)
-	 */
-	public static void testChangePseudo() {
-		Joueur[] joueurs = new Joueur[OutilTest.NB_TESTS];
-		
-		for (int i = 0 ; i < OutilTest.NB_TESTS ; i++) {
-			joueurs[i] = new Joueur();
-			System.out.println("Avant : " + joueurs[i]);
-			OutilSaisie.changePseudo(joueurs[i], "Entrez un nouveau pseudo [" 
-			                                    + (i + 1) + "/" 
-					                            + OutilTest.NB_TESTS + "] : ");
-			
-			System.out.println("Après : " + joueurs[i] + "\n");
-		}
-		
-		OutilTest.continuer();
-	}
-	
-	/**
 	 * Test de la méthode OutilSaisie.demandeSymbole(String)
 	 */
-	public static void testDemandeSymbole() {
+	private static void testDemandeSymbole() {
 		String symbole;
 		
 		for (int i = 0 ; i < OutilTest.NB_TESTS ; i++) {
 			symbole = OutilSaisie.demandeSymbole("Entrez le symbole d'une "
-		                                    + "carte [" + (i + 1) + "/" 
-					                        + OutilTest.NB_TESTS + "] : ");
+                                            + "carte [" + (i + 1) + "/" 
+                                            + OutilTest.NB_TESTS + "] : ");
 			
 			System.out.println("Le symbole entré est : " + symbole + "\n");
 		}
@@ -54,13 +35,13 @@ public class TestOutilSaisie {
 	/**
 	 * Test de la méthode OutilSaisie.demandeOrdre(String)
 	 */
-	public static void testDemandeOrdre() {
+	private static void testDemandeOrdre() {
 		String ordre;
 		
 		for (int i = 0 ; i < OutilTest.NB_TESTS ; i++) {
 			ordre = OutilSaisie.demandeOrdre("Entrez l'ordre d'une " 
-		                                     + "carte [" + (i + 1) + "/" 
-					                         + OutilTest.NB_TESTS + "] : ");
+                                             + "carte [" + (i + 1) + "/" 
+                                             + OutilTest.NB_TESTS + "] : ");
 			
 			System.out.println("L'ordre entré est : " + ordre + "\n");
 		}
@@ -71,7 +52,7 @@ public class TestOutilSaisie {
 	/**
 	 * Test de la méthode OutilSaisie.symboleEstValide(String)
 	 */
-	public static void testSymboleEstValide() {
+	private static void testSymboleEstValide() {
 		final String[] JEU_TEST = { "TreflE", "As", null, "36.:--!", "Coeur",
                                     "carreauE", "pique", "CARREAU", "*1", "" };
 		
@@ -97,7 +78,7 @@ public class TestOutilSaisie {
 	/**
 	 * Test de la méthode OutilSaisie.ordreEstValide(String)
 	 */
-	public static void testOrdreEstValide() {
+	private static void testOrdreEstValide() {
 		final String[] JEU_TEST = { "2  ", "As", "ROI", null, " ", "", "Dame",
                                     "VaLeT", ".-**/'", "10", "9", "12", "2", 
                                     "5", "roi" };
@@ -122,16 +103,23 @@ public class TestOutilSaisie {
 	}
 	
 	/**
+	 * Test de la méthode OutilSaisie.generationPseudo()
+	 */
+	private static void testGenerationPseudo() {
+		// TODO Faire la méthode de test.
+	}
+	
+	/**
 	 * Lancement des méthodes de test de la classe OutilSaisie.
-	 * @param args Non utilisé
+	 * @param args Non utilisé.
 	 */
 	public static void main(String[] args) {
 		
-		// testChangePseudo();
-		// testDemandeSymbole();
-		// testDemandeOrdre();
-		// testSymboleEstValide();
-		// testOrdreEstValide();
+		testDemandeSymbole();
+		testDemandeOrdre();
+		testSymboleEstValide();
+		testOrdreEstValide();
+		testGenerationPseudo();
 
 	}
 
