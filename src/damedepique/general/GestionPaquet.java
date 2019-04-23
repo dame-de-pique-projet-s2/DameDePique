@@ -35,22 +35,22 @@ package damedepique.general;
 public class GestionPaquet {
 
 	/** Nombre de cartes qu'un paquet complet contient. */
-	public static final int NB_CARTES = 52;
+	private final static int NB_CARTES = 52;
 	
 	/**
 	 * Création d'un paquet de 52 cartes.
 	 * @return Le paquet de 52 cartes.
 	 */
 	public static Carte[] creation() {
-		int rang;
-		Carte[] paquet;
+		int rang;          // Rang auquel il faut insérer la nouvelle carte.
+		Carte[] paquet;    // Déclaration du paquet de carte à créer.
 		
-		paquet = new Carte[NB_CARTES];    // Paquet de 52 cartes.
+		paquet = new Carte[NB_CARTES];    // Initialisation du paquet.
 		
 		rang = 0;
-		/* Attribution d'un symbole et d'un ordre à chaque carte. */
 		for (int i = 0 ; i < Carte.SYMBOLES.length ; i++) {
 			for (int j = 0 ; j < Carte.ORDRES.length ; j++) {
+				// Attribution d'un symbole et d'un ordre à chaque carte.
 				paquet[rang] = new Carte(Carte.SYMBOLES[i], Carte.ORDRES[j]);
 				rang++;
 			}
@@ -60,32 +60,46 @@ public class GestionPaquet {
 	}
 	
 	/**
-	 * Mélange un paquet de cartes. 
+	 * Mélange un paquet de cartes de manière aléatoire. 
 	 * Attention, cette méthode change l'état du paquet à mélanger.
 	 * @param paquet Le paquet à mélanger.
 	 * @return Le paquet passé en paramètre mélangé.
 	 */
 	public static Carte[] melange(Carte[] paquet) {
-		Carte temp;
+		Carte temp;    // Mémoire temporaire pour la permutation de 2 cartes.
 		
-		for (int i = 1 ; i < paquet.length ; i++) {
-			int graine = (int) Math.round(Math.random() * (paquet.length - 1));
+		for (int i = 0 ; i < paquet.length ; i++) {
+			// Génération d'un indice aléatoire dans l'intervalle [0, 52[.
+			int indice = (int) Math.floor(Math.random() * paquet.length);
 			
+			// Permutation de 2 cartes dans le paquet (mélange).
 			temp = paquet[i];
-			paquet[i] = paquet[graine];
-			paquet[graine] = temp;
+			paquet[i] = paquet[indice];
+			paquet[indice] = temp;
 		}
 		
 		return paquet;
 	}
 	
 	/**
-	 * 
-	 * @param paquet
-	 * @param joueurs
+	 * Distribue les cartes entre les quatre joueurs (13 cartes par joueur).
+	 * @param paquet Le paquet de cartes à distribuer.
+	 * @param joueurs Les joueurs qui reçoivent une partie des cartes du jeu.
 	 */
 	public static void distribution(Carte[] paquet, Joueur[] joueurs) {
-		
+		// Parcours du paquet de 52 cartes.
+		for (int i = 0, rang = 0 ; rang < NB_CARTES ; rang++) {
+			// Ajoute les cartes dans la main du joueur courant.
+			joueurs[i].ajouterCarte(paquet[rang]);
+			
+			/*
+			 * Vérifie si le rang a atteint un palier (12, 25 ou 38) pour 
+			 * passer à la distribution des cartes pour le joueur suivant.
+			 */
+			if (rang == (NB_CARTES / 4) * (i + 1) - 1) {
+				i++;
+			}
+		}
 	}
 	
 }

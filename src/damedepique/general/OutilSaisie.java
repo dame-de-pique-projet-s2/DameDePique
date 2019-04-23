@@ -33,8 +33,8 @@ import java.util.Objects;
  *     la saisie est recommencée.
  *   </li>
  *   <li>
- *     La méthode generationPseudo() permet de générer un pseudo aléatoire 
- *     parmi une liste de pseudonymes prédéfinie.
+ *     La méthode generationPseudo() permet de générer un indice de pseudo 
+ *     aléatoire parmi une liste de pseudonymes prédéfinis.
  *   </li>
  * </ul>
  * 
@@ -44,7 +44,7 @@ import java.util.Objects;
 public class OutilSaisie {
 
 	/** Analyseur lexical de l'entrée standard texte. */
-	private static Scanner sc = new Scanner(System.in);
+	private final static Scanner sc = new Scanner(System.in);
 	
 	/**
 	 * Vérifie si un symbole donné est valide ou non.
@@ -196,12 +196,17 @@ public class OutilSaisie {
 	}
 	
 	/**
-	 * 
-	 * @return Un pseudonyme généré aléatoirement.
+	 * Génère un indice de pseudo aléatoire permis une liste préétablie.
+	 * @return Un indice de pseudonyme généré aléatoirement.
+	 * @see damedepique.general.Joueur
 	 */
-	public static String generationPseudo() {
-		// TODO Faire la méthode.
-		return "Joueur";
+	public static int generationPseudo() {
+		int indice;    // Indice du tableau générée aléatoirement.
+		
+		// Génération d'un indice aléatoire.
+		indice = (int) Math.floor(Math.random() * Joueur.PSEUDOS.length);
+		
+		return indice;
 	}
 	
 }

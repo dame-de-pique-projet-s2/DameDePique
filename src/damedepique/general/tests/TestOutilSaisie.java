@@ -5,6 +5,7 @@
 
 package damedepique.general.tests;
 
+import damedepique.general.Joueur;
 import damedepique.general.OutilSaisie;
 
 /**
@@ -18,7 +19,10 @@ public class TestOutilSaisie {
 	/**
 	 * Test de la méthode OutilSaisie.demandeSymbole(String)
 	 */
-	private static void testDemandeSymbole() {
+	public static void testDemandeSymbole() {
+		System.out.println("OutilSaisie.demandeSymbole(String)\n"
+				           + "----------------------------------\n");
+		
 		String symbole;
 		
 		for (int i = 0 ; i < OutilTest.NB_TESTS ; i++) {
@@ -35,7 +39,10 @@ public class TestOutilSaisie {
 	/**
 	 * Test de la méthode OutilSaisie.demandeOrdre(String)
 	 */
-	private static void testDemandeOrdre() {
+	public static void testDemandeOrdre() {
+		System.out.println("OutilSaisie.demandeOrdre(String)\n"
+		                   + "--------------------------------\n");
+		
 		String ordre;
 		
 		for (int i = 0 ; i < OutilTest.NB_TESTS ; i++) {
@@ -52,7 +59,10 @@ public class TestOutilSaisie {
 	/**
 	 * Test de la méthode OutilSaisie.symboleEstValide(String)
 	 */
-	private static void testSymboleEstValide() {
+	public static void testSymboleEstValide() {
+		System.out.println("OutilSaisie.symboleEstValide(String)\n"
+		                   + "------------------------------------\n");
+		
 		final String[] JEU_TEST = { "TreflE", "As", null, "36.:--!", "Coeur",
                                     "carreauE", "pique", "CARREAU", "*1", "" };
 		
@@ -78,7 +88,10 @@ public class TestOutilSaisie {
 	/**
 	 * Test de la méthode OutilSaisie.ordreEstValide(String)
 	 */
-	private static void testOrdreEstValide() {
+	public static void testOrdreEstValide() {
+		System.out.println("OutilSaisie.ordreEstValide(String)\n"
+		                   + "----------------------------------\n");
+		
 		final String[] JEU_TEST = { "2  ", "As", "ROI", null, " ", "", "Dame",
                                     "VaLeT", ".-**/'", "10", "9", "12", "2", 
                                     "5", "roi" };
@@ -105,8 +118,23 @@ public class TestOutilSaisie {
 	/**
 	 * Test de la méthode OutilSaisie.generationPseudo()
 	 */
-	private static void testGenerationPseudo() {
-		// TODO Faire la méthode de test.
+	public static void testGenerationPseudo() {
+		System.out.println("OutilSaisie.generationPseudo(String)\n"
+		                   + "------------------------------------\n");
+		
+		int[] resultats = new int[Joueur.PSEUDOS.length];
+		int rang;
+		
+		for (int i = 0 ; i < 1000 ; i++) {
+			resultats[OutilSaisie.generationPseudo()]++;
+		}
+		
+		rang = 0;
+		for (String pseudo : Joueur.PSEUDOS) {
+			System.out.println(pseudo + " = " + resultats[rang++] / 10 + "%");
+		}
+		
+		OutilTest.continuer();
 	}
 	
 	/**
@@ -115,11 +143,15 @@ public class TestOutilSaisie {
 	 */
 	public static void main(String[] args) {
 		
-		testDemandeSymbole();
-		testDemandeOrdre();
-		testSymboleEstValide();
-		testOrdreEstValide();
-		testGenerationPseudo();
+		System.out.println("-----------------------------------------\n"
+                           + "|     TEST DE LA CLASSE OUTILSAISIE     |\n"
+				           + "-----------------------------------------\n");
+		
+		// testDemandeSymbole();
+		// testDemandeOrdre();
+		// testSymboleEstValide();
+		// testOrdreEstValide();
+		// testGenerationPseudo();
 
 	}
 

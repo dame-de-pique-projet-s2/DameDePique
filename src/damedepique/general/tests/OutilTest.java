@@ -22,7 +22,7 @@ public class OutilTest {
 	private static Scanner sc = new Scanner(System.in);
 	
 	/** Nombre maximum de tests manuels à faire */
-	public static final int NB_TESTS = 3;
+	public final static int NB_TESTS = 3;
 	
 	/**
 	 * Demande à l'utilisateur d'appuyer sur entrée pour continuer les tests.

@@ -5,12 +5,19 @@
 
 package damedepique.general;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * <p>
  *   Cette classe contient tous les éléments qui caractérisent un joueur 
  *   jouant au jeu de la dame de pique.
  * </p>
  * <ul>
+ *   <li>
+ *     Une constante PSEUDOS qui contient les pseudos prédéfinis à attribuer 
+ *     aléatoirement aux joueurs.
+ *   </li>
  *   <li>
  *     Trois variables pseudo, points et main qui comportent respectivement
  *     le pseudo du joueur, les points de ce dernier ainsi que sa main avec un 
@@ -27,9 +34,14 @@ package damedepique.general;
  *     failles de sécurité.
  *   </li>
  *   <li>
- *     Deux mutateurs (setters) setPoints(int) et setMain(Carte[]) permettant
- *     de modifier les attributs privés dans la classe tout en préservant 
- *     l'intégrité et la cohérence des données.
+ *     Un mutateur (setter) setPoints(int) permettant de modifier l'attribut 
+ *     privé dans la classe tout en préservant l'intégrité et la cohérence 
+ *     des données.
+ *   </li>
+ *   <li>
+ *     Deux méthodes ajouterCarte(Carte) et retirerCarte(Carte) qui servent à
+ *     manipuler la main du joueur, soit à la distribution des cartes ou au 
+ *     moment de jouer une carte.
  *   </li>
  *   <li>
  *     Une méthode toString() permettant d'afficher de manière compréhensible 
@@ -41,7 +53,12 @@ package damedepique.general;
  * @version 1.0
  */
 public class Joueur {
-
+	
+	/** Pseudos prédéfinis pour les joueurs. */
+	public final static String[] PSEUDOS = { "Pierre", "Paul", "Jacques",
+			                                 "Camille", "Emilie", "Jade", "Ed",
+			                                 "Georges", "Thomas", "Aurore" };
+	
 	/** Pseudo de ce (this) Joueur.*/
 	private String pseudo;
 	
@@ -49,15 +66,16 @@ public class Joueur {
 	private int points;
 	
 	/** Carte(s) dans la main de ce (this) Joueur. */
-	private Carte[] main;
+	private List<Carte> main;
 	
 	/**
 	 * Création d'un nouveau joueur avec un pseudo généré aléatoirement
 	 * (non modifiable) et un nombre de points nul.
 	 */
 	public Joueur() {
-		this.pseudo = OutilSaisie.generationPseudo();
+		this.pseudo = PSEUDOS[OutilSaisie.generationPseudo()];
 		this.points = 0;
+		this.main = new ArrayList<>();
 	}
 
 	/**
@@ -80,7 +98,7 @@ public class Joueur {
 	 * Récupère la main du joueur.
 	 * @return Les cartes dans la main du joueur.
 	 */
-	public Carte[] getMain() {
+	public List<Carte> getMain() {
 		return main;
 	}
 
@@ -93,11 +111,19 @@ public class Joueur {
 	}
 
 	/**
-	 * Met à jour la main du joueur.
-	 * @param main Les nouvelles cartes dans la main du joueur.
+	 * Ajoute une carte dans la main du joueur.
+	 * @param carte La carte à ajouter.
 	 */
-	public void setMain(Carte[] main) {
-		this.main = main;
+	public void ajouterCarte(Carte carte) {
+		main.add(carte);
+	}
+	
+	/**
+	 * Retire une carte de la main du joueur.
+	 * @param carte La carte à enlever.
+	 */
+	public void retirerCarte(Carte carte) {
+		main.remove(carte);
 	}
 
 	@Override
