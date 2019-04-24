@@ -1,5 +1,5 @@
 /*
- * GestionPaquet.java                                                22/04/2019
+ * GestionPaquet.java                                                23/04/2019
  * Projet de la dame de pique | IUT de Rodez | 2018 - 2019
  */
 
@@ -35,7 +35,7 @@ package damedepique.general;
 public class GestionPaquet {
 
 	/** Nombre de cartes qu'un paquet complet contient. */
-	private final static int NB_CARTES = 52;
+	private static final int NB_CARTES = 52;
 	
 	/**
 	 * Création d'un paquet de 52 cartes.

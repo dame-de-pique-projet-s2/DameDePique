@@ -44,7 +44,7 @@ import java.util.Objects;
 public class OutilSaisie {
 
 	/** Analyseur lexical de l'entrée standard texte. */
-	private final static Scanner sc = new Scanner(System.in);
+	private static final Scanner sc = new Scanner(System.in);
 	
 	/**
 	 * Vérifie si un symbole donné est valide ou non.

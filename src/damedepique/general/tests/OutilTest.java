@@ -22,7 +22,7 @@ public class OutilTest {
 	private static Scanner sc = new Scanner(System.in);
 	
 	/** Nombre maximum de tests manuels à faire */
-	public final static int NB_TESTS = 3;
+	public static final int NB_TESTS = 3;
 	
 	/**
 	 * Demande à l'utilisateur d'appuyer sur entrée pour continuer les tests.
@@ -40,7 +40,7 @@ public class OutilTest {
 	 */
 	public static void afficherResultat(int nbTestTotal, int nbTestCorrect) {
 		System.out.println(nbTestCorrect + " test(s) ont réussi sur un total "
-	                       + "de " + nbTestTotal + " tests réalisés.\n\t"
+	                       + "de " + nbTestTotal + " tests réalisés.\n    "
 				           + "=> " + ((nbTestCorrect == nbTestTotal) 
 				        		       ? "Tous les tests sont corrects." 
 				        		       : "Au moins un test a échoué.") + "\n");

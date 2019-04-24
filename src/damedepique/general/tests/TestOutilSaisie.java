@@ -17,47 +17,8 @@ import damedepique.general.OutilSaisie;
 public class TestOutilSaisie {
 	
 	/**
-	 * Test de la méthode OutilSaisie.demandeSymbole(String)
-	 */
-	public static void testDemandeSymbole() {
-		System.out.println("OutilSaisie.demandeSymbole(String)\n"
-				           + "----------------------------------\n");
-		
-		String symbole;
-		
-		for (int i = 0 ; i < OutilTest.NB_TESTS ; i++) {
-			symbole = OutilSaisie.demandeSymbole("Entrez le symbole d'une "
-                                            + "carte [" + (i + 1) + "/" 
-                                            + OutilTest.NB_TESTS + "] : ");
-			
-			System.out.println("Le symbole entré est : " + symbole + "\n");
-		}
-		
-		OutilTest.continuer();
-	}
-	
-	/**
-	 * Test de la méthode OutilSaisie.demandeOrdre(String)
-	 */
-	public static void testDemandeOrdre() {
-		System.out.println("OutilSaisie.demandeOrdre(String)\n"
-		                   + "--------------------------------\n");
-		
-		String ordre;
-		
-		for (int i = 0 ; i < OutilTest.NB_TESTS ; i++) {
-			ordre = OutilSaisie.demandeOrdre("Entrez l'ordre d'une " 
-                                             + "carte [" + (i + 1) + "/" 
-                                             + OutilTest.NB_TESTS + "] : ");
-			
-			System.out.println("L'ordre entré est : " + ordre + "\n");
-		}
-		
-		OutilTest.continuer();
-	}
-	
-	/**
 	 * Test de la méthode OutilSaisie.symboleEstValide(String)
+	 * Test automatique.
 	 */
 	public static void testSymboleEstValide() {
 		System.out.println("OutilSaisie.symboleEstValide(String)\n"
@@ -87,6 +48,7 @@ public class TestOutilSaisie {
 	
 	/**
 	 * Test de la méthode OutilSaisie.ordreEstValide(String)
+	 * Test automatique.
 	 */
 	public static void testOrdreEstValide() {
 		System.out.println("OutilSaisie.ordreEstValide(String)\n"
@@ -116,7 +78,50 @@ public class TestOutilSaisie {
 	}
 	
 	/**
+	 * Test de la méthode OutilSaisie.demandeSymbole(String)
+	 * Test visuel.
+	 */
+	public static void testDemandeSymbole() {
+		System.out.println("OutilSaisie.demandeSymbole(String)\n"
+				           + "----------------------------------\n");
+		
+		String symbole;
+		
+		for (int i = 0 ; i < OutilTest.NB_TESTS ; i++) {
+			symbole = OutilSaisie.demandeSymbole("Entrez le symbole d'une "
+                                            + "carte [" + (i + 1) + "/" 
+                                            + OutilTest.NB_TESTS + "] : ");
+			
+			System.out.println("Le symbole entré est : " + symbole + "\n");
+		}
+		
+		OutilTest.continuer();
+	}
+	
+	/**
+	 * Test de la méthode OutilSaisie.demandeOrdre(String)
+	 * Test visuel.
+	 */
+	public static void testDemandeOrdre() {
+		System.out.println("OutilSaisie.demandeOrdre(String)\n"
+		                   + "--------------------------------\n");
+		
+		String ordre;
+		
+		for (int i = 0 ; i < OutilTest.NB_TESTS ; i++) {
+			ordre = OutilSaisie.demandeOrdre("Entrez l'ordre d'une " 
+                                             + "carte [" + (i + 1) + "/" 
+                                             + OutilTest.NB_TESTS + "] : ");
+			
+			System.out.println("L'ordre entré est : " + ordre + "\n");
+		}
+		
+		OutilTest.continuer();
+	}
+	
+	/**
 	 * Test de la méthode OutilSaisie.generationPseudo()
+	 * Test automatique.
 	 */
 	public static void testGenerationPseudo() {
 		System.out.println("OutilSaisie.generationPseudo(String)\n"
@@ -147,10 +152,10 @@ public class TestOutilSaisie {
                            + "|     TEST DE LA CLASSE OUTILSAISIE     |\n"
 				           + "-----------------------------------------\n");
 		
-		// testDemandeSymbole();
-		// testDemandeOrdre();
 		// testSymboleEstValide();
 		// testOrdreEstValide();
+		// testDemandeSymbole();
+		// testDemandeOrdre();
 		// testGenerationPseudo();
 
 	}

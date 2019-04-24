@@ -12,6 +12,15 @@
       <ATT name="Name"><![CDATA[damedepique]]></ATT>
       <ATT name="status">1970354901745664</ATT>
     </ATTRIBUTES>
-    <DEPENDENCIES></DEPENDENCIES>
+    <DEPENDENCIES>
+      <COMP relation="OwnedElement">
+        <COMPID name="damedepique" mc="Standard.Package" uid="d8f01603-0ef0-475b-bf88-6e67bcf7ddbd"/>
+        <COMPID name="Scanner" mc="Standard.DataType" uid="51793229-076f-4e90-a250-0eea415f595c"/>
+        <COMPID name="GestionPartie" mc="Standard.Class" uid="11eb60ca-184d-4550-a6b2-e11e6cca52b7"/>
+      </COMP>
+      <COMP relation="Product">
+        <COMPID name="Diagramme de classe" mc="Standard.ClassDiagram" uid="c35159bf-513d-477b-9817-dfced61acf7e"/>
+      </COMP>
+    </DEPENDENCIES>
   </OBJECT>
 </EXT>

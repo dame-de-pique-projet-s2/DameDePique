@@ -40,11 +40,11 @@ package damedepique.general;
 public class Carte {
 	
 	/** Tableau contenant tous les symboles possibles. */
-	public final static String[] SYMBOLES = { "Carreau", "Coeur", 
+	public static final String[] SYMBOLES = { "Carreau", "Coeur", 
 			                                  "Pique", "Trefle" };
 	
 	/** Tableau contenant tous les ordres possibles. */
-	public final static String[] ORDRES = { "2", "3", "4", "5", "6", 
+	public static final String[] ORDRES = { "2", "3", "4", "5", "6", 
 			                                "7", "8", "9", "10", 
 			                                "Valet", "Dame", "Roi", "As" };
 	

@@ -55,7 +55,7 @@ import java.util.List;
 public class Joueur {
 	
 	/** Pseudos prédéfinis pour les joueurs. */
-	public final static String[] PSEUDOS = { "Pierre", "Paul", "Jacques",
+	public static final String[] PSEUDOS = { "Pierre", "Paul", "Jacques",
 			                                 "Camille", "Emilie", "Jade", "Ed",
 			                                 "Georges", "Thomas", "Aurore" };
 	
