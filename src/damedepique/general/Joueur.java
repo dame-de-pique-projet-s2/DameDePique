@@ -1,12 +1,11 @@
 /*
- * Joueur.java                                                       18/04/2019
+ * Joueur.java                                                       25/04/2019
  * Projet de la dame de pique | IUT de Rodez | 2018 - 2019
  */
 
 package damedepique.general;
 
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * <p>
@@ -15,120 +14,123 @@ import java.util.List;
  * </p>
  * <ul>
  *   <li>
- *     Une constante PSEUDOS qui contient les pseudos prédéfinis à attribuer 
- *     aléatoirement aux joueurs.
+ *     
  *   </li>
  *   <li>
- *     Trois variables pseudo, points et main qui comportent respectivement
- *     le pseudo du joueur, les points de ce dernier ainsi que sa main avec un 
- *     maximum de 13 cartes simultanément au début d'une manche.
- *   </li>
- *   <li>
- *     Un constructeur Joueur() permettant de créer un nouveau joueur avec 
- *     un pseudo généré aléatoirement (pas de possibilité de le changer) 
- *     et un nombre de point nul.
- *   </li>
- *   <li>
- *     Trois accesseurs (getters) getPseudo(), getPoints() et getMain() 
- *     permettant d'accéder aux champs privés de la classe pour éviter les 
- *     failles de sécurité.
- *   </li>
- *   <li>
- *     Un mutateur (setter) setPoints(int) permettant de modifier l'attribut 
- *     privé dans la classe tout en préservant l'intégrité et la cohérence 
- *     des données.
- *   </li>
- *   <li>
- *     Deux méthodes ajouterCarte(Carte) et retirerCarte(Carte) qui servent à
- *     manipuler la main du joueur, soit à la distribution des cartes ou au 
- *     moment de jouer une carte.
- *   </li>
- *   <li>
- *     Une méthode toString() permettant d'afficher de manière compréhensible 
- *     un joueur avec son pseudonyme et son nombre de point(s).
+ *     
  *   </li>
  * </ul>
- * 
  * @author Julien B.
  * @version 1.0
  */
 public class Joueur {
+
+	/** Pseudo de ce (this) Joueur. */
+	private Pseudo pseudo;
 	
-	/** Pseudos prédéfinis pour les joueurs. */
-	public static final String[] PSEUDOS = { "Pierre", "Paul", "Jacques",
-			                                 "Camille", "Emilie", "Jade", "Ed",
-			                                 "Georges", "Thomas", "Aurore" };
 	
-	/** Pseudo de ce (this) Joueur.*/
-	private String pseudo;
-	
-	/** Nombre de point(s) de ce (this) Joueur. */
+	/** Nombre de points de ce (this) Joueur. */
 	private int points;
 	
+	
 	/** Carte(s) dans la main de ce (this) Joueur. */
-	private List<Carte> main;
+	private ArrayList<Carte> main;
+	
 	
 	/**
-	 * Création d'un nouveau joueur avec un pseudo généré aléatoirement
-	 * (non modifiable) et un nombre de points nul.
+	 * Création d'un nouveau joueur auquel est associé un pseudonyme généré 
+	 * aléatoirement parmi une liste de pseudonymes prédéfinis, un nombre de 
+	 * point nul et d'un ensemble de cartes constituant sa main.
 	 */
 	public Joueur() {
-		this.pseudo = PSEUDOS[OutilSaisie.generationPseudo()];
-		this.points = 0;
+		this.affectationPseudo();    // Affecte un pseudo par défaut.
 		this.main = new ArrayList<>();
+		this.points = 0;
 	}
-
+	
+	
+	/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+	 * * * * * * * * * * * * * * PARTIE PSEUDO * * * * * * * * * * * * * * *
+	 * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
+	
 	/**
-	 * Récupère le pseudo du joueur.
-	 * @return Le pseudo du joueur.
+	 * Génère et affecte un pseudonyme aléatoire pour ce (this) Joueur.
+	 * Les pseudonymes générés aléatoirement sont prédéfinis. Il n'est pas 
+	 * possible pour le joueur de changer son pseudonyme.
+	 * @see damedepique.general.Pseudo
 	 */
-	public String getPseudo() {
-		return pseudo;
+	private void affectationPseudo() {
+		// Stocke dans un tableau tous les pseudonymes prédéfinis.
+		Pseudo[] pseudos = Pseudo.values();
+		
+		// Indice généré aléatoirement pour la recherche d'un pseudonyme.
+		int indiceAleatoire;
+		
+		// Génération d'un indice correspondant à un pseudonyme.
+		indiceAleatoire = (int) Math.floor(Math.random() * pseudos.length);
+		
+		// Attribution du pseudonyme par défaut à ce (this) Joueur.
+		this.pseudo = pseudos[indiceAleatoire];
 	}
-
+	
+	
+	/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+	 * * * * * * * * * * * * * * PARTIE POINTS * * * * * * * * * * * * * * *
+	 * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
+	
 	/**
-	 * Récupère les points du joueur.
-	 * @return Les points du joueur.
+	 * Récupère les points de ce (this) Joueur sous la forme d'un entier.
+	 * @return Le(s) point(s) du joueur.
 	 */
 	public int getPoints() {
-		return points;
+		return this.points;
 	}
 	
-	/**
-	 * Récupère la main du joueur.
-	 * @return Les cartes dans la main du joueur.
-	 */
-	public List<Carte> getMain() {
-		return main;
-	}
-
-	/**
-	 * Met à jour le nombre de points du joueur.
-	 * @param points Le nouveau nombre de points du joueur.
-	 */
-	public void setPoints(int points) {
-		this.points = points;
-	}
-
-	/**
-	 * Ajoute une carte dans la main du joueur.
-	 * @param carte La carte à ajouter.
-	 */
-	public void ajouterCarte(Carte carte) {
-		main.add(carte);
-	}
+	
+	/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+	 * * * * * * * * * * * * * * PARTIE MAIN * * * * * * * * * * * * * * * *
+	 * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 	
 	/**
-	 * Retire une carte de la main du joueur.
-	 * @param carte La carte à enlever.
+	 * Récupère la main de ce (this) Joueur.
+	 * @return La main du joueur.
 	 */
-	public void retirerCarte(Carte carte) {
-		main.remove(carte);
+	public ArrayList<Carte> getMain() {
+		return this.main;
 	}
-
+	
+	
+	/**
+	 * Ajoute une carte dans la main de ce (this) Joueur.
+	 * @param aAjouter La carte à ajouter.
+	 */
+	public void ajouterCarte(Carte aAjouter) {
+		this.main.add(aAjouter);
+	}
+	
+	
+	/**
+	 * Retire une carte de la main de ce (this) Joueur.
+	 * @param aRetirer La carte à retirer.
+	 */
+	public void retirerCarte(Carte aRetirer) {
+		this.main.remove(aRetirer);
+	}
+	
+	
+	/**
+	 * Trie les cartes dans la main de ce (this) Joueur.
+	 * Cette méthode aide les joueurs dans sa partie pour ne pas perdre de 
+	 * temps à jouer une carte.
+	 */
+	public void trierCartes() {
+		
+	}
+	
+	
 	@Override
 	public String toString() {
-		return pseudo + " (" + points + " points)";
+		return this.pseudo.toString() + "\n" + this.main.toString();
 	}
 	
 }

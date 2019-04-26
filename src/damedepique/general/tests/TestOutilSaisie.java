@@ -1,146 +1,119 @@
 /*
- * TestOutilSaisie.java                                              18/04/2019
+ * TestOutilSaisie.java                                              26/04/2019
  * Projet de la dame de pique | IUT de Rodez | 2018 - 2019
  */
 
 package damedepique.general.tests;
 
-import damedepique.general.Joueur;
+import damedepique.general.Ordre;
 import damedepique.general.OutilSaisie;
+import damedepique.general.Symbole;
 
 /**
- * Cette classe contient toutes les méthodes de test de la 
- * classe utilitaire OutilSaisie.
+ * Cette classe contient toutes les méthodes de test de la classe OutilSaisie.
  * @author Julien B.
  * @version 1.0
  */
 public class TestOutilSaisie {
-	
+
 	/**
 	 * Test de la méthode OutilSaisie.symboleEstValide(String)
-	 * Test automatique.
 	 */
 	public static void testSymboleEstValide() {
 		System.out.println("OutilSaisie.symboleEstValide(String)\n"
-		                   + "------------------------------------\n");
+				           + "------------------------------------");
 		
-		final String[] JEU_TEST = { "TreflE", "As", null, "36.:--!", "Coeur",
-                                    "carreauE", "pique", "CARREAU", "*1", "" };
+		// Jeu d'essai avec des valeurs correctes et incorrectes.
+		final String[] JEU_TEST = { "treFLE", "As", null, "36!.-", "Coeur", 
+				                    "CarreaUE", "pique", "CARREAU", " ", 
+				                    "" + null, "Roi de carreau", "Dame" };
 		
-		final boolean[] RESULTATS_ATTENDUS = { true, false, false, false, 
-                                               true, false, true, true, 
-                                               false, false };
+		// Valeurs de retour attendues lors de l'exécution de la méthode.
+		final boolean[] ATTENDU = { true, false, false, false, true, false, 
+				                    true, true, false, false, false, false };
+		
+		int nbTests = ATTENDU.length;    // Nombre de tests à effectuer.
 		
 		int nbEchecs = 0;
-		for (int i = 0 ; i < JEU_TEST.length ; i++) {
-			if (OutilSaisie.symboleEstValide(JEU_TEST[i]) 
-                != RESULTATS_ATTENDUS[i]) {
-				
+		for (int i = 0 ; i < nbTests ; i++) {
+			if (OutilSaisie.symboleEstValide(JEU_TEST[i]) != ATTENDU[i]) {
 				nbEchecs++;
 			}
 		}
 		
-		OutilTest.afficherResultat(JEU_TEST.length, 
-                                   JEU_TEST.length - nbEchecs);
+		OutilTest.afficherResultat(nbTests, nbTests - nbEchecs);
 		
 		OutilTest.continuer();
 	}
+	
 	
 	/**
 	 * Test de la méthode OutilSaisie.ordreEstValide(String)
-	 * Test automatique.
 	 */
 	public static void testOrdreEstValide() {
 		System.out.println("OutilSaisie.ordreEstValide(String)\n"
-		                   + "----------------------------------\n");
+		                   + "----------------------------------");
 		
-		final String[] JEU_TEST = { "2  ", "As", "ROI", null, " ", "", "Dame",
-                                    "VaLeT", ".-**/'", "10", "9", "12", "2", 
-                                    "5", "roi" };
+		// Jeu d'essai avec des valeurs correctes et incorrectes.
+		final String[] JEU_TEST = { "deux ", "As", "ROI", null, " " + null, "", 
+				                    "Dame", "VaLeT", "36!.-", "quatres", 
+				                    "neuf", "12", "2", "cinq", "UN", "rey" };
 		
-		final boolean[] RESULTATS_ATTENDUS = { false, true, true, false, false, 
-                                               false, true, true, false, true, 
-                                               true, false, true, true, true };
+		// Valeurs de retour attendues lors de l'exécution de la méthode.
+		final boolean[] ATTENDU = { false, true, true, false, false, false, 
+				                    true, true, false, false, true, false, 
+				                    false, true, false, false };
+		
+		int nbTests = ATTENDU.length;    // Nombre de tests à effectuer.
 		
 		int nbEchecs = 0;
-		for (int i = 0 ; i < JEU_TEST.length ; i++) {
-			if (OutilSaisie.ordreEstValide(JEU_TEST[i])
-                != RESULTATS_ATTENDUS[i]) {
-				
+		for (int i = 0 ; i < nbTests ; i++) {
+			if (OutilSaisie.ordreEstValide(JEU_TEST[i]) != ATTENDU[i]) {
 				nbEchecs++;
 			}
 		}
 		
-		OutilTest.afficherResultat(JEU_TEST.length, 
-                                   JEU_TEST.length - nbEchecs);
+		OutilTest.afficherResultat(nbTests, nbTests - nbEchecs);
 		
 		OutilTest.continuer();
 	}
 	
+	
 	/**
-	 * Test de la méthode OutilSaisie.demandeSymbole(String)
-	 * Test visuel.
+	 * Test de la méthode OutilSaisie.saisirSymbole(String)
 	 */
-	public static void testDemandeSymbole() {
-		System.out.println("OutilSaisie.demandeSymbole(String)\n"
-				           + "----------------------------------\n");
+	public static void testSaisirSymbole() {
+		System.out.println("OutilSaisie.saisirSymbole(String)\n"
+                           + "---------------------------------");
 		
-		String symbole;
+		Symbole symbole;
 		
 		for (int i = 0 ; i < OutilTest.NB_TESTS ; i++) {
-			symbole = OutilSaisie.demandeSymbole("Entrez le symbole d'une "
-                                            + "carte [" + (i + 1) + "/" 
-                                            + OutilTest.NB_TESTS + "] : ");
-			
-			System.out.println("Le symbole entré est : " + symbole + "\n");
+			symbole = OutilSaisie.saisirSymbole("Entrez un symbole : ");
+			System.out.println("    => " + symbole.toString() + "\n");
 		}
 		
 		OutilTest.continuer();
 	}
 	
+	
 	/**
-	 * Test de la méthode OutilSaisie.demandeOrdre(String)
-	 * Test visuel.
+	 * Test de la méthode OutilSaisie.saisirOrdre(String)
 	 */
-	public static void testDemandeOrdre() {
-		System.out.println("OutilSaisie.demandeOrdre(String)\n"
-		                   + "--------------------------------\n");
+	public static void testSaisirOrdre() {
+		System.out.println("OutilSaisie.saisirOrdre(String)\n"
+                           + "-------------------------------");
 		
-		String ordre;
+		Ordre ordre;
 		
 		for (int i = 0 ; i < OutilTest.NB_TESTS ; i++) {
-			ordre = OutilSaisie.demandeOrdre("Entrez l'ordre d'une " 
-                                             + "carte [" + (i + 1) + "/" 
-                                             + OutilTest.NB_TESTS + "] : ");
-			
-			System.out.println("L'ordre entré est : " + ordre + "\n");
+			ordre = OutilSaisie.saisirOrdre("Entrez un ordre : ");
+			System.out.println("    => " + ordre.toString() + "\n");
 		}
 		
 		OutilTest.continuer();
 	}
 	
-	/**
-	 * Test de la méthode OutilSaisie.generationPseudo()
-	 * Test automatique.
-	 */
-	public static void testGenerationPseudo() {
-		System.out.println("OutilSaisie.generationPseudo(String)\n"
-		                   + "------------------------------------\n");
-		
-		int[] resultats = new int[Joueur.PSEUDOS.length];
-		int rang;
-		
-		for (int i = 0 ; i < 1000 ; i++) {
-			resultats[OutilSaisie.generationPseudo()]++;
-		}
-		
-		rang = 0;
-		for (String pseudo : Joueur.PSEUDOS) {
-			System.out.println(pseudo + " = " + resultats[rang++] / 10 + "%");
-		}
-		
-		OutilTest.continuer();
-	}
 	
 	/**
 	 * Lancement des méthodes de test de la classe OutilSaisie.
@@ -150,13 +123,12 @@ public class TestOutilSaisie {
 		
 		System.out.println("-----------------------------------------\n"
                            + "|     TEST DE LA CLASSE OUTILSAISIE     |\n"
-				           + "-----------------------------------------\n");
+                           + "-----------------------------------------\n");
 		
-		// testSymboleEstValide();
-		// testOrdreEstValide();
-		// testDemandeSymbole();
-		// testDemandeOrdre();
-		// testGenerationPseudo();
+		testSymboleEstValide();
+		testOrdreEstValide();
+		testSaisirSymbole();
+		testSaisirOrdre();
 
 	}
 
