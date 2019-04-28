@@ -6,37 +6,47 @@
 package damedepique.general.tests;
 
 import damedepique.general.Carte;
-import damedepique.general.Ordre;
-import damedepique.general.Symbole;
+import damedepique.general.Valeur;
+import damedepique.general.Couleur;
 
 /**
- * TODO Faire la description de la classe de test TestCarte.
+ * Cette classe contient toutes les méthodes de test de la classe Carte.
  * @author Julien B.
  * @version 1.0
  */
 public class TestCarte {
 	
 	/**
-	 * Test de la méthode (getter) Carte.getSymbole()
+	 * Test de la méthode (getter) Carte.getCouleur()
 	 */
-	public static void testGetSymbole() {
-		// Instantiation d'une nouvelle carte de jeu.
-		Carte carte = new Carte(Symbole.Coeur, Ordre.Roi);
+	public static void testGetCouleur() {
+		System.out.println("Carte.getCouleur()\n"
+                           + "------------------");
 		
-		// Affichage du symbole de la carte créée auparavant.
-		System.out.println("Symbole = " + carte.getSymbole());
+		// Instantiation d'une nouvelle carte de jeu.
+		Carte carte = new Carte(Couleur.Coeur, Valeur.Roi);
+		
+		// Affichage de la couleur de la carte créée auparavant.
+		System.out.println("Couleur = " + carte.getCouleur());
+		
+		OutilTest.continuer();
 	}
 	
 	
 	/**
-	 * Test de la méthode (getter) Carte.getOrdre()
+	 * Test de la méthode (getter) Carte.getValeur()
 	 */
-	public static void testGetOrdre() {
-		// Instantiation d'une nouvelle carte de jeu.
-		Carte carte = new Carte(Symbole.Pique, Ordre.Dame);
+	public static void testGetValeur() {
+		System.out.println("Carte.getValeur()\n"
+                           + "-----------------");
 		
-		// Affichage de l'ordre de la carte créée auparavant.
-		System.out.println("Ordre = " + carte.getOrdre());
+		// Instantiation d'une nouvelle carte de jeu.
+		Carte carte = new Carte(Couleur.Pique, Valeur.Dame);
+		
+		// Affichage de la valeur de la carte créée auparavant.
+		System.out.println("Valeur = " + carte.getValeur());
+		
+		OutilTest.continuer();
 	}
 	
 	
@@ -45,9 +55,12 @@ public class TestCarte {
 	 * @param args Non utilisé.
 	 */
 	public static void main(String[] args) {
+		System.out.println("-----------------------------------\n"
+                           + "|     TEST DE LA CLASSE CARTE     |\n"
+                           + "-----------------------------------\n");
 		
-		// testGetSymbole();
-		// testGetOrdre();
+		testGetCouleur();
+		testGetValeur();
 
 	}
 

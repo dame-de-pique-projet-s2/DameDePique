@@ -1,5 +1,5 @@
 /*
- * OutilSaisie.java                                                  26/04/2019
+ * OutilSaisie.java                                                  27/04/2019
  * Projet de la dame de pique | IUT de Rodez | 2018 - 2019
  */
 
@@ -13,11 +13,6 @@ import java.util.Scanner;
  * <p>
  *   Cette classe contient des méthodes outils pour effectuer des saisies.
  * </p>
- * <ul>
- *   <li>
- *     
- *   </li>
- * </ul>
  * 
  * @author Julien B.
  * @version 1.0
@@ -29,12 +24,12 @@ public class OutilSaisie {
 	
 	
 	/**
-	 * Vérifie si un symbole donné est valide ou non.
-	 * @param aVerifier Le symbole à vérifier.
-	 * @return Vrai si le symbole est dans la liste des symboles sinon faux.
-	 * @see damedepique.general.Symbole
+	 * Vérifie si une couleur donnée est valide ou non.
+	 * @param aVerifier La couleur à vérifier.
+	 * @return Vrai si la couleur est dans la liste des couleurs sinon faux.
+	 * @see damedepique.general.Couleur
 	 */
-	public static boolean symboleEstValide(String aVerifier) {
+	public static boolean couleurEstValide(String aVerifier) {
 		/*
 		 * Vérifie si la référence de l'objet String passée en paramètre est 
 		 * égale à null. Si l'objet n'est pas référencé alors la méthode 
@@ -52,20 +47,20 @@ public class OutilSaisie {
 		
 		/*
 		 * Recherche d'une occurrence entre la valeur aVerifier passée en 
-		 * paramètre et une valeur de la liste des symboles. Pour cette 
+		 * paramètre et une valeur de la liste des couleurs. Pour cette 
 		 * recherche la casse est ignorée ce qui laisse de la liberté à 
 		 * l'utilisateur lors de la saisie.
 		 */
-		for (Symbole symbole : Symbole.values()) {
-			if (symbole.toString().equalsIgnoreCase(aVerifier)) {
+		for (Couleur couleur : Couleur.values()) {
+			if (couleur.toString().equalsIgnoreCase(aVerifier)) {
 				// A la première occurrence trouvée, la méthode renvoie vrai.
 				return true;
 			}
 		}
 		
 		/*
-		 * Si aucune référence n'a été trouvée dans la liste des symboles 
-		 * alors le symbole entré par l'utilisateur n'est valide donc la 
+		 * Si aucune référence n'a été trouvée dans la liste des couleurs 
+		 * alors la couleur entrée par l'utilisateur n'est valide donc la 
 		 * méthode renvoie faux.
 		 */
 		return false;
@@ -73,12 +68,12 @@ public class OutilSaisie {
 	
 	
 	/**
-	 * Vérifie si un ordre donné est valide ou non.
-	 * @param aVerifier L'ordre à vérifier.
-	 * @return Vrai si l'ordre est dans la liste des ordres sinon faux.
-	 * @see damedepique.general.Ordre
+	 * Vérifie si une valeur donnée est valide ou non.
+	 * @param aVerifier La valeur à vérifier.
+	 * @return Vrai si la valeur est dans la liste des valeurs sinon faux.
+	 * @see damedepique.general.Valeur
 	 */
-	public static boolean ordreEstValide(String aVerifier) {
+	public static boolean valeurEstValide(String aVerifier) {
 		/*
 		 * Vérifie si la référence de l'objet String passée en paramètre est 
 		 * égale à null. Si l'objet n'est pas référencé alors la méthode 
@@ -96,20 +91,20 @@ public class OutilSaisie {
 		
 		/*
 		 * Recherche d'une occurrence entre la valeur aVerifier passée en 
-		 * paramètre et une valeur de la liste des ordres. Pour cette 
+		 * paramètre et une valeur de la liste des valeurs. Pour cette 
 		 * recherche la casse est ignorée ce qui laisse de la liberté à 
 		 * l'utilisateur lors de la saisie.
 		 */
-		for (Ordre ordre : Ordre.values()) {
-			if (ordre.toString().equalsIgnoreCase(aVerifier)) {
+		for (Valeur valeur : Valeur.values()) {
+			if (valeur.toString().equalsIgnoreCase(aVerifier)) {
 				// A la première occurrence trouvée, la méthode renvoie vrai.
 				return true;
 			}
 		}
 		
 		/*
-		 * Si aucune référence n'a été trouvée dans la liste des ordres 
-		 * alors l'ordre entré par l'utilisateur n'est valide donc la 
+		 * Si aucune référence n'a été trouvée dans la liste des valeurs 
+		 * alors la valeur entrée par l'utilisateur n'est valide donc la 
 		 * méthode renvoie faux.
 		 */
 		return false;
@@ -117,74 +112,74 @@ public class OutilSaisie {
 	
 	
 	/**
-	 * Demande à un joueur d'entrer un symbole.
-	 * @param message Le message à afficher pour demander de saisir un symbole.
-	 * @return Le symbole valide d'une carte.
+	 * Demande à un joueur d'entrer une couleur.
+	 * @param message Le message à afficher pour demander de saisir une couleur.
+	 * @return La couleur valide d'une carte.
 	 */
-	public static Symbole saisirSymbole(String message) {
-		String symbole;     // Symbole entré par le joueur.
-		boolean correct;    // Indicateur de bonne saisie (symbole valide).
+	public static Couleur saisirCouleur(String message) {
+		String couleur;     // Couleur entrée par le joueur.
+		boolean correct;    // Indicateur de bonne saisie (couleur valide).
 		
 		/*
-		 * Demande d'un symbole au joueur. Si celui-ci n'est pas valide alors 
+		 * Demande d'une couleur au joueur. Si celle-ci n'est pas valide alors 
 		 * la saisie est recommencée.
 		 */
 		do {
-			// Affichage d'un message pour demander d'entrer un symbole.
+			// Affichage d'un message pour demander d'entrer une couleur.
 			System.out.print(message);
-			symbole = sc.next() + sc.nextLine();
-			correct = symboleEstValide(symbole);
+			couleur = sc.next() + sc.nextLine();
+			correct = couleurEstValide(couleur);
 			
-			// Affichage d'un message d'erreur en cas de symbole invalide.
+			// Affichage d'un message d'erreur en cas de couleur invalide.
 			if (!correct) {
-				System.out.println("Le symbole que vous avez entré n'est pas "
+				System.out.println("La couleur que vous avez entrée n'est pas "
 						           + "valide.\nVous trouverez ci-dessous la "
-						           + "liste des symboles possibles.\n" 
-						           + Arrays.toString(Symbole.values()) + "\n");
+						           + "liste des couleurs possibles.\n" 
+						           + Arrays.toString(Couleur.values()) + "\n");
 			}
 		} while (!correct);
 		
-		// Mise en forme du symbole entré par l'utilisateur.
-		symbole = symbole.substring(0, 1).toUpperCase() 
-				  + symbole.substring(1).toLowerCase();
+		// Mise en forme de la couleur entrée par l'utilisateur.
+		couleur = couleur.substring(0, 1).toUpperCase() 
+				  + couleur.substring(1).toLowerCase();
 		
-		return Symbole.valueOf(symbole);
+		return Couleur.valueOf(couleur);
 	}
 	
 	
 	/**
-	 * Demande à un joueur d'entrer un ordre.
-	 * @param message Le message à afficher pour demander de saisir un ordre.
-	 * @return L'ordre valide d'une carte.
+	 * Demande à un joueur d'entrer une valeur.
+	 * @param message Le message à afficher pour demander de saisir une valeur.
+	 * @return La valeur valide d'une carte.
 	 */
-	public static Ordre saisirOrdre(String message) {
-		String ordre;       // Ordre entré par le joueur.
-		boolean correct;    // Indicateur de bonne saisie (ordre valide).
+	public static Valeur saisirValeur(String message) {
+		String valeur;      // Valeur entrée par le joueur.
+		boolean correct;    // Indicateur de bonne saisie (valeur valide).
 		
 		/*
-		 * Demande d'un ordre au joueur. Si celui-ci n'est pas valide alors
+		 * Demande d'une valeur au joueur. Si celle-ci n'est pas valide alors
 		 * la saisie est recommencée.
 		 */
 		do {
-			// Affichage d'un message pour demander d'entrer un ordre.
+			// Affichage d'un message pour demander d'entrer une valeur.
 			System.out.print(message);
-			ordre = sc.next() + sc.nextLine();
-			correct = ordreEstValide(ordre);
+			valeur = sc.next() + sc.nextLine();
+			correct = valeurEstValide(valeur);
 			
-			// Affichage d'un message d'erreur en cas d'ordre invalide.
+			// Affichage d'un message d'erreur en cas de valeur invalide.
 			if (!correct) {
-				System.out.println("L'ordre que vous avez entré n'est pas "
+				System.out.println("La valeur que vous avez entrée n'est pas "
 						           + "valide.\nVous trouverez ci-dessous la "
-						           + "liste des ordres possibles.\n" 
-						           + Arrays.toString(Ordre.values()) + "\n");
+						           + "liste des valeurs possibles.\n" 
+						           + Arrays.toString(Valeur.values()) + "\n");
 			}
 		} while (!correct);
 		
-		// Mise en forme de l'ordre entré par l'utilisateur.
-		ordre = ordre.substring(0, 1).toUpperCase() 
-				+ ordre.substring(1).toLowerCase();
+		// Mise en forme de la valeur entrée par l'utilisateur.
+		valeur = valeur.substring(0, 1).toUpperCase() 
+				+ valeur.substring(1).toLowerCase();
 		
-		return Ordre.valueOf(ordre);
+		return Valeur.valueOf(valeur);
 	}
 	
 }

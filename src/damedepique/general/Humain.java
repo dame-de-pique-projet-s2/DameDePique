@@ -12,6 +12,19 @@ package damedepique.general;
  */
 public class Humain extends Joueur {
 
+	/**
+	 * 
+	 */
+	public Humain() {
+		super();
+	}
 	
+	
+	/**
+	 * 
+	 */
+	public void jouerCarte() {
+		
+	}
 	
 }

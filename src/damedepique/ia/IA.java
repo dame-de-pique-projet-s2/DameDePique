@@ -21,4 +21,12 @@ public class IA extends Joueur {
 		super();
 	}
 	
+	
+	/**
+	 * 
+	 */
+	public void jouerCarte() {
+		
+	}
+	
 }

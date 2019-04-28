@@ -1,18 +1,22 @@
 /*
- * Pseudo.java                                                       25/04/2019
+ * Pseudo.java                                                       27/04/2019
  * Projet de la dame de pique | IUT de Rodez | 2018 - 2019
  */
 
 package damedepique.general;
 
 /**
- * TODO Faire la description de la classe Pseudo.
+ * <p>
+ *   Cette énumération regroupe tous les pseudonymes prédéfinis à attribuer 
+ *   aléatoirement au joueur humain ainsi qu'aux intelligences artificielles.
+ * </p>
+ * 
  * @author Julien B.
  * @version 1.0
  */
 public enum Pseudo {
 	
-	Camille, Emilie, Jade, Aurore,
+	Camille, Emilie, Jade, Aurore, Brigitte,
 	Pierre, Paul, Jacques, Georges, Thomas
 
 }

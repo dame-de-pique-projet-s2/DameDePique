@@ -6,20 +6,17 @@
 package damedepique.general;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 /**
  * <p>
  *   Cette classe contient tous les éléments qui caractérisent un joueur 
- *   jouant au jeu de la dame de pique.
+ *   jouant au jeu de la dame de pique. Un joueur est caractérisé par un pseudo 
+ *   non modifiable qui lui est assigné par défaut, un nombre de points qui 
+ *   évolue au cours de la partie et d'une main dans laquelle le joueur possède 
+ *   les cartes qu'il peut jouer.
  * </p>
- * <ul>
- *   <li>
- *     
- *   </li>
- *   <li>
- *     
- *   </li>
- * </ul>
+ * 
  * @author Julien B.
  * @version 1.0
  */
@@ -52,6 +49,15 @@ public class Joueur {
 	/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 	 * * * * * * * * * * * * * * PARTIE PSEUDO * * * * * * * * * * * * * * *
 	 * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
+	
+	/**
+	 * Récupère le pseudonyme de ce (this) Joueur.
+	 * @return Le pseudo du joueur.
+	 */
+	public Pseudo getPseudo() {
+		return this.pseudo;
+	}
+	
 	
 	/**
 	 * Génère et affecte un pseudonyme aléatoire pour ce (this) Joueur.
@@ -101,6 +107,18 @@ public class Joueur {
 	
 	
 	/**
+	 * Trie les cartes dans la main de ce (this) Joueur.
+	 * Cette méthode aide le joueur dans sa partie pour ne pas perdre de 
+	 * temps à jouer une carte. Attention, cette méthode change l'état de la 
+	 * main du joueur concerné.
+	 */
+	public void trierMain() {
+		// Tri les cartes dans la main du joueur suivant un ordre croissant.
+		Collections.sort(this.main, Carte.ordreCroissant);
+	}
+	
+	
+	/**
 	 * Ajoute une carte dans la main de ce (this) Joueur.
 	 * @param aAjouter La carte à ajouter.
 	 */
@@ -113,24 +131,21 @@ public class Joueur {
 	 * Retire une carte de la main de ce (this) Joueur.
 	 * @param aRetirer La carte à retirer.
 	 */
-	public void retirerCarte(Carte aRetirer) {
-		this.main.remove(aRetirer);
-	}
-	
-	
-	/**
-	 * Trie les cartes dans la main de ce (this) Joueur.
-	 * Cette méthode aide les joueurs dans sa partie pour ne pas perdre de 
-	 * temps à jouer une carte.
-	 */
-	public void trierCartes() {
-		
-	}
+	// public void retirerCarte(Carte aRetirer) {
+		// this.main.remove(aRetirer);
+	// }
 	
 	
 	@Override
 	public String toString() {
-		return this.pseudo.toString() + "\n" + this.main.toString();
+		String listeCartes = "";
+		
+		for (Carte carte : this.main) {
+			listeCartes += "\n    => " + carte.toString();
+		}
+		
+		return this.pseudo.toString() + " (" + this.points + " points)\n" 
+		                              + "* * * * * * * * * * *" + listeCartes;
 	}
 	
 }

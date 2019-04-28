@@ -1,5 +1,5 @@
 /*
- * Paquet.java                                                       25/04/2019
+ * Paquet.java                                                       27/04/2019
  * Projet de la dame de pique | IUT de Rodez | 2018 - 2019
  */
 
@@ -16,8 +16,8 @@ import java.util.ArrayList;
  *   <li>
  *     La méthode creer() permet comme son nom l'indique de créer et 
  *     d'initialiser une paquet de 52 cartes pour jouer au jeu de la dame de 
- *     pique. Chaque symbole est associé à exactement un ordre sinon le jeu de 
- *     cartes n'est pas valide (doublons).
+ *     pique. Chaque couleur est associée à exactement une valeur sinon le jeu 
+ *     de cartes n'est pas valide (doublons).
  *   </li>
  *   <li>
  *     La méthode melanger() permet de mélanger un paquet de cartes créé au 
@@ -47,20 +47,20 @@ public class Paquet {
 	
 	
 	/**
-	 * Création d'un paquet de 52 cartes, un symbole est associé à exactement 
-	 * un ordre sinon le jeu de cartes risque d'être truqué (doublons).
-	 * @see damedepique.general.Symbole
-	 * @see damedepique.general.Ordre
+	 * Création d'un paquet de 52 cartes, une couleur est associée à exactement 
+	 * une valeur sinon le jeu de cartes risque d'être truqué (doublons).
+	 * @see damedepique.general.Couleur
+	 * @see damedepique.general.Valeur
 	 */
 	public void creer() {
-		// Balayage de la liste des symboles.
-		for (Symbole symbole : Symbole.values()) {
+		// Balayage de la liste des couleurs.
+		for (Couleur couleur : Couleur.values()) {
 			
-			// Balayage de la liste des ordres.
-			for (Ordre ordre : Ordre.values()) {
+			// Balayage de la liste des valeurs.
+			for (Valeur valeur : Valeur.values()) {
 				
-				// Association d'un symbole à exactement un ordre.
-				this.cartes.add(new Carte(symbole, ordre));
+				// Association d'une couleur à exactement une valeur.
+				this.cartes.add(new Carte(couleur, valeur));
 			}
 		}
 	}
@@ -124,7 +124,7 @@ public class Paquet {
 		String listeCartes = "";
 		
 		for (Carte carte : this.cartes) {
-			listeCartes += "\n" + carte.toString();
+			listeCartes += "\n    => " + carte.toString();
 		}
 		
 		return listeCartes;
