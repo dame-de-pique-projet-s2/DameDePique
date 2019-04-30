@@ -5,6 +5,8 @@
 
 package damedepique.general;
 
+import damedepique.ia.IA;
+
 /**
  * 
  * @author Julien B.
@@ -18,17 +20,29 @@ public class DameDePique {
 	 */
 	public static void main(String[] args) {
 		
-		// Scénario du jeu de la dame de pique.
-		
-		// Création d'un paquet de cartes (52 cartes)
 		Paquet paquet = new Paquet();
 		paquet.creer();
 		
-		// Création d'un plateau de jeu où les joueurs mettent les cartes.
-		Plateau plateau = new Plateau();
+		// Plateau plateau = new Plateau();
 		
+		Joueur[] joueurs = new Joueur[4];
+		joueurs[0] = new Humain();    // Création d'un joueur humain.
+		for (int i = 1 ; i < joueurs.length ; i++) {
+			joueurs[i] = new IA();    // Création de trois joueurs IA.
+		}
 		
-		
+		// TODO Faire un import static de OutilPartie. 
+		while (!OutilPartie.finPartie(joueurs)) {
+			for (int j = 0 ; j < joueurs.length ; j++) {
+				if (joueurs[j] instanceof Humain) {
+					// Actions pour l'humain.
+				} else {
+					// Actions pour les IA.
+				}
+			}
+			
+			
+		}
 
 	}
 

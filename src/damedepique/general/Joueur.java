@@ -6,7 +6,6 @@
 package damedepique.general;
 
 import java.util.ArrayList;
-import java.util.Collections;
 
 /**
  * <p>
@@ -93,6 +92,15 @@ public class Joueur {
 	}
 	
 	
+	/**
+	 * Ajoute des points à ce (this) Joueur.
+	 * @param aAjouter Le nombre de points à ajouter.
+	 */
+	public void ajouterPoints(int aAjouter) {
+		this.points += aAjouter;
+	}
+	
+	
 	/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 	 * * * * * * * * * * * * * * PARTIE MAIN * * * * * * * * * * * * * * * *
 	 * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
@@ -114,7 +122,7 @@ public class Joueur {
 	 */
 	public void trierMain() {
 		// Tri les cartes dans la main du joueur suivant un ordre croissant.
-		Collections.sort(this.main, Carte.ordreCroissant);
+		this.main.sort(Carte.ordreCroissant);
 	}
 	
 	
@@ -131,9 +139,9 @@ public class Joueur {
 	 * Retire une carte de la main de ce (this) Joueur.
 	 * @param aRetirer La carte à retirer.
 	 */
-	// public void retirerCarte(Carte aRetirer) {
-		// this.main.remove(aRetirer);
-	// }
+	public void retirerCarte(Carte aRetirer) {
+		this.main.remove(aRetirer);
+	}
 	
 	
 	@Override
@@ -144,8 +152,8 @@ public class Joueur {
 			listeCartes += "\n    => " + carte.toString();
 		}
 		
-		return this.pseudo.toString() + " (" + this.points + " points)\n" 
-		                              + "* * * * * * * * * * *" + listeCartes;
+		return this.pseudo.toString() + " (" + this.points + " points)" 
+		                              + listeCartes;
 	}
 	
 }

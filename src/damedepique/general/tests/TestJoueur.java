@@ -110,7 +110,7 @@ public class TestJoueur {
 		
 		joueurs[0].trierMain();
 		
-		System.out.println(joueurs[0]);
+		System.out.println("\n" + joueurs[0]);
 				
 		OutilTest.continuer();
 	}

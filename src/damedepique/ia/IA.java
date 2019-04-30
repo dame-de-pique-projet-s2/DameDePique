@@ -1,5 +1,5 @@
 /*
- * IA.java                                                           25/04/2019
+ * IA.java                                                           30/04/2019
  * Projet de la dame de pique | IUT de Rodez | 2018 - 2019
  */
 
@@ -15,7 +15,8 @@ import damedepique.general.Joueur;
 public class IA extends Joueur {
 
 	/**
-	 * 
+	 * Création d'une nouvelle IA avec les caractéristiques d'un joueur.
+	 * @see damedepique.general.Joueur
 	 */
 	public IA() {
 		super();

@@ -25,7 +25,7 @@ public class Plateau {
 	
 	
 	/**
-	 * 
+	 * Vide les cartes disposées sur le plateau.
 	 */
 	public void vider() {
 		this.cartes.clear();
