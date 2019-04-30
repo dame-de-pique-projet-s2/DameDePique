@@ -16,7 +16,7 @@ import java.util.ArrayList;
  *   <li>
  *     La méthode creer() permet comme son nom l'indique de créer et 
  *     d'initialiser une paquet de 52 cartes pour jouer au jeu de la dame de 
- *     pique. Chaque couleur est associée à exactement une valeur sinon le jeu 
+ *     pique. Chaque symbole est associé à exactement une valeur sinon le jeu 
  *     de cartes n'est pas valide (doublons).
  *   </li>
  *   <li>
@@ -47,20 +47,20 @@ public class Paquet {
 	
 	
 	/**
-	 * Création d'un paquet de 52 cartes, une couleur est associée à exactement 
+	 * Création d'un paquet de 52 cartes, un symbole est associé à exactement 
 	 * une valeur sinon le jeu de cartes risque d'être truqué (doublons).
-	 * @see damedepique.general.Couleur
+	 * @see damedepique.general.Symbole
 	 * @see damedepique.general.Valeur
 	 */
 	public void creer() {
-		// Balayage de la liste des couleurs.
-		for (Couleur couleur : Couleur.values()) {
+		// Balayage de la liste des symboles.
+		for (Symbole symbole : Symbole.values()) {
 			
 			// Balayage de la liste des valeurs.
 			for (Valeur valeur : Valeur.values()) {
 				
-				// Association d'une couleur à exactement une valeur.
-				this.cartes.add(new Carte(couleur, valeur));
+				// Association d'un symbole à exactement une valeur.
+				this.cartes.add(new Carte(symbole, valeur));
 			}
 		}
 	}

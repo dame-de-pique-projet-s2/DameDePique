@@ -63,7 +63,7 @@ public class OutilPartie {
 	public static boolean estDeuxTrefle(Carte aVerifier) {
 		// TODO Faire les commentaires.
 		if (aVerifier.getValeur().equals(Valeur.Deux) 
-			&& aVerifier.getCouleur().equals(Couleur.Trefle)) {
+			&& aVerifier.getSymbole().equals(Symbole.Trefle)) {
 			
 			return true;
 		}

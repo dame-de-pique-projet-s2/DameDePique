@@ -5,6 +5,7 @@
 
 package damedepique.general;
 
+import static damedepique.general.OutilPartie.*;
 import damedepique.ia.IA;
 
 /**
@@ -31,8 +32,7 @@ public class DameDePique {
 			joueurs[i] = new IA();    // Création de trois joueurs IA.
 		}
 		
-		// TODO Faire un import static de OutilPartie. 
-		while (!OutilPartie.finPartie(joueurs)) {
+		while (!finPartie(joueurs)) {
 			for (int j = 0 ; j < joueurs.length ; j++) {
 				if (joueurs[j] instanceof Humain) {
 					// Actions pour l'humain.

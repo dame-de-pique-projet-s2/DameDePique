@@ -1,5 +1,5 @@
 /*
- * Carte.java                                                        28/04/2019
+ * Carte.java                                                        30/04/2019
  * Projet de la dame de pique | IUT de Rodez | 2018 - 2019
  */
 
@@ -26,8 +26,8 @@ import java.util.Comparator;
  */
 public class Carte {
 
-	/** Couleur de cette (this) Carte. */
-	private Couleur couleur;
+	/** Symbole de cette (this) Carte. */
+	private Symbole symbole;
 	
 	
 	/** Valeur de cette (this) Carte. */
@@ -35,23 +35,23 @@ public class Carte {
 	
 	
 	/**
-	 * Création d'une nouvelle carte comportant une couleur valide 
+	 * Création d'une nouvelle carte comportant un symbole valide 
 	 * et une valeur valide.
-	 * @param couleur Couleur pour la carte à créer.
+	 * @param symbole Symbole pour la carte à créer.
 	 * @param valeur Valeur pour la carte à créer.
 	 */
-	public Carte(Couleur couleur, Valeur valeur) {
-		this.couleur = couleur;
+	public Carte(Symbole symbole, Valeur valeur) {
+		this.symbole = symbole;
 		this.valeur = valeur;
 	}
 	
 	
 	/**
-	 * Récupère la couleur de cette (this) Carte.
-	 * @return La couleur de la carte.
+	 * Récupère le symbole de cette (this) Carte.
+	 * @return Le symbole de la carte.
 	 */
-	public Couleur getCouleur() {
-		return this.couleur;
+	public Symbole getSymbole() {
+		return this.symbole;
 	}
 	
 	
@@ -67,14 +67,14 @@ public class Carte {
 	@Override
 	public String toString() {
 		return this.valeur.toString() + " de " 
-                                      + this.couleur.toString().toLowerCase();
+                                      + this.symbole.toString().toLowerCase();
 	}
 	
 	
 	/**
 	 * Création d'un comparateur pour trier les cartes dans un ordre croissant 
-	 * suivant la position des objets des énumérations Couleur et Valeur.
-	 * @see damedepique.general.Couleur
+	 * suivant la position des objets des énumérations Symbole et Valeur.
+	 * @see damedepique.general.Symbole
 	 * @see damedepique.general.Valeur
 	 */
 	public static Comparator<Carte> ordreCroissant = new Comparator<>() {
@@ -90,11 +90,11 @@ public class Carte {
 		 */
 		public int compare(Carte carte1, Carte carte2) {
 			
-			// Récupère la couleur de la première carte passée en paramètre.
-			Couleur carte1Couleur = carte1.getCouleur();
+			// Récupère le symbole de la première carte passée en paramètre.
+			Symbole carte1Symbole = carte1.getSymbole();
 			
-			// Récupère la couleur de la seconde carte passée en paramètre.
-			Couleur carte2Couleur = carte2.getCouleur();
+			// Récupère le symbole de la seconde carte passée en paramètre.
+			Symbole carte2Symbole = carte2.getSymbole();
 			
 			// Récupère la valeur de la première carte passée en paramètre.
 			Valeur carte1Valeur = carte1.getValeur();
@@ -103,12 +103,12 @@ public class Carte {
 			Valeur carte2Valeur = carte2.getValeur();
 			
 			/*
-			 * Compare cet objet (carte1Couleur) avec l'objet spécifié pour la 
-			 * commande (carte2Couleur). Retourne un entier négatif, nul ou 
+			 * Compare cet objet (carte1Symbole) avec l'objet spécifié pour la 
+			 * commande (carte2Symbole). Retourne un entier négatif, nul ou 
 			 * positif si cet objet est inférieur, égal ou supérieur à l'objet 
 			 * spécifié. 
 			 */
-			int couleurDiff = carte1Couleur.compareTo(carte2Couleur);
+			int symboleDiff = carte1Symbole.compareTo(carte2Symbole);
 			
 			/*
 			 * Compare cet objet (carte1Valeur) avec l'objet spécifié pour la 
@@ -119,17 +119,17 @@ public class Carte {
 			int valeurDiff = carte1Valeur.compareTo(carte2Valeur);
 			
 			/*
-			 * Si la valeur de la couleur trouvée (couleurDiff) est strictement 
-			 * supérieure à 0 cela signifie que la couleur de la première carte 
-			 * passée en argument est supérieure à celle de la seconde par 
+			 * Si la valeur du symbole trouvé (symboleDiff) est strictement 
+			 * supérieure à 0 cela signifie que le symbole de la première carte 
+			 * passée en argument est supérieur à celui de la seconde par 
 			 * conséquent la valeur retournée est 1 (positive) pour que le 
 			 * déplacement soit effectué.
 			 * 
-			 * Si la valeur de la couleur trouvée (couleurDiff) est strictement 
+			 * Si la valeur du symbole trouvé (symboleDiff) est strictement 
 			 * égale à 0 et qu'en même temps la valeur trouvée (valeurDiff) est 
 			 * strictement supérieure à 0 alors cela signifie que les cartes 
-			 * passées en arguments sont de même couleur, on a donc 
-			 * carte1Couleur.equals(carte2Couleur) mais la valeur 
+			 * passées en arguments sont de même symbole, on a donc 
+			 * carte1Symbole.equals(carte2Symbole) mais la valeur 
 			 * de la première carte est strictement supérieure à celle de la 
 			 * seconde par conséquent la valeur retournée est 1 (positive) 
 			 * pour que le déplacement soit effectué.
@@ -139,8 +139,8 @@ public class Carte {
 			 * cartes comparées sont déjà rangées dans l'ordre alors aucun 
 			 * déplacement n'est à effectuer.
 			 */
-			return couleurDiff > 0 
-				   || (couleurDiff == 0 && valeurDiff > 0) ? 1 : -1;
+			return symboleDiff > 0 
+				   || (symboleDiff == 0 && valeurDiff > 0) ? 1 : -1;
 			
 		}
 		

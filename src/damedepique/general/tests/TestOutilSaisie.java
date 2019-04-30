@@ -7,7 +7,7 @@ package damedepique.general.tests;
 
 import damedepique.general.Valeur;
 import damedepique.general.OutilSaisie;
-import damedepique.general.Couleur;
+import damedepique.general.Symbole;
 
 /**
  * Cette classe contient toutes les méthodes de test de la classe OutilSaisie.
@@ -17,10 +17,10 @@ import damedepique.general.Couleur;
 public class TestOutilSaisie {
 
 	/**
-	 * Test de la méthode OutilSaisie.couleurEstValide(String)
+	 * Test de la méthode OutilSaisie.symboleEstValide(String)
 	 */
-	public static void testCouleurEstValide() {
-		System.out.println("OutilSaisie.couleurEstValide(String)\n"
+	public static void testSymboleEstValide() {
+		System.out.println("OutilSaisie.symboleEstValide(String)\n"
 				           + "------------------------------------");
 		
 		// Jeu d'essai avec des valeurs correctes et incorrectes.
@@ -36,7 +36,7 @@ public class TestOutilSaisie {
 		
 		int nbEchecs = 0;
 		for (int i = 0 ; i < nbTests ; i++) {
-			if (OutilSaisie.couleurEstValide(JEU_TEST[i]) != ATTENDU[i]) {
+			if (OutilSaisie.symboleEstValide(JEU_TEST[i]) != ATTENDU[i]) {
 				nbEchecs++;
 			}
 		}
@@ -80,17 +80,17 @@ public class TestOutilSaisie {
 	
 	
 	/**
-	 * Test de la méthode OutilSaisie.saisirCouleur(String)
+	 * Test de la méthode OutilSaisie.saisirSymbole(String)
 	 */
-	public static void testSaisirCouleur() {
-		System.out.println("OutilSaisie.saisirCouleur(String)\n"
+	public static void testSaisirSymbole() {
+		System.out.println("OutilSaisie.saisirSymbole(String)\n"
                            + "---------------------------------");
 		
-		Couleur couleur;
+		Symbole symbole;
 		
 		for (int i = 0 ; i < OutilTest.NB_TESTS ; i++) {
-			couleur = OutilSaisie.saisirCouleur("Entrez une couleur : ");
-			System.out.println("    => " + couleur.toString() + "\n");
+			symbole = OutilSaisie.saisirSymbole("Entrez un symbole : ");
+			System.out.println("    => " + symbole.toString() + "\n");
 		}
 		
 		OutilTest.continuer();
@@ -124,9 +124,9 @@ public class TestOutilSaisie {
                            + "|     TEST DE LA CLASSE OUTILSAISIE     |\n"
                            + "-----------------------------------------\n");
 		
-		// testCouleurEstValide();
+		// testSymboleEstValide();
 		// testValeurEstValide();
-		// testSaisirCouleur();
+		// testSaisirSymbole();
 		// testSaisirValeur();
 
 	}

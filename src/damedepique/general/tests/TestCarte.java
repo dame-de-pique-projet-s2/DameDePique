@@ -7,7 +7,7 @@ package damedepique.general.tests;
 
 import damedepique.general.Carte;
 import damedepique.general.Valeur;
-import damedepique.general.Couleur;
+import damedepique.general.Symbole;
 
 /**
  * Cette classe contient toutes les méthodes de test de la classe Carte.
@@ -17,17 +17,17 @@ import damedepique.general.Couleur;
 public class TestCarte {
 	
 	/**
-	 * Test de la méthode (getter) Carte.getCouleur()
+	 * Test de la méthode (getter) Carte.getSymbole()
 	 */
-	public static void testGetCouleur() {
-		System.out.println("Carte.getCouleur()\n"
+	public static void testGetSymbole() {
+		System.out.println("Carte.getSymbole()\n"
                            + "------------------");
 		
 		// Instantiation d'une nouvelle carte de jeu.
-		Carte carte = new Carte(Couleur.Coeur, Valeur.Roi);
+		Carte carte = new Carte(Symbole.Coeur, Valeur.Roi);
 		
-		// Affichage de la couleur de la carte créée auparavant.
-		System.out.println("Couleur = " + carte.getCouleur());
+		// Affichage du symbole de la carte créée auparavant.
+		System.out.println("Symbole = " + carte.getSymbole());
 		
 		OutilTest.continuer();
 	}
@@ -41,7 +41,7 @@ public class TestCarte {
                            + "-----------------");
 		
 		// Instantiation d'une nouvelle carte de jeu.
-		Carte carte = new Carte(Couleur.Pique, Valeur.Dame);
+		Carte carte = new Carte(Symbole.Pique, Valeur.Dame);
 		
 		// Affichage de la valeur de la carte créée auparavant.
 		System.out.println("Valeur = " + carte.getValeur());
@@ -59,8 +59,8 @@ public class TestCarte {
                            + "|     TEST DE LA CLASSE CARTE     |\n"
                            + "-----------------------------------\n");
 		
-		testGetCouleur();
-		testGetValeur();
+		// testGetSymbole();
+		// testGetValeur();
 
 	}
 

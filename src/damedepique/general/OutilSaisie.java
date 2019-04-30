@@ -24,12 +24,12 @@ public class OutilSaisie {
 	
 	
 	/**
-	 * Vérifie si une couleur donnée est valide ou non.
-	 * @param aVerifier La couleur à vérifier.
-	 * @return Vrai si la couleur est dans la liste des couleurs sinon faux.
-	 * @see damedepique.general.Couleur
+	 * Vérifie si un symbole donné est valide ou non.
+	 * @param aVerifier Le symbole à vérifier.
+	 * @return Vrai si le symbole est dans la liste des symboles sinon faux.
+	 * @see damedepique.general.Symbole
 	 */
-	public static boolean couleurEstValide(String aVerifier) {
+	public static boolean symboleEstValide(String aVerifier) {
 		/*
 		 * Vérifie si la référence de l'objet String passée en paramètre est 
 		 * égale à null. Si l'objet n'est pas référencé alors la méthode 
@@ -47,20 +47,20 @@ public class OutilSaisie {
 		
 		/*
 		 * Recherche d'une occurrence entre la valeur aVerifier passée en 
-		 * paramètre et une valeur de la liste des couleurs. Pour cette 
+		 * paramètre et une valeur de la liste des symboles. Pour cette 
 		 * recherche la casse est ignorée ce qui laisse de la liberté à 
 		 * l'utilisateur lors de la saisie.
 		 */
-		for (Couleur couleur : Couleur.values()) {
-			if (couleur.toString().equalsIgnoreCase(aVerifier)) {
+		for (Symbole symbole : Symbole.values()) {
+			if (symbole.toString().equalsIgnoreCase(aVerifier)) {
 				// A la première occurrence trouvée, la méthode renvoie vrai.
 				return true;
 			}
 		}
 		
 		/*
-		 * Si aucune référence n'a été trouvée dans la liste des couleurs 
-		 * alors la couleur entrée par l'utilisateur n'est valide donc la 
+		 * Si aucune référence n'a été trouvée dans la liste des symboles 
+		 * alors le symbole entré par l'utilisateur n'est pas valide donc la 
 		 * méthode renvoie faux.
 		 */
 		return false;
@@ -104,7 +104,7 @@ public class OutilSaisie {
 		
 		/*
 		 * Si aucune référence n'a été trouvée dans la liste des valeurs 
-		 * alors la valeur entrée par l'utilisateur n'est valide donc la 
+		 * alors la valeur entrée par l'utilisateur n'est pas valide donc la 
 		 * méthode renvoie faux.
 		 */
 		return false;
@@ -112,38 +112,38 @@ public class OutilSaisie {
 	
 	
 	/**
-	 * Demande à un joueur d'entrer une couleur.
-	 * @param message Le message à afficher pour demander de saisir une couleur.
-	 * @return La couleur valide d'une carte.
+	 * Demande à un joueur d'entrer un symbole.
+	 * @param message Le message à afficher pour demander de saisir un symbole.
+	 * @return Le symbole valide d'une carte.
 	 */
-	public static Couleur saisirCouleur(String message) {
-		String couleur;     // Couleur entrée par le joueur.
-		boolean correct;    // Indicateur de bonne saisie (couleur valide).
+	public static Symbole saisirSymbole(String message) {
+		String symbole;     // Symbole entrée par le joueur.
+		boolean correct;    // Indicateur de bonne saisie (symbole valide).
 		
 		/*
-		 * Demande d'une couleur au joueur. Si celle-ci n'est pas valide alors 
+		 * Demande d'un symbole au joueur. Si celui-ci n'est pas valide alors 
 		 * la saisie est recommencée.
 		 */
 		do {
-			// Affichage d'un message pour demander d'entrer une couleur.
+			// Affichage d'un message pour demander d'entrer un symbole.
 			System.out.print(message);
-			couleur = sc.next() + sc.nextLine();
-			correct = couleurEstValide(couleur);
+			symbole = sc.next() + sc.nextLine();
+			correct = symboleEstValide(symbole);
 			
-			// Affichage d'un message d'erreur en cas de couleur invalide.
+			// Affichage d'un message d'erreur en cas de symbole invalide.
 			if (!correct) {
-				System.out.println("La couleur que vous avez entrée n'est pas "
+				System.out.println("Le symbole que vous avez entré n'est pas "
 						           + "valide.\nVous trouverez ci-dessous la "
-						           + "liste des couleurs possibles.\n" 
-						           + Arrays.toString(Couleur.values()) + "\n");
+						           + "liste des symboles possibles.\n" 
+						           + Arrays.toString(Symbole.values()) + "\n");
 			}
 		} while (!correct);
 		
-		// Mise en forme de la couleur entrée par l'utilisateur.
-		couleur = couleur.substring(0, 1).toUpperCase() 
-				  + couleur.substring(1).toLowerCase();
+		// Mise en forme du symbole entré par l'utilisateur.
+		symbole = symbole.substring(0, 1).toUpperCase() 
+				  + symbole.substring(1).toLowerCase();
 		
-		return Couleur.valueOf(couleur);
+		return Symbole.valueOf(symbole);
 	}
 	
 	
