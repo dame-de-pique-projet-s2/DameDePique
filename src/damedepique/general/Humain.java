@@ -20,12 +20,4 @@ public class Humain extends Joueur {
 		super();
 	}
 	
-	
-	/**
-	 * 
-	 */
-	public void jouerCarte() {
-		
-	}
-	
 }

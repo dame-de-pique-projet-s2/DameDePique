@@ -5,7 +5,11 @@
 
 package damedepique.general;
 
+import static damedepique.general.OutilSaisie.*;
+import static damedepique.general.OutilPartie.*;
+
 import java.util.ArrayList;
+import java.util.Objects;
 
 /**
  * <p>
@@ -107,7 +111,7 @@ public class Joueur {
 	
 	/**
 	 * Récupère la main de ce (this) Joueur.
-	 * @return La main du joueur.
+	 * @return Les cartes dans la main du joueur.
 	 */
 	public ArrayList<Carte> getMain() {
 		return this.main;
@@ -154,6 +158,41 @@ public class Joueur {
 		
 		return this.pseudo.toString() + " (" + this.points + " points)" 
 		                              + listeCartes;
+	}
+	
+	
+	/**
+	 * ...
+	 * @return La carte jouée par cet (this) Humain.
+	 */
+	public Carte jouerCarte() {
+		Symbole symbole;    // Symbole entré par le joueur de la carte à jouer.
+		Valeur valeur;      // Valeur entrée par le joueur de la carte à jouer.
+		Carte carte;
+		
+		do {
+			valeur = saisirValeur("Entreé la valeur d'une carte : ");
+			symbole = saisirSymbole("Entrez le symbole d'une carte : ");
+			carte = recuperationCarte(this, symbole, valeur);
+			
+			if (Objects.isNull(carte)) {
+				System.out.println("Cette carte n'est pas dans votre main.\n"
+						           + "Veuillez choisir une carte disponible "
+						           + "dans votre main de jeu.\n" + this);
+			}
+		} while (Objects.isNull(carte));
+		
+		return carte;
+	}
+	
+	
+	/**
+	 * 
+	 * @param symbole
+	 * @return La carte jouée par cet (this) Humain.
+	 */
+	public Carte jouerCarte(Symbole symbole) {
+		return null;
 	}
 	
 }

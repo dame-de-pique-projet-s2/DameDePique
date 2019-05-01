@@ -14,6 +14,10 @@ import java.util.ArrayList;
  */
 public class OutilPartie {
 
+	/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+	 * * * * * * * * * * OUTILS PARTIE / MANCHE / TOUR * * * * * * * * * * *
+	 * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
+	
 	/**
 	 * Détermine si une partie est finie ou non.
 	 * @param joueurs Les joueurs de la partie.
@@ -56,14 +60,107 @@ public class OutilPartie {
 	
 	
 	/**
-	 * Vérifie si une carte donnée est le deux de trèfle ou non.
-	 * @param aVerifier La carte à vérifier.
-	 * @return Vrai si la carte donnée est le deux de trèfle sinon faux.
+	 * Détermine si un tour est terminé ou non.
+	 * @param plateau Le plateau de la partie.
+	 * @return Vrai si le tour est fini (exactement quatre cartes disposées sur 
+	 *         le plateau de jeu) sinon faux.
 	 */
-	public static boolean estDeuxTrefle(Carte aVerifier) {
-		// TODO Faire les commentaires.
-		if (aVerifier.getValeur().equals(Valeur.Deux) 
-			&& aVerifier.getSymbole().equals(Symbole.Trefle)) {
+	public static boolean finTour(Plateau plateau) {
+		// Vérifie si le plateau contient exactement quatre cartes.
+		if (plateau.getCartes().size() == 4) {
+			
+			// Retourne vrai si le plateau dispose d'exactement quatre cartes.
+			return true;
+		}
+		
+		return false;    // Retourne faux si le plateau n'a pas quatre cartes.
+	}
+	
+	
+	/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+	 * * * * * * * * * * * * * * OUTILS CARTES * * * * * * * * * * * * * * *
+	 * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
+	
+	/**
+	 * 
+	 * @param joueur
+	 * @param symbole
+	 * @param valeur
+	 * @return null si la carte n'est pas dans la main du joueur.
+	 */
+	public static Carte recuperationCarte(Joueur joueur, Symbole symbole, 
+			                                             Valeur valeur) {
+		
+		ArrayList<Carte> mainJoueur = joueur.getMain();
+		
+		for (int i = 0 ; i < mainJoueur.size() ; i++) {
+			if (carteEgale(mainJoueur.get(i), symbole, valeur)) {
+				return mainJoueur.get(i);
+			}
+		}
+		
+		return null;
+	}
+	
+	
+	/**
+	 * 
+	 * @param joueurs
+	 * @param symbole 
+	 * @param valeur 
+	 * @return null si il n'y a aucun joueur qui ne possède la carte 
+	 */
+	public static Joueur rechercherCarte(Joueur[] joueurs, Symbole symbole,
+			                                               Valeur valeur) {
+		
+		Joueur joueur = joueurs[0];
+		
+		ArrayList<Carte> mainJoueurCourant;
+		
+		for (int i = 1 ; i < joueurs.length ; i++) {
+			mainJoueurCourant = joueurs[i].getMain();
+			for (int j = 0 ; j < mainJoueurCourant.size() ; j++) {
+				if (carteEgale(mainJoueurCourant.get(j), symbole, valeur)) {
+					return joueurs[i];
+				}
+			}
+		}
+		
+		return joueur;
+	}
+	
+	
+	/**
+	 * 
+	 * @param joueur 
+	 * @param symbole 
+	 * @return  
+	 */
+	public static boolean rechercherSymbole(Joueur joueur, Symbole symbole) {
+		ArrayList<Carte> mainJoueur = joueur.getMain();
+		
+		for (int i = 0 ; i < mainJoueur.size() ; i++) {
+			if (mainJoueur.get(i).getSymbole().equals(symbole)) {
+				return true;
+			}
+		}
+		
+		return false;
+	}
+	
+	
+	/**
+	 * 
+	 * @param aVerifier 
+	 * @param symbole 
+	 * @param valeur 
+	 * @return 
+	 */
+	public static boolean carteEgale(Carte aVerifier, Symbole symbole, 
+			                                          Valeur valeur) {
+		
+		if (aVerifier.getSymbole().equals(symbole) 
+			&& aVerifier.getValeur().equals(valeur)) {
 			
 			return true;
 		}
@@ -72,29 +169,10 @@ public class OutilPartie {
 	}
 	
 	
-	/**
-	 * Recherche le joueur possédant le deux de trèfle.
-	 * @param joueurs Les joueurs de la partie.
-	 * @return Le joueur possédant le deux de trèfle dans sa main de départ.
-	 */
-	public static Joueur rechercherDeuxTrefle(Joueur[] joueurs) {
-		// TODO Optimiser l'algorithme et commenter.
-		Joueur joueur = joueurs[0];
-		
-		ArrayList<Carte> mainCourante;
-		int tailleMain;
-		
-		for (int i = 1 ; i < joueurs.length ; i++) {
-			mainCourante = joueurs[i].getMain();
-			tailleMain = mainCourante.size();
-			for (int j = 0 ; j < tailleMain ; j++) {
-				if (estDeuxTrefle(mainCourante.get(j))) {
-					return joueurs[j];
-				}
-			}
-		}
-		
-		return joueur;
-	}
+	/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+	 * * * * * * * * * * * * * GESTION CLOCHE BOIS * * * * * * * * * * * * *
+	 * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
+	
+	
 	
 }
