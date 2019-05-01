@@ -44,6 +44,7 @@ public class DameDePique {
 			paquet.melanger();
 			paquet.distribuer(joueurs);
 			
+			// TODO Faire le tri qu'une fois. Condition if numManche == 0
 			for (int k = 0 ; k < NB_JOUEURS ; k++) {
 				joueurs[k].trierMain();
 			}
@@ -59,7 +60,14 @@ public class DameDePique {
 					
 				}
 				
+				// TODO Échange des trois cartes.
+				
+				// TODO Faire un autre tri qu'une fois. Condition if numTour == 0
+				
 				while (!finTour(plateau)) {
+					// TODO Ne pas commencer par un coeur.
+					System.out.println(joueurs[0]);
+					joueurs[0].jouerCarte(Symbole.Trefle);
 					// TODO Faire attention avec la valeur quatre ne marche pas.
 					// System.out.println(plateau);
 					// System.out.println(joueurs[0]);

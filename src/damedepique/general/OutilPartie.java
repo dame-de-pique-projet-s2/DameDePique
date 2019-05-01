@@ -6,6 +6,7 @@
 package damedepique.general;
 
 import java.util.ArrayList;
+import java.util.concurrent.Semaphore;
 
 /**
  * 
@@ -132,17 +133,66 @@ public class OutilPartie {
 	
 	/**
 	 * 
-	 * @param joueur 
-	 * @param symbole 
-	 * @return  
+	 * @param joueur Le joueur à vérifier.
+	 * @param symboleDemande Le symbole demandé au début du tour.
+	 * @return La liste des cartes pouvant être jouées par le joueur.
 	 */
-	public static boolean rechercherSymbole(Joueur joueur, Symbole symbole) {
+	public static ArrayList<Carte> cartesPossibles(Joueur joueur,
+			                                       Symbole symboleDemande) {
+		
+		// Stocke la main du joueur passé en argument.
 		ArrayList<Carte> mainJoueur = joueur.getMain();
 		
+		// Stocke les cartes jouables que possède le joueur.
+		ArrayList<Carte> cartesJouables = new ArrayList<>();
+		
+		// Parcours des cartes dans la main du joueur passé en argument.
 		for (int i = 0 ; i < mainJoueur.size() ; i++) {
-			if (mainJoueur.get(i).getSymbole().equals(symbole)) {
-				return true;
+			
+			/*
+			 * Recherche de toutes les cartes ayant un symbole équivalent
+			 * au symbole demandé en argument.
+			 */
+			if (mainJoueur.get(i).getSymbole().equals(symboleDemande)) {
+				cartesJouables.add(mainJoueur.get(i));
 			}
+		}
+		
+		/*
+		 * Si le joueur ne possède aucune carte ayant un symbole équivalent au 
+		 * symbole demandé alors il peut jouer toutes les cartes présentes dans 
+		 * sa main. 
+		 */
+		if (cartesJouables.isEmpty()) {
+			return mainJoueur;
+		}
+		
+		/* 
+		 * Retourne la liste des cartes jouables par le joueur selon le 
+		 * symbole demandé.
+		 */
+		return cartesJouables;
+	}
+	
+	
+	/**
+	 * 
+	 * @param joueur 
+	 * @param symboleDemande 
+	 * @param carteJouee 
+	 * @return 
+	 */
+	public static boolean estCartePossible(Joueur joueur, 
+			                               Symbole symboleDemande, 
+			                               Carte carteJouee) {
+		
+		// Liste des cartes jouables par le joueur passé en argument.
+		ArrayList<Carte> cartesJouables = cartesPossibles(joueur, 
+				                                          symboleDemande);
+		
+		// Vérifie si la carte jouée est contenue dans la liste des cartes.
+		if (cartesJouables.contains(carteJouee)) {
+			return true;
 		}
 		
 		return false;
