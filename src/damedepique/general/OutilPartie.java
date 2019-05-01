@@ -6,7 +6,6 @@
 package damedepique.general;
 
 import java.util.ArrayList;
-import java.util.concurrent.Semaphore;
 
 /**
  * 
@@ -174,6 +173,16 @@ public class OutilPartie {
 		return cartesJouables;
 	}
 	
+	
+	public static String afficherCartesPossibles(ArrayList<Carte> cartes) {
+		String listeCartes = "";
+		
+		for (Carte carte : cartes) {
+			listeCartes += "\n    => " + carte.toString();
+		}
+		
+		return listeCartes;
+	}
 	
 	/**
 	 * 

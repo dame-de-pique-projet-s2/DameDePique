@@ -11,7 +11,7 @@ package damedepique.ia.tests;
  * @version 1.0
  */
 public class TestIA {
-
+	
 	/**
 	 * Lancement des méthodes de test de la classe IA.
 	 * @param args Non utilisé.

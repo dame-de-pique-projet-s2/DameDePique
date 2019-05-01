@@ -9,7 +9,6 @@ import static damedepique.general.OutilSaisie.*;
 import static damedepique.general.OutilPartie.*;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Objects;
 
 /**
@@ -167,25 +166,27 @@ public class Joueur {
 	 * @return La carte jouée par cet (this) Humain.
 	 */
 	public Carte jouerCarte() {
-		// FIXME Améliorer l'algorithme.
-		boolean ok;
+		boolean nok;        // Indicateur de mauvaise carte choisie.
 		
-		Symbole symbole;    // Symbole entré par le joueur de la carte à jouer.
-		Valeur valeur;      // Valeur entrée par le joueur de la carte à jouer.
-		Carte carte;
+		Carte carte;        // Carte choisie par le joueur.
+		Symbole symbole;    // Symbole de la carte choisie par le joueur.
+		Valeur valeur;      // Valeur de la carte choisie par le joueur.
+		
+		System.out.println(this + "\n");
 		
 		do {
-			valeur = saisirValeur("Entrez la valeur d'une carte : ");
-			symbole = saisirSymbole("Entrez le symbole d'une carte : ");
+			valeur = saisirValeur("Entrez la valeur d'une carte à jouer : ");
+			symbole = saisirSymbole("Entrez le symbole d'une carte à jouer : ");
 			carte = recuperationCarte(this, symbole, valeur);
-			ok = !Objects.isNull(carte);
 			
-			if (!ok) {
-				System.out.println("Cette carte n'est pas dans votre main.\n"
+			nok = Objects.isNull(carte);
+			
+			if (nok) {
+				System.out.println("\nCette carte n'est pas dans votre main.\n"
 						           + "Veuillez choisir une carte disponible "
-						           + "dans votre main de jeu.\n" + this);
+						           + "dans votre main de jeu.\n" + this + "\n");
 			}
-		} while (!ok);
+		} while (nok);
 		
 		return carte;
 	}
@@ -197,35 +198,38 @@ public class Joueur {
 	 * @return La carte jouée par cet (this) Humain.
 	 */
 	public Carte jouerCarte(Symbole symboleDemande) {
-		// FIXME Améliorer l'algorithme.
-		boolean ok;
+		boolean nok;        // Indicateur de mauvaise carte choisie.
 		
-		Symbole symbole;
-		Valeur valeur;
-		Carte carte;
+		Carte carte;        // Carte choisie par le joueur.
+		Symbole symbole;    // Symbole de la carte choisie par le joueur.
+		Valeur valeur;      // Valeur de la carte choisie par le joueur.
+		
+		System.out.println(this);
+		
+		ArrayList<Carte> cartesPossibles;
+		cartesPossibles = cartesPossibles(this, symboleDemande);
+		System.out.println("\nCarte(s) que vous (" +  this.getPseudo() +") "
+				           + "pouvez jouer :"
+				           + afficherCartesPossibles(cartesPossibles) + "\n");
 		
 		do {
-			valeur = saisirValeur("Entrez la valeur d'une carte : ");
-			symbole = saisirSymbole("Entrez le symbole d'une carte : ");
+			valeur = saisirValeur("Entrez la valeur d'une carte à jouer : ");
+			symbole = saisirSymbole("Entrez le symbole d'une carte à jouer : ");
 			carte = recuperationCarte(this, symbole, valeur);
 			
-			if (Objects.isNull(carte)) {
-				System.out.println("Cette carte n'est pas dans votre main.\n"
-		                           + "Veuillez choisir une carte disponible "
-		                           + "dans votre main de jeu.\n" + this);
-			} else if (!estCartePossible(this, symboleDemande, carte)) {
-				System.out.println("Vous ne pouvez pas jouer cette carte !\n"
-						           + "Vous trouvez ci-dessous la liste des "
-						           + "cartes possibles : \n" + Arrays.toString(cartesPossibles(this, symboleDemande).toArray()));
+			nok = Objects.isNull(carte) 
+			      || !estCartePossible(this, symboleDemande, carte);
+			
+			if (nok) {
+				System.out.println("\nVous ne pouvez pas jouer cette carte.\n"
+						           + "Voici les cartes que vous pouvez jouer "
+						           + "pour ce tour."
+						           + afficherCartesPossibles(cartesPossibles) 
+						           + "\n");
 			}
-		} while (Objects.isNull(carte) || estCartePossible(this, symboleDemande, carte));
+		} while (nok);
 		
 		return carte;
 	}
-	
-	
-	/**
-	 * 
-	 */
 	
 }

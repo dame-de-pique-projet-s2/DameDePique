@@ -66,7 +66,7 @@ public class DameDePique {
 				
 				while (!finTour(plateau)) {
 					// TODO Ne pas commencer par un coeur.
-					System.out.println(joueurs[0]);
+					joueurs[0].jouerCarte();
 					joueurs[0].jouerCarte(Symbole.Trefle);
 					// TODO Faire attention avec la valeur quatre ne marche pas.
 					// System.out.println(plateau);
