@@ -1,10 +1,9 @@
-/* TestIA.java                                                       01/05/2019
+/*
+ * TestIA.java                                                       01/05/2019
  * Projet de la dame de pique | IUT de Rodez | 2018 - 2019
  */
 
 package damedepique.ia.tests;
-
-import java.util.Collections;
 
 import damedepique.general.Carte;
 import damedepique.general.Joueur;
@@ -13,7 +12,6 @@ import damedepique.ia.IA;
 
 /**
  * Cette classe contient toutes les méthodes de test de la classe IA.
- * 
  * @author Julien B.
  * @version 1.0
  */
@@ -63,8 +61,7 @@ public class TestIA {
 		
 	}
 	
-	
-  	/**
+	/**
 	 * Lancement des méthodes de test de la classe IA.
 	 * @param args Non utilisé.
 	 */

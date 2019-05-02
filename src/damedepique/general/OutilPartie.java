@@ -5,18 +5,15 @@
 
 package damedepique.general;
 
-import java.util.ArrayList;
-
 /**
+ * <p>
+ *   
+ * </p>
  * 
  * @author Julien B.
  * @version 1.0
  */
 public class OutilPartie {
-
-	/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
-	 * * * * * * * * * * OUTILS PARTIE / MANCHE / TOUR * * * * * * * * * * *
-	 * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 	
 	/**
 	 * Détermine si une partie est finie ou non.
@@ -74,164 +71,6 @@ public class OutilPartie {
 		}
 		
 		return false;    // Retourne faux si le plateau n'a pas quatre cartes.
-	}
-	
-	
-	/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
-	 * * * * * * * * * * * * * * OUTILS CARTES * * * * * * * * * * * * * * *
-	 * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
-	
-	/**
-	 * 
-	 * @param joueur
-	 * @param symbole
-	 * @param valeur
-	 * @return null si la carte n'est pas dans la main du joueur.
-	 */
-	public static Carte recuperationCarte(Joueur joueur, Symbole symbole, 
-			                                             Valeur valeur) {
-		
-		ArrayList<Carte> mainJoueur = joueur.getMain();
-		
-		for (int i = 0 ; i < mainJoueur.size() ; i++) {
-			if (carteEgale(mainJoueur.get(i), symbole, valeur)) {
-				return mainJoueur.get(i);
-			}
-		}
-		
-		return null;
-	}
-	
-	
-	/**
-	 * 
-	 * @param joueurs
-	 * @param symbole 
-	 * @param valeur 
-	 * @return null si il n'y a aucun joueur qui ne possède la carte 
-	 */
-	public static Joueur rechercherCarte(Joueur[] joueurs, Symbole symbole,
-			                                               Valeur valeur) {
-		
-		Joueur joueur = joueurs[0];
-		
-		ArrayList<Carte> mainJoueurCourant;
-		
-		for (int i = 1 ; i < joueurs.length ; i++) {
-			mainJoueurCourant = joueurs[i].getMain();
-			for (int j = 0 ; j < mainJoueurCourant.size() ; j++) {
-				if (carteEgale(mainJoueurCourant.get(j), symbole, valeur)) {
-					return joueurs[i];
-				}
-			}
-		}
-		
-		return joueur;
-	}
-	
-	
-	/**
-	 * 
-	 * @param joueur Le joueur à vérifier.
-	 * @param symboleDemande Le symbole demandé au début du tour.
-	 * @return La liste des cartes pouvant être jouées par le joueur.
-	 */
-	public static ArrayList<Carte> cartesPossibles(Joueur joueur,
-			                                       Symbole symboleDemande) {
-		
-		// Stocke la main du joueur passé en argument.
-		ArrayList<Carte> mainJoueur = joueur.getMain();
-		
-		// Stocke les cartes jouables que possède le joueur.
-		ArrayList<Carte> cartesJouables = new ArrayList<>();
-		
-		// Parcours des cartes dans la main du joueur passé en argument.
-		for (int i = 0 ; i < mainJoueur.size() ; i++) {
-			
-			/*
-			 * Recherche de toutes les cartes ayant un symbole équivalent
-			 * au symbole demandé en argument.
-			 */
-			if (mainJoueur.get(i).getSymbole().equals(symboleDemande)) {
-				cartesJouables.add(mainJoueur.get(i));
-			}
-		}
-		
-		/*
-		 * Si le joueur ne possède aucune carte ayant un symbole équivalent au 
-		 * symbole demandé alors il peut jouer toutes les cartes présentes dans 
-		 * sa main. 
-		 */
-		if (cartesJouables.isEmpty()) {
-			return mainJoueur;
-		}
-		
-		/* 
-		 * Retourne la liste des cartes jouables par le joueur selon le 
-		 * symbole demandé.
-		 */
-		return cartesJouables;
-	}
-	
-	
-	public static String afficherCartesPossibles(ArrayList<Carte> cartes) {
-		String listeCartes = "";
-		
-		for (Carte carte : cartes) {
-			listeCartes += "\n    => " + carte.toString();
-		}
-		
-		return listeCartes;
-	}
-	
-	/**
-	 * 
-	 * @param joueur 
-	 * @param symboleDemande 
-	 * @param carteJouee 
-	 * @return 
-	 */
-	public static boolean estCartePossible(Joueur joueur, 
-			                               Symbole symboleDemande, 
-			                               Carte carteJouee) {
-		
-		// Liste des cartes jouables par le joueur passé en argument.
-		ArrayList<Carte> cartesJouables = cartesPossibles(joueur, 
-				                                          symboleDemande);
-		
-		// Vérifie si la carte jouée est contenue dans la liste des cartes.
-		if (cartesJouables.contains(carteJouee)) {
-			return true;
-		}
-		
-		return false;
-	}
-	
-	
-	/**
-	 * 
-	 * @param aVerifier 
-	 * @param symbole 
-	 * @param valeur 
-	 * @return 
-	 */
-	public static boolean carteEgale(Carte aVerifier, Symbole symbole, 
-			                                          Valeur valeur) {
-		
-		if (aVerifier.getSymbole().equals(symbole) 
-			&& aVerifier.getValeur().equals(valeur)) {
-			
-			return true;
-		}
-		
-		return false;
-	}
-	
-	
-	/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
-	 * * * * * * * * * * * * * GESTION CLOCHE BOIS * * * * * * * * * * * * *
-	 * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
-	
-	
+	}	
 	
 }

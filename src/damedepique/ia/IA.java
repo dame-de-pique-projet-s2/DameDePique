@@ -5,12 +5,12 @@
 
 package damedepique.ia;
 
+import damedepique.general.Carte;
 import damedepique.general.Joueur;
-import java.util.ArrayList;
 
 /**
  * <p>
- * Cette classe sert à  gérer l'inteligence artificielle qui servira 
+ * Cette classe sert à  gérer l'inteligence artificielle qui servira 
  * d'adversaire au joueur humain.
  * </p>
  * <ul>
@@ -26,28 +26,28 @@ import java.util.ArrayList;
  *             dans l'ordre puis par la suite de maniÃ¨re à la faire gagner)
  *    </li>
  * </ul>
- *
- *
+ * 
  * @author Julien B.
  * @version 1.0
  */
 public class IA extends Joueur {
 
 	/**
-	 * CrÃ©ation d'une nouvelle IA avec les caractÃ©ristiques d'un joueur.
+	 * Création d'une nouvelle IA avec les caractéristiques d'un joueur.
 	 * @see damedepique.general.Joueur
 	 */
 	public IA() {
 		super();
 	}
 	
-	 /**
-     * mÃ©thode qui choisi 3 cartes Ã  echanger au debut des manches
+	
+	/**
+     * méthode qui choisi 3 cartes à échanger au début des manches
 	 * Les 3 cartes sont (pour le moment) les 3 premieres de la main
 	 * 
-	 * @return echange[] un tableau de 3 elements contenants des cartes
+	 * @return Un tableau de 3 elements contenants des cartes
      */
-	 public Carte[] carteEchange() {
+	public Carte[] carteEchange() {
 		// Création d'un tableau d'objets carte pour stocker les cartes 
 		// choisies pour l'échange
         Carte[] echange = new  Carte[3];
@@ -56,6 +56,7 @@ public class IA extends Joueur {
         for (int i = 0; i<3; i++){
             echange[i]= getMain().get(i);
         }
+        
         // On renvoie le tableau contenant les cartes que l'IA va echanger
         return echange;
 
@@ -63,12 +64,12 @@ public class IA extends Joueur {
 		
     
 	
-	 // TODO à finir la deuxieme methode
+	 // TODO à finir la deuxième méthode
 //	/**
-//	 * mÃ©thode qui joue une carte
+//	 * méthode qui joue une carte
 //	 * La carte est (pour le moment) la premiere possible de la main
 //	 *
-//	 * @return aJouer la carte qui vas Ãªtre jouÃ©e
+//	 * @return aJouer la carte qui vas être jouée
 //	 */
 //	public void jouerCarte() {
 //		Carte aJouer = new Carte;
@@ -77,4 +78,3 @@ public class IA extends Joueur {
 //	}
 	
 }
-

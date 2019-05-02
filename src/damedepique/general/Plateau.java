@@ -59,8 +59,24 @@ public class Plateau {
 	}
 	
 	
+	/**
+	 * Récupère le joueur perdant d'un tour. Le joueur perdant est le joueur 
+	 * ayant posé la plus grosse carte sur le plateau de jeu.
+	 * @return Le joueur ayant perdu le tour.
+	 */
+	public Joueur getPerdant() {
+		
+		
+		/* 
+		 * Si le symbole joué durant le tour ne correspond pas au symbole 
+		 * annoncé au début du tour alors le joueur ne peut pas perdre le tour.
+		 */
+		
+		return null;
+	}
+	
+	
 	// TODO Faire le comptage des points à chaque tour.
-	// TODO Faire la determination du perdant, le joueur qui a joué la plus grosse carte.
 	
 	
 	@Override

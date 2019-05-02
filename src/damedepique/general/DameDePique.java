@@ -5,6 +5,7 @@
 
 package damedepique.general;
 
+import static damedepique.general.OutilCarte.*;
 import static damedepique.general.OutilPartie.*;
 import damedepique.ia.IA;
 
@@ -23,11 +24,17 @@ public class DameDePique {
 	 */
 	public static void main(String[] args) {
 		
+		// Création d'un paquet de 52 cartes à jouer.
 		Paquet paquet = new Paquet();
-		paquet.creer();
+		paquet.creer();    // Initialisation du paquet de cartes pour jouer.
 		
+		/* 
+		 * Création d'un plateau pour poser les cartes jouées par les 
+		 * joueurs durant les tours.
+		 */
 		Plateau plateau = new Plateau();
 		
+		// Création d'un groupe de quatre joueurs.
 		Joueur[] joueurs = new Joueur[NB_JOUEURS];
 		joueurs[0] = new Humain();    // Création d'un joueur humain.
 		for (int i = 1 ; i < NB_JOUEURS ; i++) {
@@ -36,46 +43,31 @@ public class DameDePique {
 		
 		// L'indice correspond à la place du joueur.
 		int[] pointsManche = new int[NB_JOUEURS];
-		
-		// A chaque nouvelle 
+		 
 		int numeroManche = 0;
+		int numeroTour = 0;
 		
 		while (!finPartie(joueurs)) {
 			paquet.melanger();
 			paquet.distribuer(joueurs);
 			
-			// TODO Faire le tri qu'une fois. Condition if numManche == 0
-			for (int k = 0 ; k < NB_JOUEURS ; k++) {
-				joueurs[k].trierMain();
+			if (numeroManche == 0) {
+				trierMains(joueurs);
 			}
 			
 			while (!finManche(joueurs[0])) {
-				if (numeroManche != 0) {
-					
-					// Faire un système de récupération du tour précédent.
-					
-				} else {
-					
-					// Cherche le joueur ayant le deux de trèfle.
-					
+				if (numeroTour == 0) {
+					// TODO Échange des trois cartes.
+					trierMains(joueurs);
 				}
 				
-				// TODO Échange des trois cartes.
-				
-				// TODO Faire un autre tri qu'une fois. Condition if numTour == 0
-				
 				while (!finTour(plateau)) {
+					
 					// TODO Ne pas commencer par un coeur.
-					joueurs[0].jouerCarte();
-					joueurs[0].jouerCarte(Symbole.Trefle);
 					// TODO Faire attention avec la valeur quatre ne marche pas.
-					// System.out.println(plateau);
-					// System.out.println(joueurs[0]);
-					// Carte carte = joueurs[0].jouerCarte();
-					// plateau.ajouterCarte(carte);
-					// joueurs[0].retirerCarte(carte);
-					// System.out.println(joueurs[0]);
-					// System.out.println(plateau);
+					((Humain) joueurs[0]).jouerCarte(Symbole.Trefle);
+					
+					numeroTour++;
 				}
 				
 				// TODO Message de fin de tour + nom du perdant.
