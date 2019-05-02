@@ -80,11 +80,11 @@ public class OutilSaisie {
 		 * renvoie faux pour éviter une exception.
 		 * 
 		 * Si la longueur de la chaîne à vérifier n'est pas comprise entre 
-		 * 1 et 5 alors la méthode renvoie faux et cela évite de rentrer dans 
+		 * 2 et 6 alors la méthode renvoie faux et cela évite de rentrer dans 
 		 * la boucle pour ne trouver aucune occurrence.
 		 */
 		if (Objects.isNull(aVerifier)
-			|| 1 > aVerifier.length() || aVerifier.length() > 5) {
+			|| 2 > aVerifier.length() || aVerifier.length() > 6) {
 			
 			return false;
 		}

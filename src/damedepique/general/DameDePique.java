@@ -7,7 +7,6 @@ package damedepique.general;
 
 import static damedepique.general.OutilCarte.*;
 import static damedepique.general.OutilPartie.*;
-import damedepique.ia.IA;
 
 /**
  * 
@@ -38,7 +37,8 @@ public class DameDePique {
 		Joueur[] joueurs = new Joueur[NB_JOUEURS];
 		joueurs[0] = new Humain();    // Création d'un joueur humain.
 		for (int i = 1 ; i < NB_JOUEURS ; i++) {
-			joueurs[i] = new IA();    // Création de trois joueurs IA.
+			// TODO Mettre trois IA.
+			joueurs[i] = new Humain();    // Création de trois joueurs IA.
 		}
 		
 		// L'indice correspond à la place du joueur.
@@ -64,8 +64,31 @@ public class DameDePique {
 				while (!finTour(plateau)) {
 					
 					// TODO Ne pas commencer par un coeur.
-					// TODO Faire attention avec la valeur quatre ne marche pas.
-					((Humain) joueurs[0]).jouerCarte(Symbole.Trefle);
+					Carte carteJouee;
+					carteJouee = ((Humain) joueurs[0]).jouerCarte();
+					joueurs[0].retirerCarte(carteJouee);
+					plateau.ajouterCarte(carteJouee);
+					
+					System.out.println("\n\n\n\nVoici le plateau de jeu actuel : " + plateau + "\n\n\n\n");
+					
+					Symbole symboleDebut = plateau.getSymboleDebut();
+					
+					carteJouee = ((Humain) joueurs[1]).jouerCarte(symboleDebut);
+					joueurs[1].retirerCarte(carteJouee);
+					plateau.ajouterCarte(carteJouee);
+					System.out.println("\n\n\n\nVoici le plateau de jeu actuel : " + plateau + "\n\n\n\n");
+					carteJouee = ((Humain) joueurs[2]).jouerCarte(symboleDebut);
+					joueurs[2].retirerCarte(carteJouee);
+					plateau.ajouterCarte(carteJouee);
+					System.out.println("\n\n\n\nVoici le plateau de jeu actuel : " + plateau + "\n\n\n\n");
+					carteJouee = ((Humain) joueurs[3]).jouerCarte(symboleDebut);
+					joueurs[3].retirerCarte(carteJouee);
+					plateau.ajouterCarte(carteJouee);
+					System.out.println("\n\n\n\nVoici le plateau de jeu actuel : " + plateau + "\n\n\n\n");
+					
+					System.out.println(plateau.getPerdant(symboleDebut, joueurs));
+					
+					System.out.println("\n\n\n\nVoici le plateau de jeu actuel : " + plateau + "\n\n\n\n");
 					
 					numeroTour++;
 				}

@@ -60,19 +60,34 @@ public class Plateau {
 	
 	
 	/**
-	 * Récupère le joueur perdant d'un tour. Le joueur perdant est le joueur 
-	 * ayant posé la plus grosse carte sur le plateau de jeu.
-	 * @return Le joueur ayant perdu le tour.
+	 * Récupère l'indice du joueur perdant d'un tour. Le joueur perdant est 
+	 * le joueur ayant posé la plus grosse carte sur le plateau de jeu.
+	 * @param symboleDemande 
+	 * @param joueurs 
+	 * @return L'indice du joueur ayant perdu le tour.
 	 */
-	public Joueur getPerdant() {
+	public int getPerdant(Symbole symboleDemande, Joueur[] joueurs) {
 		
+		ArrayList<Carte> plateauCourant = this.cartes;
 		
 		/* 
 		 * Si le symbole joué durant le tour ne correspond pas au symbole 
 		 * annoncé au début du tour alors le joueur ne peut pas perdre le tour.
 		 */
+		for (int i = 0 ; i < this.cartes.size() ; i++) {
+			if (!plateauCourant.get(i).getSymbole().equals(symboleDemande)) {
+				plateauCourant.remove(plateauCourant.get(i));
+			} else {
+				// 2 - 3 - 6 - roi     / Oui - Oui - Oui
+				//if (this.cartes.get(i).getValeur().compareTo(this.cartes.get(i + 1).getValeur()) < 0) {
+					//System.out.println("Oui !");
+				//} else {
+					//System.out.println("Non !");
+				//}
+			}
+		}
 		
-		return null;
+		return 0;
 	}
 	
 	
