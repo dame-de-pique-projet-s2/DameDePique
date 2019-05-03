@@ -8,7 +8,6 @@ package damedepique.general;
 import static damedepique.general.OutilCarte.*;
 import static damedepique.general.OutilSaisie.*;
 
-import java.util.ArrayList;
 import java.util.Objects;
 
 /**
@@ -31,63 +30,88 @@ public class Humain extends Joueur {
 	
 	
 	/**
-	 * Demande au joueur humain d'entrer trois cartes à échanger lors de 
+	 * Demande à cet (this) Humain d'entrer trois cartes à échanger lors de 
 	 * l'échange des trois cartes entre les quatre joueurs en début de manche.
+	 * @return Un tableau contenant les trois cartes à échanger.
 	 */
-	public void choisirCartesAEchanger() {
-		// Vide les cartes à échanger de la manche précédente.
-		this.viderCartesAEchanger();
-		
-		Carte aEchanger;    // Une carte à échanger avec un autre joueur.
+	public Carte[] choisirCartesAEchanger() {	
+		// Initialise un tableau de trois éléments de type Carte.
+		Carte[] aEchanger = new Carte[3];
 		
 		// Demande trois fois de choisir une carte au joueur.
-		for (int i = 0 ; i < NB_CARTES_A_ECHANGER ; i++) {
-			aEchanger = this.jouerCarte();
+		for (int i = 0 ; i < aEchanger.length ; i++) {
+			// Demande une carte et la stocke dans la case courante.
+			aEchanger[i] = this.jouerCarte();
 			
-			// Retire la carte à échanger de la main du joueur.
-			this.retirerCarte(aEchanger);
-			
-			// Ajoute la carte à échanger dans la liste des cartes à échanger.
-			this.ajouterCarteAEchanger(aEchanger);
+			// Retire la carte sélectionnée de la main du joueur.
+			this.retirerCarte(aEchanger[i]);
 		}
+		
+		return aEchanger;    // Renvoie le tableau contenant les trois cartes.
 	}
 	
 	
-	// FIXME Factoriser le code des méthodes.
 	/**
-	 * ...
+	 * Demande à cet (this) Humain d'entrer une carte afin de la jouer.
+	 * Il n'a aucune restriction mis à part d'entrer une carte présente 
+	 * dans sa main.
 	 * @return La carte jouée par cet (this) Humain.
 	 */
 	public Carte jouerCarte() {
-		boolean nok;        // Indicateur de mauvaise carte choisie.
+		// Indicateur de mauvaise carte choisie, elle n'est pas dans la main.
+		boolean nok;
 		
 		Carte carte;        // Carte choisie par le joueur.
 		Symbole symbole;    // Symbole de la carte choisie par le joueur.
 		Valeur valeur;      // Valeur de la carte choisie par le joueur.
 		
-		System.out.println(this + "\n");
+		// Affichage les cartes présentes dans la main du joueur.
+		afficherCartes(this.getMain());
 		
 		do {
-			valeur = saisirValeur("Entrez la valeur d'une carte à jouer : ");
-			symbole = saisirSymbole("Entrez le symbole d'une carte à jouer : ");
+			// Demande à cet (this) Humain d'entrer la valeur d'une carte.
+			valeur = saisirValeur("Entrez la valeur d'une carte : ");
+			
+			// Demande à cet (this) Humain d'entrer le symbole d'une carte.
+			symbole = saisirSymbole("Entrez le symbole d'une carte : ");
+			
+			/*
+			 * Récupère la carte jouée dans la main du joueur à partir du 
+			 * symbole et de la valeur donnés.
+			 */
 			carte = recuperationCarte(this, symbole, valeur);
 			
+			/*
+			 * Si la carte correspondant au symbole et à la valeur joués 
+			 * précédemment n'est pas présente dans la main du joueur alors la 
+			 * valeur renvoyée par l'instruction antérieure est null. 
+			 * L'indicateur de mauvaise carte choisie passe donc à vrai pour 
+			 * que la demande soit renouvelée.
+			 */
 			nok = Objects.isNull(carte);
 			
+			// Affichage d'un message d'indication au joueur.
 			if (nok) {
 				System.out.println("\nCette carte n'est pas dans votre main.\n"
 						           + "Veuillez choisir une carte disponible "
-						           + "dans votre main de jeu.\n" + this + "\n");
+						           + "dans votre main de jeu.\n"); 
+				
+				// Affichage les cartes présentes dans la main du joueur.
+				afficherCartes(this.getMain());
 			}
 		} while (nok);
 		
-		return carte;
+		return carte;    // Retourne la carte jouée par le joueur.
 	}
 	
 	
 	/**
-	 * ...
-	 * @param symboleDemande
+	 * Demande à cet (this) Humain d'entrer une carte afin de la jouer.
+	 * Le joueur doit joué une carte possédant le même symbole mentionné en 
+	 * argument sinon la demande est renouvelé. Si le joueur ne possède pas de 
+	 * carte ayant le même symbole que celui mentionné alors, le joueur peut 
+	 * jouer n'importe quelle carte.
+	 * @param symboleDemande Le symbole demandé.
 	 * @return La carte jouée par cet (this) Humain.
 	 */
 	public Carte jouerCarte(Symbole symboleDemande) {
@@ -97,33 +121,48 @@ public class Humain extends Joueur {
 		Symbole symbole;    // Symbole de la carte choisie par le joueur.
 		Valeur valeur;      // Valeur de la carte choisie par le joueur.
 		
-		System.out.println(this);
+		// Affichage les cartes présentes dans la main du joueur.
+		afficherCartes(this.getMain());
 		
-		ArrayList<Carte> cartesPossibles;
-		cartesPossibles = cartesPossibles(this, symboleDemande);
-		System.out.println("\nCarte(s) que vous (" +  this.getPseudo() +") "
-				           + "pouvez jouer :");
-				           
-		afficherCartes(cartesPossibles);
+		// Affichage les cartes possibles pour jouer dans la main du jouer.
+		System.out.println("\nCarte(s) que vous pouvez jouer : ");		           
+		afficherCartes(cartesPossibles(this, symboleDemande));
 		
 		do {
-			valeur = saisirValeur("Entrez la valeur d'une carte à jouer : ");
-			symbole = saisirSymbole("Entrez le symbole d'une carte à jouer : ");
+			// Demande à cet (this) Humain d'entrer la valeur d'une carte.
+			valeur = saisirValeur("Entrez la valeur d'une carte : ");
+						
+			// Demande à cet (this) Humain d'entrer le symbole d'une carte.
+			symbole = saisirSymbole("Entrez le symbole d'une carte : ");
+			
+			/*
+			 * Récupère la carte jouée dans la main du joueur à partir du 
+			 * symbole et de la valeur donnés.
+			 */
 			carte = recuperationCarte(this, symbole, valeur);
 			
+			/*
+			 * Si la carte correspondant au symbole et à la valeur joués 
+			 * précédemment n'est pas présente dans la main du joueur ou n'est 
+			 * pas dans la liste des cartes possibles alors l'indicateur de 
+			 * mauvaise carte choisie passe à vrai pour que la demande soit 
+			 * renouvelée.
+			 */
 			nok = Objects.isNull(carte) 
 			      || !estCartePossible(this, symboleDemande, carte);
 			
+			// Affichage d'un message d'indication au joueur.
 			if (nok) {
 				System.out.println("\nVous ne pouvez pas jouer cette carte.\n"
 						           + "Voici les cartes que vous pouvez jouer "
-						           + "pour ce tour.");
+						           + "pour ce tour.\n");
 				
-				afficherCartes(cartesPossibles);
+				// Affichage les cartes possibles pour jouer.
+				afficherCartes(cartesPossibles(this, symboleDemande));
 			}
 		} while (nok);
 		
-		return carte;
+		return carte;    // Retourne la carte jouée par le joueur.
 	}
 	
 	
@@ -145,6 +184,7 @@ public class Humain extends Joueur {
 			aJouer = recuperationCarte(this, Symbole.Trefle, Valeur.Deux);
 			nok = !estEgale(aJouer, symbole, valeur);
 			
+			// TODO Faire un message plus explicite.
 			if (nok) {
 				System.out.println("\nIl faut jouer le " 
 			                       + aJouer.toString().toLowerCase() + "\n");

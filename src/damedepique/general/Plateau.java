@@ -5,6 +5,8 @@
 
 package damedepique.general;
 
+import static damedepique.general.OutilCarte.*;
+
 import java.util.ArrayList;
 
 /**
@@ -62,36 +64,50 @@ public class Plateau {
 	/**
 	 * Récupère l'indice du joueur perdant d'un tour. Le joueur perdant est 
 	 * le joueur ayant posé la plus grosse carte sur le plateau de jeu.
-	 * @param symboleDemande 
-	 * @param joueurs 
+	 * @param joueurs Les joueurs de la partie.
 	 * @return L'indice du joueur ayant perdu le tour.
 	 */
-	public int getPerdant(Symbole symboleDemande, Joueur[] joueurs) {
-		
+	public int getPerdant(Joueur[] joueurs) {
+		// Copie du plateau courant pour ne pas changer son état.
 		ArrayList<Carte> plateauCourant = this.cartes;
 		
+		// Stocke le symbole demandé au début du tour.
+		Symbole symboleDemande = this.getSymboleDebut();
+		
+		// Stocke la valeur de la carte la plus grande.
+		Valeur valeur;
+		
 		/* 
-		 * Si le symbole joué durant le tour ne correspond pas au symbole 
-		 * annoncé au début du tour alors le joueur ne peut pas perdre le tour.
+		 * Parcours des cartes du plateau pour vérifier quelles ont bien toutes 
+		 * le même symbole. Si une ou plusieurs n'ont pas le même symbole alors 
+		 * elles sont supprimées de la copie du plateau.
 		 */
-		for (int i = 0 ; i < this.cartes.size() ; i++) {
+		for (int i = 0 ; i < joueurs.length ; i++) {
+			
+			/* 
+			 * Vérifie si le symbole de la carte courante est équivalent à 
+			 * celui demandé au début du tour.
+			 */
 			if (!plateauCourant.get(i).getSymbole().equals(symboleDemande)) {
+				
+				// Retire s'ils ne sont pas équivalent.
 				plateauCourant.remove(plateauCourant.get(i));
-			} else {
-				// 2 - 3 - 6 - roi     / Oui - Oui - Oui
-				//if (this.cartes.get(i).getValeur().compareTo(this.cartes.get(i + 1).getValeur()) < 0) {
-					//System.out.println("Oui !");
-				//} else {
-					//System.out.println("Non !");
-				//}
 			}
 		}
 		
-		return 0;
+		// Tri les cartes restantes sur le plateau dans l'ordre croissant.
+		plateauCourant.sort(Carte.ordreCroissant);
+		
+		// Récupère la valeur de la dernière carte du plateau (plus grande).
+		valeur = plateauCourant.get(plateauCourant.size() - 1).getValeur();
+		
+		// Retourne l'indice du joueur ayant la carte la plus grande.
+		return rechercherCarte(joueurs, symboleDemande, valeur);
 	}
 	
 	
 	// TODO Faire le comptage des points à chaque tour.
+	// lejoueur.retirerCarte(carte);
 	
 	
 	@Override

@@ -7,6 +7,8 @@ package damedepique.general;
 
 import java.util.ArrayList;
 
+import damedepique.ia.IA;
+
 /**
  * <p>
  *   
@@ -199,18 +201,22 @@ public class OutilCarte {
 	
 	
 	/**
-	 * @param joueurs 
-	 * 
+	 * Échange des cartes choisies par les joueurs entre eux.
+	 * Dans ce méthode, l'échange se fait vers la gauche.
+	 * @param joueurs Les joueurs de la partie.
 	 */
 	public static void echangeGauche(Joueur[] joueurs) {
-		// joueurs[0] -> joueurs[1]
-		joueurs[1].ajouterCartes(joueurs[0].getCartesAEchanger());
-		// joueurs[1] -> joueurs[2]
-		joueurs[2].ajouterCartes(joueurs[1].getCartesAEchanger());
-		// joueurs[2] -> joueurs[3]
-		joueurs[3].ajouterCartes(joueurs[2].getCartesAEchanger());
-		// joueurs[3] -> joueurs[0]
-		joueurs[0].ajouterCartes(joueurs[3].getCartesAEchanger());
+		Carte[] cartesJ0 = ((Humain) joueurs[0]).choisirCartesAEchanger();
+		Carte[] cartesJ1 = ((IA) joueurs[1]).choisirCartesAEchanger();
+		Carte[] cartesJ2 = ((IA) joueurs[2]).choisirCartesAEchanger();
+		Carte[] cartesJ3 = ((IA) joueurs[3]).choisirCartesAEchanger();
+		
+		for (int i = 0 ; i < cartesJ0.length ; i++) {
+			joueurs[1].ajouterCarte(cartesJ0[i]);
+			joueurs[2].ajouterCarte(cartesJ1[i]);
+			joueurs[3].ajouterCarte(cartesJ2[i]);
+			joueurs[0].ajouterCarte(cartesJ3[i]);
+		}
 	}
 	
 	
@@ -219,14 +225,17 @@ public class OutilCarte {
 	 * 
 	 */
 	public static void echangeDroit(Joueur[] joueurs) {
-		// joueurs[0] -> joueurs[3]
-		joueurs[3].ajouterCartes(joueurs[0].getCartesAEchanger());
-		// joueurs[3] -> joueurs[2]
-		joueurs[2].ajouterCartes(joueurs[3].getCartesAEchanger());
-		// joueurs[2] -> joueurs[1]
-		joueurs[1].ajouterCartes(joueurs[2].getCartesAEchanger());
-		// joueurs[1] -> joueurs[0]
-		joueurs[0].ajouterCartes(joueurs[1].getCartesAEchanger());
+		Carte[] cartesJ0 = ((Humain) joueurs[0]).choisirCartesAEchanger();
+		Carte[] cartesJ1 = ((IA) joueurs[1]).choisirCartesAEchanger();
+		Carte[] cartesJ2 = ((IA) joueurs[2]).choisirCartesAEchanger();
+		Carte[] cartesJ3 = ((IA) joueurs[3]).choisirCartesAEchanger();
+		
+		for (int i = 0 ; i < cartesJ0.length ; i++) {
+			joueurs[3].ajouterCarte(cartesJ0[i]);
+			joueurs[2].ajouterCarte(cartesJ3[i]);
+			joueurs[1].ajouterCarte(cartesJ2[i]);
+			joueurs[0].ajouterCarte(cartesJ1[i]);
+		}
 	}
 	
 	
@@ -235,14 +244,17 @@ public class OutilCarte {
 	 * 
 	 */
 	public static void echangeFace(Joueur[] joueurs) {
-		// joueurs[0] -> joueurs[2]
-		joueurs[2].ajouterCartes(joueurs[0].getCartesAEchanger());
-		// joueurs[2] -> joueurs[0]
-		joueurs[0].ajouterCartes(joueurs[2].getCartesAEchanger());
-		// joueurs[1] -> joueurs[3]
-		joueurs[3].ajouterCartes(joueurs[1].getCartesAEchanger());
-		// joueurs[3] -> joueurs[1]
-		joueurs[1].ajouterCartes(joueurs[3].getCartesAEchanger());
+		Carte[] cartesJ0 = ((Humain) joueurs[0]).choisirCartesAEchanger();
+		Carte[] cartesJ1 = ((IA) joueurs[1]).choisirCartesAEchanger();
+		Carte[] cartesJ2 = ((IA) joueurs[2]).choisirCartesAEchanger();
+		Carte[] cartesJ3 = ((IA) joueurs[3]).choisirCartesAEchanger();
+		
+		for (int i = 0 ; i < cartesJ0.length ; i++) {
+			joueurs[2].ajouterCarte(cartesJ0[i]);
+			joueurs[0].ajouterCarte(cartesJ2[i]);
+			joueurs[1].ajouterCarte(cartesJ3[i]);
+			joueurs[3].ajouterCarte(cartesJ1[i]);
+		}
 	}
 	
 	
@@ -252,12 +264,22 @@ public class OutilCarte {
 	 * @param noManche 
 	 */
 	public static void echangerCartes(Joueur[] joueurs, int noManche) {
+		System.out.println("Début de l'échange des cartes !");
+		
 		if (noManche == 0) {
 			echangeGauche(joueurs);
+			System.out.println("L'échange des cartes est terminé !");
+			trierMains(joueurs);
 		} else if (noManche == 1) {
 			echangeDroit(joueurs);
+			System.out.println("L'échange des cartes est terminé !");
+			trierMains(joueurs);
 		} else if (noManche == 2) {
 			echangeFace(joueurs);
+			System.out.println("L'échange des cartes est terminé !");
+			trierMains(joueurs);
+		} else {
+			System.out.println("Il n'y a pas d'échange de cartes ce tour !");
 		}
 	}
 	

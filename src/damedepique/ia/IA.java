@@ -49,18 +49,19 @@ public class IA extends Joueur {
 	/**
      * méthode qui choisi 3 cartes à échanger au début des manches
 	 * Les 3 cartes sont (pour le moment) les 3 premieres de la main
+	 * @return .
 	 * 
      */
-	public void choisirCartesAEchanger() {
-		this.viderCartesAEchanger();
-		
-		Carte aEchanger;
+	public Carte[] choisirCartesAEchanger() {
+		Carte[] aEchanger = new Carte[3];
 
 		for (int i = 0 ; i < 3 ; i++) {
-			aEchanger = this.jouerCarte();
-			this.retirerCarte(aEchanger);
-			this.ajouterCarteAEchanger(aEchanger);
+			aEchanger[i] = this.jouerCarte();
+			
+			this.retirerCarte(aEchanger[i]);
 		}
+		
+		return aEchanger;
     }
 	
 	
