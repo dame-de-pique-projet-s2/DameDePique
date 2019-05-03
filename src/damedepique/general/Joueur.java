@@ -21,6 +21,10 @@ import java.util.ArrayList;
  */
 public class Joueur {
 
+	/** Nombre de cartes à échanger en début de manche. */
+	public static final int NB_CARTES_A_ECHANGER = 3;
+	
+	
 	/** Pseudo de ce (this) Joueur. */
 	private Pseudo pseudo;
 	

@@ -8,6 +8,8 @@ package damedepique.general;
 import static damedepique.general.OutilCarte.*;
 import static damedepique.general.OutilPartie.*;
 
+import damedepique.ia.IA;
+
 /**
  * 
  * @author Julien B.
@@ -37,8 +39,7 @@ public class DameDePique {
 		Joueur[] joueurs = new Joueur[NB_JOUEURS];
 		joueurs[0] = new Humain();    // Création d'un joueur humain.
 		for (int i = 1 ; i < NB_JOUEURS ; i++) {
-			// TODO Mettre trois IA.
-			joueurs[i] = new Humain();    // Création de trois joueurs IA.
+			joueurs[i] = new IA();    // Création de trois joueurs IA.
 		}
 		
 		// L'indice correspond à la place du joueur.
@@ -64,9 +65,9 @@ public class DameDePique {
 				System.out.println("Début de l'échange des cartes !");
 				
 				((Humain) joueurs[0]).choisirCartesAEchanger();
-				((Humain) joueurs[1]).choisirCartesAEchanger();
-				((Humain) joueurs[2]).choisirCartesAEchanger();
-				((Humain) joueurs[3]).choisirCartesAEchanger();
+				((IA) joueurs[1]).choisirCartesAEchanger();
+				((IA) joueurs[2]).choisirCartesAEchanger();
+				((IA) joueurs[3]).choisirCartesAEchanger();
 				echangerCartes(joueurs, numeroManche);
 				
 				System.out.println("L'échange des cartes est terminé !");
@@ -80,7 +81,11 @@ public class DameDePique {
 				if (numeroTour == 0) {
 					premier = rechercherCarte(joueurs, Symbole.Trefle, Valeur.Deux);
 					System.out.println(joueurs[premier]);
-					carteJouee = ((Humain) joueurs[premier]).jouerDeuxTrefle();
+					if (joueurs[premier] instanceof Humain) {
+						carteJouee = ((Humain) joueurs[premier]).jouerDeuxTrefle();
+					} else {
+						carteJouee = ((IA) joueurs[premier]).jouerDeuxTrefle();
+					}
 					joueurs[premier].retirerCarte(carteJouee);
 					plateau.ajouterCarte(carteJouee);
 				} else {
@@ -94,10 +99,10 @@ public class DameDePique {
 					Symbole symboleDebut = plateau.getSymboleDebut();
 					
 					for (int i = 0 ; i < joueurs.length - 1 ; i++) {
+						System.out.println("\n\n\n\nVoici le plateau de jeu actuel : " + plateau + "\n\n\n\n");
 						carteJouee = ((Humain) joueurs[i]).jouerCarte(symboleDebut);
 						joueurs[i].retirerCarte(carteJouee);
 						plateau.ajouterCarte(carteJouee);
-						System.out.println("\n\n\n\nVoici le plateau de jeu actuel : " + plateau + "\n\n\n\n");
 					}
 					
 					premier = plateau.getPerdant(symboleDebut, joueurs);

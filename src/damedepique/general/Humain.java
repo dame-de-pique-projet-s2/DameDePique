@@ -31,16 +31,23 @@ public class Humain extends Joueur {
 	
 	
 	/**
-	 * 
+	 * Demande au joueur humain d'entrer trois cartes à échanger lors de 
+	 * l'échange des trois cartes entre les quatre joueurs en début de manche.
 	 */
 	public void choisirCartesAEchanger() {
+		// Vide les cartes à échanger de la manche précédente.
 		this.viderCartesAEchanger();
 		
-		Carte aEchanger;
+		Carte aEchanger;    // Une carte à échanger avec un autre joueur.
 		
-		for (int i = 0 ; i < 3 ; i++) {
+		// Demande trois fois de choisir une carte au joueur.
+		for (int i = 0 ; i < NB_CARTES_A_ECHANGER ; i++) {
 			aEchanger = this.jouerCarte();
+			
+			// Retire la carte à échanger de la main du joueur.
 			this.retirerCarte(aEchanger);
+			
+			// Ajoute la carte à échanger dans la liste des cartes à échanger.
 			this.ajouterCarteAEchanger(aEchanger);
 		}
 	}

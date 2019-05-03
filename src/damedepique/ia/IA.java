@@ -5,8 +5,13 @@
 
 package damedepique.ia;
 
+import java.util.ArrayList;
+
 import damedepique.general.Carte;
 import damedepique.general.Joueur;
+import damedepique.general.OutilCarte;
+import damedepique.general.Symbole;
+import damedepique.general.Valeur;
 
 /**
  * <p>
@@ -45,36 +50,53 @@ public class IA extends Joueur {
      * méthode qui choisi 3 cartes à échanger au début des manches
 	 * Les 3 cartes sont (pour le moment) les 3 premieres de la main
 	 * 
-	 * @return Un tableau de 3 elements contenants des cartes
      */
-	public Carte[] carteEchange() {
-		// Création d'un tableau d'objets carte pour stocker les cartes 
-		// choisies pour l'échange
-        Carte[] echange = new  Carte[3];
-  
-        // On donne au tableau les trois premieres cartes de la main triée
-        for (int i = 0; i<3; i++){
-            echange[i]= getMain().get(i);
-        }
-        
-        // On renvoie le tableau contenant les cartes que l'IA va echanger
-        return echange;
-
-    }
+	public void choisirCartesAEchanger() {
+		this.viderCartesAEchanger();
 		
-    
+		Carte aEchanger;
+
+		for (int i = 0 ; i < 3 ; i++) {
+			aEchanger = this.jouerCarte();
+			this.retirerCarte(aEchanger);
+			this.ajouterCarteAEchanger(aEchanger);
+		}
+    }
+	
 	
 	 // TODO à finir la deuxième méthode
-//	/**
-//	 * méthode qui joue une carte
-//	 * La carte est (pour le moment) la premiere possible de la main
-//	 *
-//	 * @return aJouer la carte qui vas être jouée
-//	 */
-//	public void jouerCarte() {
-//		Carte aJouer = new Carte;
-//		aJouer = cartesJouables.get(0);
-//		return aJouer		
-//	}
+	/**
+	 * méthode qui joue une carte
+	 * La carte est (pour le moment) la premiere possible de la main
+	 *
+	 * @return aJouer la carte qui vas être jouée
+	 */
+	public Carte jouerCarte() {
+		return this.getMain().get(0);
+	}
+	
+	
+	/**
+	 * 
+	 * @param symboleDemande 
+	 * @return .
+	 */
+	public Carte jouerCarte(Symbole symboleDemande) {
+		ArrayList<Carte> cartesPossibles;
+		
+		// Récupère les cartes possibles dans la main de l'IA
+		cartesPossibles = OutilCarte.cartesPossibles(this, symboleDemande);
+		
+		return cartesPossibles.get(0);
+	}
+	
+	
+	/**
+	 * Joue la carte deux de trèfle.
+	 * @return La carte deux de trèfle.
+	 */
+	public Carte jouerDeuxTrefle() {
+		return OutilCarte.recuperationCarte(this, Symbole.Trefle, Valeur.Deux);
+	}
 	
 }

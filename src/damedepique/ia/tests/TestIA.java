@@ -51,7 +51,7 @@ public class TestIA {
 	    // Création du tableau de carte qui contiendra les choix de l'I.A pour l'échange.
         Carte[] echange = new Carte[3];
         
-    	echange = ((IA) joueurs[0]).carteEchange();
+    	// echange = ((IA) joueurs[0]).carteEchange();
     	
     	// Affichage du résultat donné par la méthode
 	    System.out.println("Cartes à échanger : ");
