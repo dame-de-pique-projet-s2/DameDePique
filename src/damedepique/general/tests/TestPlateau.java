@@ -55,6 +55,7 @@ public class TestPlateau {
 		plateau.vider();
 	}
 	
+	// TODO : Methode de test pour les methodes de comptage des points
 	
 	/**
 	 * Lancement des méthodes de test de la classe Plateau.

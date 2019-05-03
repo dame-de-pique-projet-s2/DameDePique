@@ -26,7 +26,12 @@ public class Joueur {
 	
 	
 	/** Nombre de points de ce (this) Joueur. */
-	private int points;
+	private int pointsTour;
+	
+	/* ---------------------------------------------------
+	 * | Rajouter un attribut pour les points des manches |
+	 * ---------------------------------------------------
+	 */
 	
 	
 	/** Carte(s) dans la main de ce (this) Joueur. */
@@ -40,7 +45,8 @@ public class Joueur {
 	 */
 	public Joueur() {
 		this.affectationPseudo();    // Affecte un pseudo par défaut.
-		this.points = 0;
+		this.pointsTour = 0;
+		/* TODO : Rajouter les points manches */
 		this.main = new ArrayList<>();
 	}
 	
@@ -88,17 +94,20 @@ public class Joueur {
 	 * @return Le(s) point(s) du joueur.
 	 */
 	public int getPoints() {
-		return this.points;
+		return this.pointsTour;
 	}
 	
 	
 	/**
-	 * Ajoute des points à ce (this) Joueur.
+	 * Ajoute des points du tour à ce (this) Joueur.
 	 * @param aAjouter Le nombre de points à ajouter.
 	 */
 	public void ajouterPoints(int aAjouter) {
-		this.points += aAjouter;
+		this.pointsTour += aAjouter;
 	}
+	/* Todo : ajouter une methode pour reset les points du tour après les avoir 
+	 * ajoutés aux points des manches
+	 */
 	
 	
 	/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
@@ -152,7 +161,7 @@ public class Joueur {
 			listeCartes += "\n    => " + carte.toString();
 		}
 		
-		return this.pseudo.toString() + " (" + this.points + " points)" 
+		return this.pseudo.toString() + " (" + this.pointsTour + " points)" 
 		                              + listeCartes;
 	}
 	
