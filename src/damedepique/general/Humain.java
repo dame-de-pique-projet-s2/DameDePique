@@ -29,6 +29,23 @@ public class Humain extends Joueur {
 		super();
 	}
 	
+	
+	/**
+	 * 
+	 */
+	public void choisirCartesAEchanger() {
+		this.viderCartesAEchanger();
+		
+		Carte aEchanger;
+		
+		for (int i = 0 ; i < 3 ; i++) {
+			aEchanger = this.jouerCarte();
+			this.retirerCarte(aEchanger);
+			this.ajouterCarteAEchanger(aEchanger);
+		}
+	}
+	
+	
 	// FIXME Factoriser le code des méthodes.
 	/**
 	 * ...
@@ -100,6 +117,34 @@ public class Humain extends Joueur {
 		} while (nok);
 		
 		return carte;
+	}
+	
+	
+	/**
+	 * 
+	 * @return .
+	 */
+	public Carte jouerDeuxTrefle() {
+		boolean nok;
+		
+		Carte aJouer;
+		Symbole symbole;
+		Valeur valeur;
+		
+		do {
+			valeur = saisirValeur("Entrez la valeur d'une carte à jouer : ");
+			symbole = saisirSymbole("Entrez le symbole d'une carte à jouer : ");
+			
+			aJouer = recuperationCarte(this, Symbole.Trefle, Valeur.Deux);
+			nok = !estEgale(aJouer, symbole, valeur);
+			
+			if (nok) {
+				System.out.println("\nIl faut jouer le " 
+			                       + aJouer.toString().toLowerCase() + "\n");
+			}
+		} while (nok);
+		
+		return aJouer;
 	}
 	
 }

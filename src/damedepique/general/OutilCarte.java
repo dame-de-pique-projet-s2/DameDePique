@@ -53,17 +53,18 @@ public class OutilCarte {
 	
 	
 	/**
-	 * Recherche d'un joueur ayant une carte spécifique.
+	 * Recherche l'indice d'un joueur ayant une carte spécifique.
 	 * @param joueurs Les joueurs de la partie.
 	 * @param symbole Le symbole de la carte recherchée.
 	 * @param valeur La valeur de la carte recherchée.
-	 * @return Le joueur ayant la carte associée au symbole et à la valeur 
-	 *         spécifiés sinon la méthode renvoie la valeur null qui signifie 
-	 *         qu'aucun joueur de la partie ne possède cette carte (par exemple 
-	 *         si la carte ayant ce symbole et cette valeur a déjà été jouée).
+	 * @return L'indice du joueur ayant la carte associée au symbole et à la 
+	 *         valeur spécifiés sinon la méthode renvoie la valeur null qui 
+	 *         signifie qu'aucun joueur de la partie ne possède cette carte 
+	 *         (par exemple si la carte ayant ce symbole et cette valeur a déjà 
+	 *         été jouée).
 	 */
-	public static Joueur rechercherCarte(Joueur[] joueurs, Symbole symbole,
-			                                               Valeur valeur) {
+	public static int rechercherCarte(Joueur[] joueurs, Symbole symbole,
+			                                            Valeur valeur) {
 		
 		// Mémoire qui stocke les cartes dans la main du joueur courant.
 		ArrayList<Carte> mainJoueurCourant;
@@ -85,15 +86,16 @@ public class OutilCarte {
 				if (estEgale(mainJoueurCourant.get(j), symbole, valeur)) {
 					
 					/* 
-					 * Retourne le joueur possédant la carte comportant le même 
-					 * symbole et la même valeur spécifiés en argument.
+					 * Retourne l'indice du joueur possédant la carte 
+					 * comportant le même symbole et la même valeur spécifiés 
+					 * en argument.
 					 */
-					return joueurs[i];
+					return i;
 				}
 			}
 		}
 		
-		return null;    // Retourne null si aucune occurrence n'a été trouvé.
+		return -1;    // Retourne -1 si aucune occurrence n'a été trouvé.
 	}
 	
 	
@@ -193,6 +195,70 @@ public class OutilCarte {
 		}
 		
 		return false;    // Faux si aucune occurrence n'a été trouvée.
+	}
+	
+	
+	/**
+	 * @param joueurs 
+	 * 
+	 */
+	public static void echangeGauche(Joueur[] joueurs) {
+		// joueurs[0] -> joueurs[1]
+		joueurs[1].ajouterCartes(joueurs[0].getCartesAEchanger());
+		// joueurs[1] -> joueurs[2]
+		joueurs[2].ajouterCartes(joueurs[1].getCartesAEchanger());
+		// joueurs[2] -> joueurs[3]
+		joueurs[3].ajouterCartes(joueurs[2].getCartesAEchanger());
+		// joueurs[3] -> joueurs[0]
+		joueurs[0].ajouterCartes(joueurs[3].getCartesAEchanger());
+	}
+	
+	
+	/**
+	 * @param joueurs 
+	 * 
+	 */
+	public static void echangeDroit(Joueur[] joueurs) {
+		// joueurs[0] -> joueurs[3]
+		joueurs[3].ajouterCartes(joueurs[0].getCartesAEchanger());
+		// joueurs[3] -> joueurs[2]
+		joueurs[2].ajouterCartes(joueurs[3].getCartesAEchanger());
+		// joueurs[2] -> joueurs[1]
+		joueurs[1].ajouterCartes(joueurs[2].getCartesAEchanger());
+		// joueurs[1] -> joueurs[0]
+		joueurs[0].ajouterCartes(joueurs[1].getCartesAEchanger());
+	}
+	
+	
+	/**
+	 * @param joueurs 
+	 * 
+	 */
+	public static void echangeFace(Joueur[] joueurs) {
+		// joueurs[0] -> joueurs[2]
+		joueurs[2].ajouterCartes(joueurs[0].getCartesAEchanger());
+		// joueurs[2] -> joueurs[0]
+		joueurs[0].ajouterCartes(joueurs[2].getCartesAEchanger());
+		// joueurs[1] -> joueurs[3]
+		joueurs[3].ajouterCartes(joueurs[1].getCartesAEchanger());
+		// joueurs[3] -> joueurs[1]
+		joueurs[1].ajouterCartes(joueurs[3].getCartesAEchanger());
+	}
+	
+	
+	/**
+	 * 
+	 * @param joueurs 
+	 * @param noManche 
+	 */
+	public static void echangerCartes(Joueur[] joueurs, int noManche) {
+		if (noManche == 0) {
+			echangeGauche(joueurs);
+		} else if (noManche == 1) {
+			echangeDroit(joueurs);
+		} else if (noManche == 2) {
+			echangeFace(joueurs);
+		}
 	}
 	
 	

@@ -47,48 +47,62 @@ public class DameDePique {
 		int numeroManche = 0;
 		int numeroTour = 0;
 		
+		Carte carteJouee;
+		int premier;
+		
 		while (!finPartie(joueurs)) {
 			paquet.melanger();
 			paquet.distribuer(joueurs);
 			
-			if (numeroManche == 0) {
+			trierMains(joueurs);
+			
+			if (numeroManche == 4) {
+				numeroManche = 0;
+			}
+			
+			if (numeroManche < 3) {
+				System.out.println("Début de l'échange des cartes !");
+				
+				((Humain) joueurs[0]).choisirCartesAEchanger();
+				((Humain) joueurs[1]).choisirCartesAEchanger();
+				((Humain) joueurs[2]).choisirCartesAEchanger();
+				((Humain) joueurs[3]).choisirCartesAEchanger();
+				echangerCartes(joueurs, numeroManche);
+				
+				System.out.println("L'échange des cartes est terminé !");
+				
 				trierMains(joueurs);
+			} else {
+				System.out.println("Pas d'échange ce tour là !");
 			}
 			
 			while (!finManche(joueurs[0])) {
 				if (numeroTour == 0) {
-					// TODO Échange des trois cartes.
-					trierMains(joueurs);
+					premier = rechercherCarte(joueurs, Symbole.Trefle, Valeur.Deux);
+					System.out.println(joueurs[premier]);
+					carteJouee = ((Humain) joueurs[premier]).jouerDeuxTrefle();
+					joueurs[premier].retirerCarte(carteJouee);
+					plateau.ajouterCarte(carteJouee);
+				} else {
+					// Recherche du perdant durant le tour précédant.
 				}
 				
 				while (!finTour(plateau)) {
 					
 					// TODO Ne pas commencer par un coeur.
-					Carte carteJouee;
-					carteJouee = ((Humain) joueurs[0]).jouerCarte();
-					joueurs[0].retirerCarte(carteJouee);
-					plateau.ajouterCarte(carteJouee);
-					
-					System.out.println("\n\n\n\nVoici le plateau de jeu actuel : " + plateau + "\n\n\n\n");
 					
 					Symbole symboleDebut = plateau.getSymboleDebut();
 					
-					carteJouee = ((Humain) joueurs[1]).jouerCarte(symboleDebut);
-					joueurs[1].retirerCarte(carteJouee);
-					plateau.ajouterCarte(carteJouee);
-					System.out.println("\n\n\n\nVoici le plateau de jeu actuel : " + plateau + "\n\n\n\n");
-					carteJouee = ((Humain) joueurs[2]).jouerCarte(symboleDebut);
-					joueurs[2].retirerCarte(carteJouee);
-					plateau.ajouterCarte(carteJouee);
-					System.out.println("\n\n\n\nVoici le plateau de jeu actuel : " + plateau + "\n\n\n\n");
-					carteJouee = ((Humain) joueurs[3]).jouerCarte(symboleDebut);
-					joueurs[3].retirerCarte(carteJouee);
-					plateau.ajouterCarte(carteJouee);
-					System.out.println("\n\n\n\nVoici le plateau de jeu actuel : " + plateau + "\n\n\n\n");
+					for (int i = 0 ; i < joueurs.length - 1 ; i++) {
+						carteJouee = ((Humain) joueurs[i]).jouerCarte(symboleDebut);
+						joueurs[i].retirerCarte(carteJouee);
+						plateau.ajouterCarte(carteJouee);
+						System.out.println("\n\n\n\nVoici le plateau de jeu actuel : " + plateau + "\n\n\n\n");
+					}
 					
-					System.out.println(plateau.getPerdant(symboleDebut, joueurs));
+					premier = plateau.getPerdant(symboleDebut, joueurs);
 					
-					System.out.println("\n\n\n\nVoici le plateau de jeu actuel : " + plateau + "\n\n\n\n");
+					System.out.println(joueurs[premier] + " a perdu(e) le tour " + (numeroTour + 1) + "/13.");
 					
 					numeroTour++;
 				}

@@ -11,7 +11,7 @@ package damedepique.general.tests;
  * @version 1.0
  */
 public class TestHumain {
-
+	
 	/**
 	 * Lancement des méthodes de test de la classe Humain.
 	 * @param args Non utilisé.

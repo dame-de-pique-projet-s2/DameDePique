@@ -33,6 +33,10 @@ public class Joueur {
 	private ArrayList<Carte> main;
 	
 	
+	/** Stocke les trois cartes à échanger. */
+	private ArrayList<Carte> cartesAEchanger;
+	
+	
 	/**
 	 * Création d'un nouveau joueur auquel est associé un pseudonyme généré 
 	 * aléatoirement parmi une liste de pseudonymes prédéfinis, un nombre de 
@@ -40,8 +44,9 @@ public class Joueur {
 	 */
 	public Joueur() {
 		this.affectationPseudo();    // Affecte un pseudo par défaut.
-		this.main = new ArrayList<>();
 		this.points = 0;
+		this.main = new ArrayList<>();
+		this.cartesAEchanger = new ArrayList<>();
 	}
 	
 	
@@ -135,12 +140,36 @@ public class Joueur {
 	}
 	
 	
+	public void ajouterCartes(ArrayList<Carte> aAjouter) {
+		this.main.addAll(aAjouter);
+	}
+	
+	
 	/**
 	 * Retire une carte de la main de ce (this) Joueur.
 	 * @param aRetirer La carte à retirer.
 	 */
 	public void retirerCarte(Carte aRetirer) {
 		this.main.remove(aRetirer);
+	}
+	
+	
+	/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+	 * * * * * * * * * * * * * * PARTIE ECHANGES * * * * * * * * * * * * * *
+	 * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
+	
+	public ArrayList<Carte> getCartesAEchanger() {
+		return this.cartesAEchanger;
+	}
+	
+	
+	public void ajouterCarteAEchanger(Carte aAjouter) {
+		this.cartesAEchanger.add(aAjouter);
+	}
+	
+	
+	public void viderCartesAEchanger() {
+		this.cartesAEchanger.clear();
 	}
 	
 	
