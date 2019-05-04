@@ -20,7 +20,8 @@ public class DameDePique {
 	private static final int NB_JOUEURS = 4;
 	
 	/**
-	 * Algorithme de déroulement d'une partie du jeu de la dame de pique
+	 * Programme regroupant les algorithmes nécessaires au déroulement 
+	 * d'une partie du jeu de la dame de pique
 	 * @param args inutilisé.
 	 */
 	public static void main(String[] args) {
