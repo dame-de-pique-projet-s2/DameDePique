@@ -9,19 +9,10 @@ import java.util.Comparator;
 
 /**
  * <p>
- *   Cette classe contient tous les éléments qui caractérisent une carte pour 
- *   jouer au jeu de la dame de pique.
+ *   Cette classe contient tous les éléments qui caractérisent une carte et ses
+ *   spécificités en concordances avec les règles du jeu de la dame de pique
  * </p>
- * <ul>
- *   <li>
- *     
- *   </li>
- *   <li>
- *     
- *   </li>
- * </ul>
- * 
- * @author Julien B.
+ * @author Loïc B. Julien B. Margaux B. Justine R. 
  * @version 1.0
  */
 public class Carte {
@@ -35,10 +26,9 @@ public class Carte {
 	
 	
 	/**
-	 * Création d'une nouvelle carte comportant un symbole valide 
-	 * et une valeur valide.
-	 * @param symbole Symbole pour la carte à créer.
-	 * @param valeur Valeur pour la carte à créer.
+	 * Création d'une nouvelle carte composé de son symbole et de sa valeur.
+	 * @param symbole le symbole de la carte à créer.
+	 * @param valeur la valeur de la carte à créer.
 	 */
 	public Carte(Symbole symbole, Valeur valeur) {
 		this.symbole = symbole;
@@ -48,7 +38,7 @@ public class Carte {
 	
 	/**
 	 * Récupère le symbole de cette (this) Carte.
-	 * @return Le symbole de la carte.
+	 * @return Le symbole de la carte courante.
 	 */
 	public Symbole getSymbole() {
 		return this.symbole;
@@ -57,7 +47,7 @@ public class Carte {
 	
 	/**
 	 * Récupère la valeur de cette (this) Carte.
-	 * @return La valeur de la carte.
+	 * @return La valeur de la carte courante.
 	 */
 	public Valeur getValeur() {
 		return this.valeur;
@@ -73,14 +63,15 @@ public class Carte {
 	
 	/**
 	 * Création d'un comparateur pour trier les cartes dans un ordre croissant 
-	 * suivant la position des objets des énumérations Symbole et Valeur.
+	 * suivant l'ordre d'écriture Symbole et Valeur dans leurs interfaces 
+	 * enum respectives.
 	 * @see damedepique.general.Symbole
 	 * @see damedepique.general.Valeur
 	 */
 	public static Comparator<Carte> ordreCroissant = new Comparator<>() {
 		
 		/**
-		 * Compare les deux arguments pour les ordonner.
+		 * Compare deux cartes pour les ordonner dans l'ordre croissant.
 		 * @param carte1 La carte à comparer avec la seconde carte.
 		 * @param carte2 La carte à comparer avec la première carte.
 		 * @return Renvoie un entier négatif (-1) ou positif (1) si le premier 
@@ -103,18 +94,20 @@ public class Carte {
 			Valeur carte2Valeur = carte2.getValeur();
 			
 			/*
-			 * Compare cet objet (carte1Symbole) avec l'objet spécifié pour la 
-			 * commande (carte2Symbole). Retourne un entier négatif, nul ou 
-			 * positif si cet objet est inférieur, égal ou supérieur à l'objet 
-			 * spécifié. 
-			 */
+			 * Compare le symbole de la première carte avec celui de la deuxième
+			 * suivant leur ordre dans l'interface enum Symbole. 
+			 * Retourne : -1 si le symbole est située avant, 
+			 *             0 si les deux symbole sont les mêmes,
+			 *             1 si le symbole est située après.
+			 */ 
 			int symboleDiff = carte1Symbole.compareTo(carte2Symbole);
 			
 			/*
-			 * Compare cet objet (carte1Valeur) avec l'objet spécifié pour la 
-			 * commande (carte2Valeur). Retourne un entier négatif, nul ou 
-			 * positif si cet objet est inférieur, égal ou supérieur à l'objet 
-			 * spécifié.
+			 * Compare la valeur de la première carte avec celui de la deuxième
+			 * suivant leur ordre dans l'interface enum Valeur. 
+			 * Retourne : -1 si la valeur est située avant, 
+			 *             0 si les deux symbole sont les mêmes,
+			 *             1 si le symbole est située après.
 			 */
 			int valeurDiff = carte1Valeur.compareTo(carte2Valeur);
 			

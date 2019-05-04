@@ -10,8 +10,8 @@ import static damedepique.general.OutilCarte.*;
 import java.util.ArrayList;
 
 /**
- * TODO Faire la description de la classe Plateau.
- * @author Julien B.
+ * Création d'un plateau de jeu virtuel pour jouer à la dame de pique.
+ * @author Loïc B. Julien B. Margaux B. Justine R.
  * @version 1.0
  */
 public class Plateau {
@@ -62,7 +62,7 @@ public class Plateau {
 	
 	
 	/**
-	 * Récupère l'indice du joueur perdant d'un tour. Le joueur perdant est 
+	 * Récupère l'indice du joueur perdant du tour. Le joueur perdant est 
 	 * le joueur ayant posé la plus grosse carte sur le plateau de jeu.
 	 * @param joueurs Les joueurs de la partie.
 	 * @return L'indice du joueur ayant perdu le tour.
@@ -106,55 +106,58 @@ public class Plateau {
 	}
 	
 	
-	/*----------------------------------------------
-	 * Méthodes de Comptage des points  
-	 * ---------------------------------------------
+	/* 
+	 * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+	 * * * * * * * * * * Méthodes de Comptage des points * * * * * * * * * * * *  
+	 * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 	 */
 	
+	// TODO : à améliorer
+	
 	/**
-	 * Cette methode retourne un boolean egal a vrai si des coeur sont presents
-	 * sur le plateau à la fin d'un tour.
-	 *   
-	 * @return avecCoeur un booleen exprimant la presence de coeurs sur le 
+	 * Cette méthode retourne un boolean égal a vrai si des cartes coeurs sont 
+	 * presents sur le plateau à la fin d'un tour.
+	 * @return avecCoeur un booléen exprimant la presence de carte coeurs sur le 
 	 *                   plateau
 	 */
 	public boolean avecCoeur() {
-		// On récupère les cartes sur le plateau dans une liste plateauCourant
+		/* On récupère les cartes sur le plateau dans une liste plateauCourant */
 		ArrayList<Carte> plateauCourant = this.cartes;
 		
-		// On initialise à faux le booleen indiquant la presence de coeur 
-		// sur le plateau 
+		/* On initialise à faux le booléen indiquant la presence de coeur sur le plateau */ 
 		boolean avecCoeur = false;
 		
-		// On teste chaque carte du plateau, si on trouve un coeur 
-		// alors le booleen passe a vrai et la boucle s'arrête
+		/*
+		 *  On teste chaque carte du plateau, si on trouve un coeur 
+		 *  alors le booleen passe a vrai et la boucle s'arrête
+		 */
 		for (int i = 0 ; i < this.cartes.size() || avecCoeur == false ; i++) {
 			if (plateauCourant.get(i).getSymbole().equals(Symbole.Coeur)) {
 				avecCoeur = true;
 			}
 		}
-		
-		// On retourne alors le booleen 
+
 		return avecCoeur;
 	}
 
 	/**
-	 * Cette methode retourne un booleen egal à vrai si la dame de pique est
-	 * presente sur le plateau a la fin du tour.
+	 * Cette méthode retourne un booléen égal à vrai si la dame de pique est
+	 * présente sur le plateau a la fin du tour.
 	 * 
-	 * @return avecDame un booleen exprimant la presence de la dame de pique sur 
+	 * @return avecDame un booléen exprimant la presence de la dame de pique sur 
 	 *                  sur le plateau
 	 */
 	public boolean avecDame() {
-		// On récupère les cartes sur le plateau dans une liste plateauCourant
+		/* On récupère les cartes sur le plateau dans une liste plateauCourant */
 		ArrayList<Carte> plateauCourant = this.cartes;
 		
-		// On initialise à faux le booleen indiquant la presence de la dame
-		// de pique sur le plateau 
+		/* On initialise à faux le booleen indiquant la presence de la dame de pique sur le plateau */ 
 		boolean avecDame = false;
 		
-		// On teste chaque carte du plateau, si on trouve la dame de pique 
-	    // alors le booleen passe a vrai et la boucle s'arrête.
+		/* 
+		 * On teste chaque carte du plateau, si on trouve la dame de pique 
+		 *  alors le booleen passe a vrai et la boucle s'arrête.
+		 */
 		for (int i = 0 ; i < this.cartes.size() ; i++) {
 			if ((plateauCourant.get(i).getSymbole().equals(Symbole.Pique) &&
 					plateauCourant.get(i).getValeur().equals(Valeur.Dame)) || 
@@ -162,84 +165,89 @@ public class Plateau {
 				avecDame = true;
 			}
 		}
-		// On retourne alors le booleen
+		
 		return avecDame;
 	}
 	
 	/**
-	 * Cette methode calcule le nombre de points à ajouter au joueur qui perds 
+	 * Cette méthode calcule le nombre de points à ajouter au joueur qui perds 
 	 * le tour. 
 	 * Elle teste tout d'abbord la presence de la dame de pique sur le plateau
-	 * avec la methode avecDame, ensuite elle teste la presence de coeur sur
+	 * avec la méthode avecDame, ensuite elle teste la presence de coeur sur
 	 * le plateau.
 	 * Si la dame de pique est sur le plateau, elle rajoute 13 points à la valeur
 	 * renvoyée.
 	 * Si il y a des coeur sur le plateau alors elle les compte puis elle rajoute à
 	 * la valeur retournée 1 point pour chaque coeur present.
 	 *  
-	 * @return aAjouter, un int representant le nombre de point a ajouter 
+	 * @return aAjouter, un entier représentant le nombre de point a ajouter 
 	 *                   au perdant du tour
 	 */
 	public int pointsAAjouter() {
 		// On récupère les cartes sur le plateau dans une liste plateauCourant
 		ArrayList<Carte> plateauCourant = this.cartes;
 		int aAjouter = 0;            // Le nombre de points a ajouter au perdant
-		boolean aDame = avecDame();  // Booleen indiquant si le plateau 
+		boolean aDame = avecDame();  // Booléen indiquant si le plateau 
 		                             // contient la dame de pique
-		boolean aCoeur = avecCoeur();// Booleen indiquanr si le plateau contient
+		boolean aCoeur = avecCoeur();// Booléen indiquant si le plateau contient
 		                             // un ou des coeur(s)
 		
-		// La methode vérifie si la dame de pique est sur le plateau 
-		if(aDame==true ) {
-			// Si oui, elle ajoute 13 points 
+		/* Vérifie si la dame de pique est sur le plateau */ 
+		if(aDame == true ) {
 			aAjouter = aAjouter + 13;
 		}
-		// La methode verifie la presence de coeurs sur le plateau
-		if(aCoeur==true) {
-			// Si il y en a elle crée une variable pour contenir la quantité 
-			// de coeurs sur le plateau 
+		
+		/* La méthode vérifie la presence de coeurs sur le plateau */
+		if(aCoeur == true) {
+		
 			int nbCoeurs = 0;
 			
-			// Puis elle regarde chaque carte du plateau et incremente la 
-			// variable de 1 pour chaque coeur trouvé  
+			/*
+			 *  Puis elle regarde chaque carte du plateau et incrémente la 
+			 *  variable de 1 pour chaque coeur trouvé 
+			 */  
 			for (int i = 0 ; i < this.cartes.size() ; i++) {
 				if (plateauCourant.get(i).getSymbole().equals(Symbole.Coeur)) {
+					
 					nbCoeurs ++;
 				}
 			}
+			
 			aAjouter = aAjouter + nbCoeurs; 
 		}
+		
 		return aAjouter;		
 	}
 	
 	/**
-	 * Cette methode ajoute les points du tour au joueur perdant, ensuite 
+	 * Cette méthode ajoute les points du tour au joueur perdant, ensuite 
 	 * Elle retire les cartes sur le plateau des mains des joueurs 
 	 * 
 	 * @param joueurs Les joueurs de la partie 
 	 */
 	public void ajouterPointsTour(Joueur[] joueurs) {
-		// Contient les points à ajouter au perdant 
-		int aAjouter = pointsAAjouter();
-		// Contient l'indice du joueur perdant 
-		int perdant = getPerdant(joueurs);
-		// Ajoute au joueur perdant les points du tour
-		joueurs[perdant].ajouterPoints(aAjouter);
 		
-		// On récupère les cartes du plateau courant
+		int aAjouter = pointsAAjouter();          // Contient les points à ajouter au perdant  
+		int perdant = getPerdant(joueurs);        // Contient l'indice du joueur perdant
+		joueurs[perdant].ajouterPoints(aAjouter); // Ajoute au joueur perdant les points du tour
+		
+		/* On récupère toutes cartes du plateau courant */
 		ArrayList<Carte> plateauCourant = this.cartes;
 		
-		// On retire la carte que chaque joueur a joué sur le plateau de 
-		// leur main respective
+		/*
+		 * On retire la carte que chaque joueur a joué sur le plateau de 
+		 * leur main respective.
+		 */
 		for(int i = 0; i < plateauCourant.size(); i++ ) {
-			// On recupere la carte d'indice i dans une variable 
+			
+			// On récupère la carte d'indice i dans une variable 
 			Carte aTester = plateauCourant.get(i);
-			// On crée un indice permettant de récuperer l'indice
-			// du joueur possedant la carte
+			
+			// On crée un indice permettant de récupérer l'indice
+			// du joueur possédant la carte
 			int indice = rechercherCarte(joueurs, aTester.getSymbole(),
 					                     aTester.getValeur());
-			// On retire la premiere carte du plateau de la main du joueur 
-			// qui la possède
+			
 			joueurs[indice].retirerCarte(aTester);
 		}		
 	}

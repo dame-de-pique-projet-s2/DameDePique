@@ -11,10 +11,11 @@ import damedepique.ia.IA;
 
 /**
  * <p>
- *   
+ *  Classe utilitaire comportant différentes méthodes visant au respect des règles
+ *  de la dame de pique lorsque le joueur souhaite jouer une carte 
  * </p>
  * 
- * @author Julien B.
+ * @author Loïc B. Julien B. Margaux B. Justine R.
  * @version 1.0
  */
 public class OutilCarte {

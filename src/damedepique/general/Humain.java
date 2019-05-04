@@ -11,17 +11,15 @@ import static damedepique.general.OutilSaisie.*;
 import java.util.Objects;
 
 /**
- * <p>
- *   
- * </p>
- * 
- * @author Julien B.
+ * Cette classe contient toutes les méthodes qui caractérisent un joueur humain
+ * ainsi que ses moyens d'intéractions sur le jeu
+ * @author Loïc B. Julien B. Margaux B. Justine R.
  * @version 1.0
  */
 public class Humain extends Joueur {
 
 	/**
-	 * Création d'un nouveau humain avec les caractéristiques d'un joueur.
+	 * Création d'un humain avec les caractéristiques d'un joueur.
 	 * @see damedepique.general.Joueur
 	 */
 	public Humain() {
@@ -31,15 +29,16 @@ public class Humain extends Joueur {
 	
 	/**
 	 * Demande à cet (this) Humain d'entrer trois cartes à échanger lors de 
-	 * l'échange des trois cartes entre les quatre joueurs en début de manche.
+	 * l'échange des trois cartes en début de manche entre les quatre joueurs.
 	 * @return Un tableau contenant les trois cartes à échanger.
 	 */
 	public Carte[] choisirCartesAEchanger() {	
-		// Initialise un tableau de trois éléments de type Carte.
+		
 		Carte[] aEchanger = new Carte[3];
 		
-		// Demande trois fois de choisir une carte au joueur.
+		/* Demande trois fois de choisir une carte au joueur. */
 		for (int i = 0 ; i < aEchanger.length ; i++) {
+			
 			// Demande une carte et la stocke dans la case courante.
 			aEchanger[i] = this.jouerCarte();
 			
@@ -47,7 +46,7 @@ public class Humain extends Joueur {
 			this.retirerCarte(aEchanger[i]);
 		}
 		
-		return aEchanger;    // Renvoie le tableau contenant les trois cartes.
+		return aEchanger;  
 	}
 	
 	
@@ -58,8 +57,8 @@ public class Humain extends Joueur {
 	 * @return La carte jouée par cet (this) Humain.
 	 */
 	public Carte jouerCarte() {
-		// Indicateur de mauvaise carte choisie, elle n'est pas dans la main.
-		boolean nok;
+		
+		boolean nok; // Indicateur de non présence de la carte choisie dans la main
 		
 		Carte carte;        // Carte choisie par le joueur.
 		Symbole symbole;    // Symbole de la carte choisie par le joueur.
@@ -68,6 +67,7 @@ public class Humain extends Joueur {
 		// Affichage les cartes présentes dans la main du joueur.
 		afficherCartes(this.getMain());
 		
+		// TOFIX : améliorer l'algorithme de demande de carte
 		do {
 			// Demande à cet (this) Humain d'entrer la valeur d'une carte.
 			valeur = saisirValeur("Entrez la valeur d'une carte : ");
@@ -107,7 +107,7 @@ public class Humain extends Joueur {
 	
 	/**
 	 * Demande à cet (this) Humain d'entrer une carte afin de la jouer.
-	 * Le joueur doit joué une carte possédant le même symbole mentionné en 
+	 * Le joueur doit jouer une carte possédant le même symbole mentionné en 
 	 * argument sinon la demande est renouvelé. Si le joueur ne possède pas de 
 	 * carte ayant le même symbole que celui mentionné alors, le joueur peut 
 	 * jouer n'importe quelle carte.
@@ -142,10 +142,10 @@ public class Humain extends Joueur {
 			carte = recuperationCarte(this, symbole, valeur);
 			
 			/*
-			 * Si la carte correspondant au symbole et à la valeur joués 
+			 * Si la carte correspondante au symbole et à la valeur jouée 
 			 * précédemment n'est pas présente dans la main du joueur ou n'est 
 			 * pas dans la liste des cartes possibles alors l'indicateur de 
-			 * mauvaise carte choisie passe à vrai pour que la demande soit 
+			 * carte non présente passe à vrai pour que la demande soit 
 			 * renouvelée.
 			 */
 			nok = Objects.isNull(carte) 
@@ -165,11 +165,11 @@ public class Humain extends Joueur {
 		return carte;    // Retourne la carte jouée par le joueur.
 	}
 	
-	
 	/**
-	 * 
-	 * @return .
+	 * A supprimer plus tard
+	 * @return aJouer
 	 */
+	/* TODO : Faire quelque chose de mieux et arranger le code dans DameDePique */
 	public Carte jouerDeuxTrefle() {
 		boolean nok;
 		

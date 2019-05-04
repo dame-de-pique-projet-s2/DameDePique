@@ -28,7 +28,7 @@ import java.util.Scanner;
  *   </li>
  * </ul>
  * 
- * @author Julien B.
+ * @author Loïc B. Julien B. Margaux B. Justine R.
  * @version 1.0
  */
 public class OutilTest {

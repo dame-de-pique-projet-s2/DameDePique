@@ -7,7 +7,7 @@ package damedepique.general.tests;
 
 /**
  * 
- * @author Julien B.
+ * @author Loïc B. Julien B. Margaux B. Justine R.
  * @version 1.0
  */
 public class TestOutilPartie {

@@ -16,11 +16,14 @@ import damedepique.ia.IA;
 
 /**
  * Cette classe contient toutes les méthodes de test de la classe Plateau.
- * @author Julien B.
+ * @author Loïc B. Julien B. Margaux B. Justine R.
  * @version 1.0
  */
 public class TestPlateau {
 
+	/**
+	 * test de la détermination du perdant de la partie
+	 */
 	public static void testGetPerdant() {
 		Paquet paquet = new Paquet();
 		paquet.creer();
@@ -45,7 +48,7 @@ public class TestPlateau {
 		plateau.ajouterCarte(carteJouee);
 		debut = plateau.getSymboleDebut();
 		for (int j = 1 ; j < joueurs.length ; j++) {
-			carteJouee = ((IA) joueurs[j]).jouerCarte(debut);
+			//carteJouee = ((IA) joueurs[j]).jouerCarte(debut);
 			plateau.ajouterCarte(carteJouee);
 		}
 		

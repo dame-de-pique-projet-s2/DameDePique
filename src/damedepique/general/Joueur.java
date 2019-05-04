@@ -10,13 +10,13 @@ import java.util.ArrayList;
 /**
  * <p>
  *   Cette classe contient tous les éléments qui caractérisent un joueur 
- *   jouant au jeu de la dame de pique. Un joueur est caractérisé par un pseudo 
- *   non modifiable qui lui est assigné par défaut, un nombre de points qui 
- *   évolue au cours de la partie et d'une main dans laquelle le joueur possède 
- *   les cartes qu'il peut jouer.
+ *   jouant au jeu de la dame de pique. 
+ *   Un joueur est caractérisé par un pseudo non modifiable qui lui est assigné 
+ *   par défaut, un nombre de points qui évolue au cours de la partie 
+ *   et d'une main dans laquelle le joueur possède les cartes qu'il peut jouer.
  * </p>
  * 
- * @author Julien B.
+ * @author Loïc B. Julien B. Margaux B. Justine R.
  * @version 1.0
  */
 public class Joueur {
@@ -65,12 +65,13 @@ public class Joueur {
 	
 	
 	/**
-	 * Génère et affecte un pseudonyme aléatoire pour ce (this) Joueur.
+	 * Génère et affecte un pseudonyme aléatoire à ce (this) Joueur.
 	 * Les pseudonymes générés aléatoirement sont prédéfinis. Il n'est pas 
-	 * possible pour le joueur de changer son pseudonyme.
+	 * possible pour le joueur de le changer.
 	 * @see damedepique.general.Pseudo
 	 */
 	private void affectationPseudo() {
+		
 		// Stocke dans un tableau tous les pseudonymes prédéfinis.
 		Pseudo[] pseudos = Pseudo.values();
 		
@@ -105,7 +106,8 @@ public class Joueur {
 	public void ajouterPoints(int aAjouter) {
 		this.pointsTour += aAjouter;
 	}
-	/* Todo : ajouter une methode pour reset les points du tour après les avoir 
+	
+	/* TODO : ajouter une méthode pour reset les points du tour après les avoir 
 	 * ajoutés aux points des manches
 	 */
 	

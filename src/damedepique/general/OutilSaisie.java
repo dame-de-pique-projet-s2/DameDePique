@@ -11,10 +11,11 @@ import java.util.Scanner;
 
 /**
  * <p>
- *   Cette classe contient des méthodes outils pour effectuer des saisies.
+ *   Classe utilitaire contenant des méthodes outils pour effectuer des saisies
+ *   et vérifiant leur validité.
  * </p>
  * 
- * @author Julien B.
+ * @author Loïc B. Julien B. Margaux B. Justine R.
  * @version 1.0
  */
 public class OutilSaisie {
@@ -32,12 +33,13 @@ public class OutilSaisie {
 	public static boolean symboleEstValide(String aVerifier) {
 		/*
 		 * Vérifie si la référence de l'objet String passée en paramètre est 
-		 * égale à null. Si l'objet n'est pas référencé alors la méthode 
-		 * renvoie faux pour éviter une exception.
+		 * nulle. 
+		 * Si l'objet n'est pas référencé alors la méthode 
+		 * renvoie false pour éviter une exception.
 		 * 
 		 * Si la longueur de la chaîne à vérifier n'est pas comprise entre 
 		 * 5 et 7 alors la méthode renvoie faux et cela évite de rentrer dans 
-		 * la boucle pour ne trouver aucune occurrence.
+		 * la boucle et finir par ne trouver aucune occurrence.
 		 */
 		if (Objects.isNull(aVerifier) 
 			|| 5 > aVerifier.length() || aVerifier.length() > 7) {
@@ -47,13 +49,14 @@ public class OutilSaisie {
 		
 		/*
 		 * Recherche d'une occurrence entre la valeur aVerifier passée en 
-		 * paramètre et une valeur de la liste des symboles. Pour cette 
-		 * recherche la casse est ignorée ce qui laisse de la liberté à 
-		 * l'utilisateur lors de la saisie.
+		 * paramètre et une valeur de la liste des symboles. 
+		 * Pour cette recherche la casse est ignorée ce qui laisse de la liberté 
+		 * à l'utilisateur lors de la saisie.
 		 */
 		for (Symbole symbole : Symbole.values()) {
 			if (symbole.toString().equalsIgnoreCase(aVerifier)) {
-				// A la première occurrence trouvée, la méthode renvoie vrai.
+				
+				// A la première occurrence trouvée, la méthode renvoie true.
 				return true;
 			}
 		}

@@ -7,10 +7,11 @@ package damedepique.general;
 
 /**
  * <p>
- *   
+ *   Classe utilitaire comportant les méthodes associées au déroulement de la
+ *   partie de cartes.
  * </p>
  * 
- * @author Julien B.
+ * @author Loïc B. Julien B. Margaux B. Justine R.
  * @version 1.0
  */
 public class OutilPartie {

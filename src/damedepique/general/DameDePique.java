@@ -11,8 +11,8 @@ import static damedepique.general.OutilPartie.*;
 import damedepique.ia.IA;
 
 /**
- * 
- * @author Julien B.
+ * Cette classe contient le programme nécessaire au déroulement d'une partie
+ * @author Loïc B. Julien B. Margaux B. Justine R.
  * @version 1.0
  */
 public class DameDePique {
@@ -20,30 +20,28 @@ public class DameDePique {
 	private static final int NB_JOUEURS = 4;
 	
 	/**
-	 * 
-	 * @param args Non utilisé.
+	 * Algorithme de déroulement d'une partie du jeu de la dame de pique
+	 * @param args inutilisé.
 	 */
 	public static void main(String[] args) {
+			
+		Paquet paquet = new Paquet(); // Création d'un paquet de 52 cartes.
+		paquet.creer();               // Initialisation du paquet de cartes.
 		
-		// Création d'un paquet de 52 cartes à jouer.
-		Paquet paquet = new Paquet();
-		paquet.creer();    // Initialisation du paquet de cartes pour jouer.
-		
-		/* 
-		 * Création d'un plateau pour poser les cartes jouées par les 
-		 * joueurs durant les tours.
-		 */
+		/* Création d'un plateau de jeu. */
 		Plateau plateau = new Plateau();
 		
-		// Création d'un groupe de quatre joueurs.
+		/* Création d'un groupe de quatre joueurs. */
 		Joueur[] joueurs = new Joueur[NB_JOUEURS];
+		
 		joueurs[0] = new Humain();    // Création d'un joueur humain.
+		
 		for (int i = 1 ; i < NB_JOUEURS ; i++) {
-			joueurs[i] = new IA();    // Création de trois joueurs IA.
+			
+			joueurs[i] = new IA();    // Création de trois joueurs IA.	
 		}
 		
-		// L'indice correspond à la place du joueur.
-		int[] pointsManche = new int[NB_JOUEURS];
+		int[] pointsManche = new int[NB_JOUEURS]; // L'indice correspond à la place du joueur.
 		 
 		int numeroManche = 0;
 		int numeroTour = 0;

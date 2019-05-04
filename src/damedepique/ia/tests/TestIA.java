@@ -12,7 +12,7 @@ import damedepique.ia.IA;
 
 /**
  * Cette classe contient toutes les méthodes de test de la classe IA.
- * @author Julien B.
+ * @author Loïc B. Julien B. Margaux B. Justine R.
  * @version 1.0
  */
 public class TestIA {
