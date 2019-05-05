@@ -29,6 +29,7 @@ public class DameDePique {
 	 * d'une partie du jeu de la dame de pique
 	 * @param args inutilisé.
 	 */
+	
 	public static void main(String[] args) {
 			
 		paquet = new Paquet(); // Création d'un paquet de 52 cartes.
@@ -86,6 +87,7 @@ public class DameDePique {
 						if (i != premier) {
 							System.out.println("\n\n\n\nVoici le plateau de jeu actuel : " + plateau + "\n\n\n\n");
 							if (joueurs[i] instanceof Humain) {
+								// Il faut rajouter l'indice du premier joueur du tour en argument
 								carteJouee = ((Humain) joueurs[i]).jouerCarte(symboleDebut);
 							} else {
 								carteJouee = ((IA) joueurs[i]).jouerCarte(symboleDebut);

@@ -114,7 +114,7 @@ public class Humain extends Joueur {
 	 * @param symboleDemande Le symbole demandé.
 	 * @return La carte jouée par cet (this) Humain.
 	 */
-	public Carte jouerCarte(Symbole symboleDemande) {
+	public Carte jouerCarte(Symbole symboleDemande, int premierJoueur) {
 		boolean nok;        // Indicateur de mauvaise carte choisie.
 		
 		Carte carte;        // Carte choisie par le joueur.
@@ -126,7 +126,7 @@ public class Humain extends Joueur {
 		
 		// Affichage les cartes possibles pour jouer dans la main du jouer.
 		System.out.println("\nCarte(s) que vous pouvez jouer : ");		           
-		afficherCartes(cartesPossibles(this));
+		afficherCartes(this.getCartesPossibles());
 		
 		do {
 			// Demande à cet (this) Humain d'entrer la valeur d'une carte.
@@ -149,7 +149,7 @@ public class Humain extends Joueur {
 			 * renouvelée.
 			 */
 			nok = Objects.isNull(carte) 
-			      || !estCartePossible(this, carte);
+			      || !estCartePossible(this, carte, premierJoueur);
 			
 			// Affichage d'un message d'indication au joueur.
 			if (nok) {
@@ -158,7 +158,7 @@ public class Humain extends Joueur {
 						           + "pour ce tour.\n");
 				
 				// Affichage les cartes possibles pour jouer.
-				afficherCartes(cartesPossibles(this));
+				afficherCartes(this.getCartesPossibles());
 			}
 		} while (nok);
 		
