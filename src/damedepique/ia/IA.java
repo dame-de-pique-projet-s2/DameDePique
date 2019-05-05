@@ -5,11 +5,9 @@
 
 package damedepique.ia;
 
-import java.util.ArrayList;
-
 import damedepique.general.Carte;
 import damedepique.general.Joueur;
-import damedepique.general.OutilCarte;
+import static damedepique.general.OutilCarte.*;
 import damedepique.general.Symbole;
 import damedepique.general.Valeur;
 
@@ -84,13 +82,9 @@ public class IA extends Joueur {
 	 * @return .
 	 */
 	public Carte jouerCarte(Symbole symboleDemande) {
-		ArrayList<Carte> cartesPossibles;
-		
-		// Récupère les cartes possibles dans la main de l'IA
-		//cartesPossibles = OutilCarte.cartesPossibles();
-		
-		//return cartesPossibles.get(0);
-		return null;
+
+		// Récupère les cartes possibles dans la main de l'IA;
+		return this.getCartesPossibles().get(0);
 	}
 	
 	
@@ -99,8 +93,7 @@ public class IA extends Joueur {
 	 * @return La carte deux de trèfle.
 	 */
 	public Carte jouerDeuxTrefle() {
-		//return OutilCarte.recuperationCarte(this, Symbole.Trefle, Valeur.Deux);
-		return null;
+		return recuperationCarte(this, Symbole.Trefle, Valeur.Deux);
 	}
 	
 }

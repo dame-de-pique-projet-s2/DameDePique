@@ -24,6 +24,9 @@ public class DameDePique {
 	public static Plateau plateau;
 	
 	public static Joueur[] joueurs;
+	
+	public static int premierJoueur;
+	
 	/**
 	 * Programme regroupant les algorithmes nécessaires au déroulement 
 	 * d'une partie du jeu de la dame de pique
@@ -54,7 +57,7 @@ public class DameDePique {
 		int numeroTour = 0;
 		
 		Carte carteJouee;
-		int premier = 0;    // Bouchon
+		premierJoueur = 0;    // Bouchon
 		
 		while (!finPartie(joueurs)) {
 			paquet.melanger();
@@ -70,11 +73,11 @@ public class DameDePique {
 			
 			while (!finManche(joueurs[0])) {
 				if (numeroTour == 0) {
-					premier = rechercherCarte(joueurs, Symbole.Trefle, Valeur.Deux);
-					if (joueurs[premier] instanceof Humain) {
-						carteJouee = ((Humain) joueurs[premier]).jouerDeuxTrefle();
+					premierJoueur = rechercherCarte(joueurs, Symbole.Trefle, Valeur.Deux);
+					if (joueurs[premierJoueur] instanceof Humain) {
+						carteJouee = ((Humain) joueurs[premierJoueur]).jouerDeuxTrefle();
 					} else {
-						carteJouee = ((IA) joueurs[premier]).jouerDeuxTrefle();
+						carteJouee = ((IA) joueurs[premierJoueur]).jouerDeuxTrefle();
 					}
 					plateau.ajouterCarte(carteJouee);
 				}
@@ -84,11 +87,11 @@ public class DameDePique {
 					
 					// TODO Faire le jeu dans le sens des aiguilles d'une montre.
 					for (int i = 0 ; i < joueurs.length ; i++) {
-						if (i != premier) {
+						if (i != premierJoueur) {
 							System.out.println("\n\n\n\nVoici le plateau de jeu actuel : " + plateau + "\n\n\n\n");
 							if (joueurs[i] instanceof Humain) {
-								// Il faut rajouter l'indice du premier joueur du tour en argument
-								carteJouee = ((Humain) joueurs[i]).jouerCarte(symboleDebut);
+								// Il faut rajouter l'indice du premierJoueur joueur du tour en argument
+								carteJouee = ((Humain) joueurs[i]).jouerCarte(symboleDebut, premierJoueur);
 							} else {
 								carteJouee = ((IA) joueurs[i]).jouerCarte(symboleDebut);
 							}
@@ -97,9 +100,9 @@ public class DameDePique {
 					}
 					
 					// FIXME Erreur par rapport à la longueur du plateau.
-					premier = plateau.getPerdant(joueurs);
+					premierJoueur = plateau.getPerdant(joueurs);
 					
-					System.out.println(joueurs[premier].getPseudo() + " a perdu(e) le tour " + (numeroTour + 1) + "/13.");
+					System.out.println(joueurs[premierJoueur].getPseudo() + " a perdu(e) le tour " + (numeroTour + 1) + "/13.");
 					
 					// TODO Attention enlever les cartes jouées par les joueurs des mains.
 					
