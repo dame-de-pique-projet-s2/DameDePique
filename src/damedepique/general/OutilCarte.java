@@ -7,9 +7,7 @@ package damedepique.general;
 
 import java.util.ArrayList;
 
-import damedepique.general.Plateau.*;
-import damedepique.ia.IA.*;
-import damedepique.general.Joueur.*;
+import damedepique.ia.IA;
 
 /**
  * <p>
@@ -126,26 +124,27 @@ public class OutilCarte {
 	}
 
 	/**
-	 * Est-ce qu'un coeur a été joué ? 
-	 * @param joueur les joueurs de la partie 
+	 * Est-ce qu'un coeur a été joué ?
+	 * 
+	 * @param joueur les joueurs de la partie
 	 */
 	public static boolean coeurJoue(Joueur[] joueurs) {
 		boolean coeurJoue = false;
 		int nbCoeursnonJoues = 0;
-		for(int i = 0; i<joueurs.length; i ++) {
-			ArrayList<Carte> mainJoueur = joueurs[i].getMain(); 
+		for (int i = 0; i < joueurs.length; i++) {
+			ArrayList<Carte> mainJoueur = joueurs[i].getMain();
 			for (int j = 0; j < mainJoueur.size(); j++) {
 
-		    	/*
-			     * Recherche de toutes les cartes ayant un symbole équivalent 
-				 * A un coeur pour les compter
-		    	 */
-		    	if (mainJoueur.get(j).getSymbole().equals(Symbole.Coeur)) {
-			    	nbCoeursnonJoues ++;
-			    }
-		    }
+				/*
+				 * Recherche de toutes les cartes ayant un symbole équivalent A un coeur pour
+				 * les compter
+				 */
+				if (mainJoueur.get(j).getSymbole().equals(Symbole.Coeur)) {
+					nbCoeursnonJoues++;
+				}
+			}
 			// Si au moins un coeur a été joué, il est possible de commencer au coeur
-			if(nbCoeursnonJoues != 13) {
+			if (nbCoeursnonJoues != 13) {
 				coeurJoue = true;
 			}
 		}
@@ -153,64 +152,81 @@ public class OutilCarte {
 	}
 	
 	/**
+	 * Recupere les cartes possibles pour le premier joueur du tour. 
+	 *
+	 */
+	public static void cartesPossiblesPremier(Joueur[] joueurs, int premierJoueur) {
+		joueurs[premierJoueur].resetCartesPossibles();
+		boolean coeurJoue = coeurJoue(joueurs);
+		
+		// Stocke la main du joueur passé en argument.
+		ArrayList<Carte> mainJoueur = joueurs[premierJoueur].getMain();
+
+		// Stocke les cartes jouables que possède le joueur.
+		ArrayList<Carte> cartesJouables = new ArrayList<>();
+		
+		cartesJouables.addAll(mainJoueur);
+		if (coeurJoue != true) {
+		    for (int j = 0; j < mainJoueur.size(); j++) {
+
+			    /*
+				 * Recherche de toutes les cartes ayant un symbole équivalent au symbole demandé
+				 * en argument et les supprime
+				 */
+				if (cartesJouables.get(j).getSymbole().equals(Symbole.Coeur)) {
+					cartesJouables.remove(mainJoueur.get(j));
+				}
+			}
+	    }
+		joueurs[premierJoueur].ajouterCartesPossibles(cartesJouables);
+	}
+
+	/**
 	 * Récupère les cartes jouables par un joueur selon sa main
+	 * Cette methode ne traite que les joueurs qui n'ont pas la main a ce tour
 	 * 
 	 * @param joueur Le joueur à vérifier.
 	 * @return La liste des cartes pouvant être jouées par le joueur.
 	 */
 	public static void cartesPossibles(Joueur[] joueurs, int premierJoueur) {
-		for(int i = 0; i <joueurs.length; i++) {
-			joueurs[i].resetCartesPossibles();
+		for (int i = 0; i < joueurs.length; i++) {
+			if (i != premierJoueur) {
+			    joueurs[i].resetCartesPossibles();
+			}
 		}
 
-		for(int i = 0; i< joueurs.length; i++) {
-			
-		    // Stocke la main du joueur passé en argument.
-		    ArrayList<Carte> mainJoueur = joueurs[i].getMain();
+		for (int i = 0; i < joueurs.length; i++) {
+			// Stocke la main du joueur passé en argument.
+			ArrayList<Carte> mainJoueur = joueurs[i].getMain();
 
-		    // Stocke les cartes jouables que possède le joueur.
-		    ArrayList<Carte> cartesJouables = new ArrayList<>();
-		    
-		    if(i != premierJoueur) {
+			// Stocke les cartes jouables que possède le joueur.
+			ArrayList<Carte> cartesJouables = new ArrayList<>();
+            if (i != premierJoueur) {
 
-    		// Parcours des cartes dans la main du joueur passé en argument.
-	    	for (int j = 0; j < mainJoueur.size(); j++) {
+				// Parcours des cartes dans la main du joueur passé en argument.
+				for (int j = 0; j < mainJoueur.size(); j++) {
 
-		    	/*
-			     * Recherche de toutes les cartes ayant un symbole équivalent au symbole demandé
-		    	 * en argument.
-		    	 */
-		    	if (mainJoueur.get(j).getSymbole().equals(DameDePique.plateau.getSymboleDebut())) {
-			    	cartesJouables.add(mainJoueur.get(j));
+					/*
+					 * Recherche de toutes les cartes ayant un symbole équivalent au symbole demandé
+					 * en argument.
+					 */
+					if (mainJoueur.get(j).getSymbole().equals(DameDePique.plateau.getSymboleDebut())) {
+						cartesJouables.add(mainJoueur.get(j));
+					}
+				}
+
+			    /*
+			     * Si le joueur ne possède aucune carte ayant un symbole équivalent au symbole
+			     * demandé alors il peut jouer toutes les cartes présentes dans sa main.
+			     */
+			    if (cartesJouables.isEmpty()) {
+				    cartesJouables.addAll(mainJoueur);
 			    }
-		    }
-		    }
-
-		    /*
-		     * Si le joueur ne possède aucune carte ayant un symbole équivalent au symbole
-		     * demandé alors il peut jouer toutes les cartes présentes dans sa main.
-		     */
-	    	if (cartesJouables.isEmpty()) {
-	            cartesJouables.addAll(mainJoueur);
-	    	    if(i == premierJoueur) {
-	    		    boolean coeurJoue = coeurJoue(joueurs);
-		            if (coeurJoue != true) {       			        
-	    		        for (int j = 0; j < mainJoueur.size(); j++) {
-    
-	    	    	        /*
-		    	             * Recherche de toutes les cartes ayant un symbole équivalent au symbole demandé
-		        	         * en argument.
-		    	             */
-		    	            if (cartesJouables.get(j).getSymbole().equals(Symbole.Coeur)) {
-			    	            cartesJouables.remove(mainJoueur.get(j));
-		    	            }
-	    		        }
-			        } 
-		       }
-		       joueurs[i].ajouterCartesPossibles(cartesJouables);
-	       }
-		}
-	}
+			    joueurs[i].ajouterCartesPossibles(cartesJouables);
+			}
+			
+        }
+    }
 
 	/**
 	 * Vérifie si une carte est jouable ou non par rapport à un symbole demandé au
@@ -221,14 +237,14 @@ public class OutilCarte {
 	 * @return Vrai si la carte jouée est présente dans la liste des cartes jouables
 	 *         (même symbole que celui demandé) sinon faux.
 	 */
-	public static boolean estCartePossible(Joueur joueur, Carte carteJouee,int premierJoueur) {
-		
+	public static boolean estCartePossible(Joueur joueur, Carte carteJouee, int premierJoueur) {
+        boolean possible=false;
 		// Vérifie si la carte jouée est contenue dans la liste des cartes.
 		if (joueur.getCartesPossibles().contains(carteJouee)) {
-			return true; // Vrai si une occurrence a été trouvée.
+			possible = true; // Vrai si une occurrence a été trouvée.
 		}
 
-		return false; // Faux si aucune occurrence n'a été trouvée.
+		return possible; // Faux si aucune occurrence n'a été trouvée.
 	}
 
 	/**
