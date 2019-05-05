@@ -19,6 +19,11 @@ public class DameDePique {
 
 	private static final int NB_JOUEURS = 4;
 	
+	public static Paquet paquet;
+	
+	public static Plateau plateau;
+	
+	public static Joueur[] joueurs;
 	/**
 	 * Programme regroupant les algorithmes nécessaires au déroulement 
 	 * d'une partie du jeu de la dame de pique
@@ -26,14 +31,14 @@ public class DameDePique {
 	 */
 	public static void main(String[] args) {
 			
-		Paquet paquet = new Paquet(); // Création d'un paquet de 52 cartes.
-		paquet.creer();               // Initialisation du paquet de cartes.
+		paquet = new Paquet(); // Création d'un paquet de 52 cartes.
+		paquet.creer();        // Initialisation du paquet de cartes.
 		
-		/* Création d'un plateau de jeu. */
-		Plateau plateau = new Plateau();
+		/* Création d'un plateau de jeu */
+		plateau = new Plateau();
 		
-		/* Création d'un groupe de quatre joueurs. */
-		Joueur[] joueurs = new Joueur[NB_JOUEURS];
+		/* Création d'un groupe de quatre joueurs */
+		joueurs = new Joueur[NB_JOUEURS];
 		
 		joueurs[0] = new Humain();    // Création d'un joueur humain.
 		

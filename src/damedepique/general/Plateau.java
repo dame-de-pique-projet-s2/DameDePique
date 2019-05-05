@@ -114,6 +114,11 @@ public class Plateau {
 	
 	// TODO : à améliorer
 	
+	/*------------------------------------------------------------------------
+	 * ||||||||||||| Methodes de comptage pendant les manches ||||||||||||||||
+	 * -----------------------------------------------------------------------
+	 */
+	
 	/**
 	 * Cette méthode retourne un boolean égal a vrai si des cartes coeurs sont 
 	 * presents sur le plateau à la fin d'un tour.
@@ -250,6 +255,76 @@ public class Plateau {
 			
 			joueurs[indice].retirerCarte(aTester);
 		}		
+	}
+	
+	
+	/*------------------------------------------------------------------------
+	 * |||||||||||| Methodes de comptage a la fin des manches ||||||||||||||||
+	 * -----------------------------------------------------------------------
+	 */
+	
+	/**
+	 *Methode permettant de savoir si un joueur a réussi a demenager a 
+	 *la cloche de bois
+	 *
+	 *@param joueurs les joueurs de la partie
+	 */
+	public boolean clocheReussie(Joueur[] joueurs) {
+		boolean clocheReussie = false;
+		for(int i = 0; i<joueurs.length || clocheReussie == false; i++) {
+			if(joueurs[i].getPoints()== 26) {
+				clocheReussie = true;
+			}
+		}
+		return clocheReussie;
+	}
+	
+	/**
+	 * Methode qui donne 26 points a tyous les joueurs sauf celui qui a réalisé 
+	 * la cloche de bois
+	 * 
+	 * @param indiceJoueur Le joueur ayant réalisé la cloche de bois
+	 * @param joueurs Les joueurs de la partie 
+	 */
+	public void clocheBois(Joueur[] joueurs){
+		int indice =-1;
+		// On recherche le joueur qui a réalisé la cloche
+		for (int i=0;i<joueurs.length;i ++) {
+			if (joueurs[i].getPoints() == 26 ) {
+				indice = i; 
+			}
+		}
+		
+		// On echange les points. 
+		for( int i = 0; i<joueurs.length; i++) {
+			if(i != indice) {
+				joueurs[i].modifPoints(26);
+			} else {
+				joueurs[i].modifPoints(0);
+			}
+		}
+	}
+	
+	/**
+	 * Methode permettant d'ajouter les points au points totaux 
+	 * a la fin d'une manche
+	 * Cette methode  reinitialise par la même les points de la 
+	 * manche en cours
+	 * @param joueurs les joueurs de la partie 
+	 */
+	public void ajouterPointsTotaux(Joueur[] joueurs) {
+		int points;
+		boolean clocheReussie = clocheReussie(joueurs);
+		// Si besoin on réalise la cloche de bois
+		if( clocheReussie == true ) {
+			clocheBois(joueurs);
+		}
+		// On ajoute les points aux points totaux 
+		for(int i=0;i<joueurs.length;i++) {
+			points = joueurs[i].getPoints();
+			joueurs[i].ajouterPointsManche(points);
+			joueurs[i].resetPoints();
+		}
 	}
 	
 	@Override

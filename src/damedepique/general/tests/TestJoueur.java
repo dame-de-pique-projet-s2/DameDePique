@@ -108,7 +108,7 @@ public class TestJoueur {
 			
 		System.out.println(joueurs[0]);
 		
-		joueurs[0].trierMain();
+		joueurs[0].triMainCroissant();
 		
 		System.out.println("\n" + joueurs[0]);
 				

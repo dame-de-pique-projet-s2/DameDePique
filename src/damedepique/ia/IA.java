@@ -87,9 +87,10 @@ public class IA extends Joueur {
 		ArrayList<Carte> cartesPossibles;
 		
 		// Récupère les cartes possibles dans la main de l'IA
-		cartesPossibles = OutilCarte.cartesPossibles(this, symboleDemande);
+		//cartesPossibles = OutilCarte.cartesPossibles();
 		
-		return cartesPossibles.get(0);
+		//return cartesPossibles.get(0);
+		return null;
 	}
 	
 	
@@ -98,7 +99,8 @@ public class IA extends Joueur {
 	 * @return La carte deux de trèfle.
 	 */
 	public Carte jouerDeuxTrefle() {
-		return OutilCarte.recuperationCarte(this, Symbole.Trefle, Valeur.Deux);
+		//return OutilCarte.recuperationCarte(this, Symbole.Trefle, Valeur.Deux);
+		return null;
 	}
 	
 }

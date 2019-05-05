@@ -43,7 +43,7 @@ public class TestIA {
 	    paquet.distribuer(joueurs);
 	
 	    // Tri de la main pour le joueur I.A du test.
-	    joueurs[0].trierMain();
+	    joueurs[0].triMainCroissant();
 	
 	    // Affichage de la main du joueur
         System.out.println("\n" + joueurs[0]);

@@ -5,6 +5,9 @@
 
 package damedepique.general;
 
+import damedepique.general.Plateau;
+import damedepique.general.Joueur;
+
 /**
  * <p>
  *   Classe utilitaire comportant les méthodes associées au déroulement de la
@@ -23,6 +26,7 @@ public class OutilPartie {
 	 *         les 100 points) sinon faux.
 	 */
 	public static boolean finPartie(Joueur[] joueurs) {
+		boolean finPartie = false;
 		// Parcours des quatre joueurs de la partie.
 		for (int i = 0 ; i < joueurs.length ; i++) {
 			
@@ -30,12 +34,12 @@ public class OutilPartie {
 			if (joueurs[i].getPoints() >= 100) {
 				
 				// Retourne vrai au premier joueur qui a dépassé 100 points.
-				return true;
+				finPartie = true;
 			}
 		}
 		
 		// Retourne faux si aucun joueur n'a dépassé 100 points.
-		return false;
+		return finPartie;
 	}
 	
 	
@@ -48,12 +52,13 @@ public class OutilPartie {
 	 *         joueur spécifié) sinon faux.
 	 */
 	public static boolean finManche(Joueur joueur) {
+		boolean finManche = false;
 		// Vérifie si la main du joueur est vide ou non.
 		if (joueur.getMain().isEmpty()) {
-			return true;    // Retourne vrai si la main du joueur est vide.
+			finManche = true;    // Retourne vrai si la main du joueur est vide.
 		}
 		
-		return false;    // Retourne faux si la main du joueur n'est pas vide.
+		return finManche;    // Retourne faux si la main du joueur n'est pas vide.
 	}
 	
 	
@@ -64,14 +69,14 @@ public class OutilPartie {
 	 *         le plateau de jeu) sinon faux.
 	 */
 	public static boolean finTour(Plateau plateau) {
+		boolean finTour = false;
 		// Vérifie si le plateau contient exactement quatre cartes.
 		if (plateau.getCartes().size() == 4) {
-			
 			// Retourne vrai si le plateau dispose d'exactement quatre cartes.
-			return true;
+			finTour = true;
 		}
 		
-		return false;    // Retourne faux si le plateau n'a pas quatre cartes.
+		return finTour;    // Retourne faux si le plateau n'a pas quatre cartes.
 	}	
 	
 }

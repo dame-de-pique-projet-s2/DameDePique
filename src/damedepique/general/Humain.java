@@ -126,7 +126,7 @@ public class Humain extends Joueur {
 		
 		// Affichage les cartes possibles pour jouer dans la main du jouer.
 		System.out.println("\nCarte(s) que vous pouvez jouer : ");		           
-		afficherCartes(cartesPossibles(this, symboleDemande));
+		afficherCartes(cartesPossibles(this));
 		
 		do {
 			// Demande à cet (this) Humain d'entrer la valeur d'une carte.
@@ -149,7 +149,7 @@ public class Humain extends Joueur {
 			 * renouvelée.
 			 */
 			nok = Objects.isNull(carte) 
-			      || !estCartePossible(this, symboleDemande, carte);
+			      || !estCartePossible(this, carte);
 			
 			// Affichage d'un message d'indication au joueur.
 			if (nok) {
@@ -158,7 +158,7 @@ public class Humain extends Joueur {
 						           + "pour ce tour.\n");
 				
 				// Affichage les cartes possibles pour jouer.
-				afficherCartes(cartesPossibles(this, symboleDemande));
+				afficherCartes(cartesPossibles(this));
 			}
 		} while (nok);
 		
