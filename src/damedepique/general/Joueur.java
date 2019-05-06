@@ -117,6 +117,15 @@ public class Joueur {
 	
 	
 	/**
+	 * TODO A enlever.
+	 * @param aAjouter
+	 */
+	public void setPointsManche(int aAjouter) {
+		this.pointsManche = aAjouter;
+	}
+	
+	
+	/**
 	 * Ajoute des points pour un tour à ce (this) Joueur.
 	 * @param aAjouter Le nombre de points pour un tour à ajouter.
 	 */
@@ -130,15 +139,6 @@ public class Joueur {
 	 */
 	public void viderPointsManche() {
 		this.pointsManche = 0;
-	}
-	
-	
-	/**
-	 * 
-	 * @param aRemplacer 
-	 */
-	public void modifPointsManche(int aRemplacer) {
-		this.pointsManche = aRemplacer;
 	}
 	
 	

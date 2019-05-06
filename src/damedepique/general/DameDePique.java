@@ -103,7 +103,8 @@ public class DameDePique {
 					plateau.ajouterCarte(carteJouee);
 					System.out.println("\n\nVoici le plateau de jeu "
 								       + "actuel : " + plateau + "\n\n");
-						
+					
+					// TODO A améliorer.
 					if (premier == 0 && i == 3) { i = -1; };
 				}
 				
@@ -118,12 +119,14 @@ public class DameDePique {
 				
 				numeroTour++;
 			}
-
+			
 			plateau.ajouterPointsTot(joueurs);
 			
 			numeroManche++;
 
 		}
+		
+		plateau.getGagnant(joueurs);
 
 	}
 

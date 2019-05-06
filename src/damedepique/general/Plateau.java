@@ -237,41 +237,14 @@ public class Plateau {
 	 *         seule manche sinon faux.
 	 */
 	// TODO A mettre en static -> classe utilitaire.
-	public boolean clocheReussie(Joueur[] joueurs) {
+	public int clocheReussie(Joueur[] joueurs) {
 		for (int i = 0 ; i < joueurs.length ; i++) {
 			if (joueurs[i].getPointsManche() == 26) {
-				return true;
+				return i;
 			}
 		}
 		
-		return false;
-	}
-	
-	
-	/**
-	 * Méthode qui donne 26 points à tous les joueurs sauf celui qui a réalisé
-	 * la cloche de bois
-	 * 
-	 * @param indiceJoueur Le joueur ayant réalisé la cloche de bois
-	 * @param joueurs Les joueurs de la partie 
-	 */
-	public void clocheBois(Joueur[] joueurs){
-		int indice =-1;
-		// On recherche le joueur qui a réalisé la cloche
-		for (int i=0;i<joueurs.length;i ++) {
-			if (joueurs[i].getPointsManche() == 26 ) {
-				indice = i; 
-			}
-		}
-		
-		// On échange les points. 
-		for( int i = 0; i<joueurs.length; i++) {
-			if(i != indice) {
-				joueurs[i].modifPointsManche(26);
-			} else {
-				joueurs[i].modifPointsManche(0);
-			}
-		}
+		return -1;
 	}
 	
 	
@@ -280,15 +253,49 @@ public class Plateau {
 	 * @param joueurs
 	 */
 	public void ajouterPointsTot(Joueur[] joueurs) {		
-		if (this.clocheReussie(joueurs)) {
-			clocheBois(joueurs);
-		} else {
-			for (int j = 0 ; j < joueurs.length ; j++) {
-				int pointsManche = joueurs[j].getPointsManche();
-				joueurs[j].ajouterPointsTot(pointsManche);
-				joueurs[j].viderPointsManche();
+		int cloche = this.clocheReussie(joueurs);
+		
+		if (cloche != -1) {
+			for (int i = 0 ; i < joueurs.length ; i++) {
+				if (cloche == i) {
+					joueurs[cloche].viderPointsManche();
+				} else {
+					joueurs[i].setPointsManche(26);
+				}
 			}
 		}
+		
+		for (int j = 0 ; j < joueurs.length ; j++) {
+			int pointsManche = joueurs[j].getPointsManche();
+			joueurs[j].ajouterPointsTot(pointsManche);
+			joueurs[j].viderPointsManche();
+		}
+	}
+	
+	
+	/**
+	 * 
+	 * @param joueurs 
+	 * @return
+	 */
+	public void getGagnant(Joueur[] joueurs) {
+		int minPointsTot = joueurs[0].getPointsTot();
+		
+		for (int i = 1 ; i < joueurs.length ; i++) {
+			if (minPointsTot > joueurs[i].getPointsTot()) {
+				minPointsTot = joueurs[i].getPointsTot();
+			}
+		}
+		
+		String listeGagnant = "Le(s) gagnant(s) de cette partie : ";
+		
+		for (Joueur joueur : joueurs) {
+			if (joueur.getPointsTot() == minPointsTot) {
+				listeGagnant += "\n    => " + joueur.getPseudo() + " avec " + joueur.getPointsTot() + " point(s)";
+			}
+		}
+		
+		System.out.println(listeGagnant);
 	}
 	
 	
