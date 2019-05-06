@@ -10,8 +10,8 @@ import static damedepique.general.OutilCarte.*;
 import java.util.ArrayList;
 
 /**
- * Création d'un plateau de jeu virtuel pour jouer à la dame de pique.
- * @author Loïc B. Julien B. Margaux B. Justine R.
+ * TODO Faire la description de la classe Plateau.
+ * @author Julien B.
  * @version 1.0
  */
 public class Plateau {
@@ -62,14 +62,17 @@ public class Plateau {
 	
 	
 	/**
-	 * Récupère l'indice du joueur perdant du tour. Le joueur perdant est 
+	 * Récupère l'indice du joueur perdant d'un tour. Le joueur perdant est 
 	 * le joueur ayant posé la plus grosse carte sur le plateau de jeu.
 	 * @param joueurs Les joueurs de la partie.
 	 * @return L'indice du joueur ayant perdu le tour.
 	 */
 	public int getPerdant(Joueur[] joueurs) {
 		// Copie du plateau courant pour ne pas changer son état.
-		ArrayList<Carte> plateauCourant = this.cartes;
+		ArrayList<Carte> plateauCourant = new ArrayList<>();
+		for (Carte carte : this.cartes) {
+			plateauCourant.add(carte);
+		}
 		
 		// Stocke le symbole demandé au début du tour.
 		Symbole symboleDemande = this.getSymboleDebut();
@@ -82,7 +85,7 @@ public class Plateau {
 		 * le même symbole. Si une ou plusieurs n'ont pas le même symbole alors 
 		 * elles sont supprimées de la copie du plateau.
 		 */
-		for (int i = 0 ; i < joueurs.length ; i++) {
+		for (int i = 0 ; i < plateauCourant.size() ; i++) {
 			
 			/* 
 			 * Vérifie si le symbole de la carte courante est équivalent à 
@@ -106,110 +109,99 @@ public class Plateau {
 	}
 	
 	
-	/* 
-	 * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
-	 * * * * * * * * * * Méthodes de Comptage des points * * * * * * * * * * * *  
-	 * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+	/**
+	 * 
+	 * @param joueurs Les joueurs de la partie.
 	 */
+	public void retirerCartesJouees(Joueur[] joueurs) {
+		for (int i = 0 ; i < this.cartes.size() ; i++) {
+			Carte carteJouee = this.cartes.get(i);
+			int indice = rechercherCarte(joueurs, carteJouee.getSymbole(), 
+					                              carteJouee.getValeur());
+			
+			joueurs[indice].retirerCarte(carteJouee);
+		}
+		
+		this.vider();
+	}
 	
-	// TODO : à améliorer
-	
-	/*------------------------------------------------------------------------
-	 * ||||||||||||| Methodes de comptage pendant les manches ||||||||||||||||
-	 * -----------------------------------------------------------------------
-	 */
 	
 	/**
-	 * Cette méthode retourne un boolean égal a vrai si des cartes coeurs sont 
-	 * presents sur le plateau à la fin d'un tour.
-	 * @return avecCoeur un booléen exprimant la presence de carte coeurs sur le 
-	 *                   plateau
+	 * Cette méthode retourne un booléen égal à vrai si au moins une carte 
+	 * coeur est présente sur le plateau de jeu à la fin d'un tour.
+	 * @return Un booléen exprimant la présence ou non d'au moins une carte 
+	 *         ayant la valeur coeur.
 	 */
 	public boolean avecCoeur() {
-		/* On récupère les cartes sur le plateau dans une liste plateauCourant */
 		ArrayList<Carte> plateauCourant = this.cartes;
 		
-		/* On initialise à faux le booléen indiquant la presence de coeur sur le plateau */ 
-		boolean avecCoeur = false;
-		
-		/*
-		 *  On teste chaque carte du plateau, si on trouve un coeur 
-		 *  alors le booleen passe a vrai et la boucle s'arrête
-		 */
-		for (int i = 0 ; i < this.cartes.size() || avecCoeur == false ; i++) {
+		for (int i = 0 ; i < plateauCourant.size() ; i++) {
 			if (plateauCourant.get(i).getSymbole().equals(Symbole.Coeur)) {
-				avecCoeur = true;
+				return true;
 			}
 		}
-
-		return avecCoeur;
+		
+		return false;
 	}
-
+	
+	
 	/**
-	 * Cette méthode retourne un booléen égal à vrai si la dame de pique est
-	 * présente sur le plateau a la fin du tour.
 	 * 
-	 * @return avecDame un booléen exprimant la presence de la dame de pique sur 
-	 *                  sur le plateau
+	 * @return .
 	 */
-	public boolean avecDame() {
-		/* On récupère les cartes sur le plateau dans une liste plateauCourant */
+	public boolean avecDamePique() {
 		ArrayList<Carte> plateauCourant = this.cartes;
 		
-		/* On initialise à faux le booleen indiquant la presence de la dame de pique sur le plateau */ 
-		boolean avecDame = false;
-		
-		/* 
-		 * On teste chaque carte du plateau, si on trouve la dame de pique 
-		 *  alors le booleen passe a vrai et la boucle s'arrête.
-		 */
-		for (int i = 0 ; i < this.cartes.size() ; i++) {
-			if ((plateauCourant.get(i).getSymbole().equals(Symbole.Pique) &&
-					plateauCourant.get(i).getValeur().equals(Valeur.Dame)) || 
-					avecDame == false) {
-				avecDame = true;
+		for (int i = 0 ; i < plateauCourant.size() ; i++) {
+			if (plateauCourant.get(i).getSymbole().equals(Symbole.Pique) 
+				&& plateauCourant.get(i).getValeur().equals(Valeur.Dame)) {
+				
+				return true;
 			}
 		}
 		
-		return avecDame;
+		return false;
 	}
+	
 	
 	/**
 	 * Cette méthode calcule le nombre de points à ajouter au joueur qui perds 
-	 * le tour. 
-	 * Elle teste tout d'abbord la presence de la dame de pique sur le plateau
-	 * avec la méthode avecDame, ensuite elle teste la presence de coeur sur
-	 * le plateau.
-	 * Si la dame de pique est sur le plateau, elle rajoute 13 points à la valeur
-	 * renvoyée.
-	 * Si il y a des coeur sur le plateau alors elle les compte puis elle rajoute à
-	 * la valeur retournée 1 point pour chaque coeur present.
+	 * le tour. Elle teste tout d'abbord la presence de la dame de pique sur le 
+	 * plateau avec la méthode avecDamePique(), ensuite elle teste la presence 
+	 * de coeur sur le plateau avec la méthode avecCoeur().
+	 * Si la dame de pique est sur le plateau, elle rajoute 13 points à la 
+	 * valeur renvoyée. Si il y a des coeurs sur le plateau alors elle les 
+	 * compte puis elle rajoute à la valeur retournée 1 point pour chaque coeur 
+	 * présent.
 	 *  
-	 * @return aAjouter, un entier représentant le nombre de point a ajouter 
-	 *                   au perdant du tour
+	 * @return Un entier représentant le nombre de points à ajouter au perdant 
+	 *         du tour.
 	 */
 	public int pointsAAjouter() {
-		// On récupère les cartes sur le plateau dans une liste plateauCourant
+		// On stocke les cartes présentes sur le plateau courant. 
 		ArrayList<Carte> plateauCourant = this.cartes;
-		int aAjouter = 0;            // Le nombre de points a ajouter au perdant
-		boolean aDame = avecDame();  // Booléen indiquant si le plateau 
-		                             // contient la dame de pique
-		boolean aCoeur = avecCoeur();// Booléen indiquant si le plateau contient
-		                             // un ou des coeur(s)
+		
+		int aAjouter = 0;    // Le nombre de points a ajouter au perdant.
+		
+		// Booléen indiquant si le plateau contient la dame de pique.
+		boolean aDame = avecDamePique();
+
+		// Booléen indiquant si un plateau contient un ou des coeur(s).
+		boolean aCoeur = avecCoeur();
 		
 		/* Vérifie si la dame de pique est sur le plateau */ 
-		if(aDame == true ) {
-			aAjouter = aAjouter + 13;
+		if(aDame) {
+			aAjouter += 13;
 		}
 		
 		/* La méthode vérifie la presence de coeurs sur le plateau */
-		if(aCoeur == true) {
+		if(aCoeur) {
 		
 			int nbCoeurs = 0;
 			
 			/*
-			 *  Puis elle regarde chaque carte du plateau et incrémente la 
-			 *  variable de 1 pour chaque coeur trouvé 
+			 *  Puis elle regarde chaque carte du plateau et incrémente la
+			 *  variable de 1 pour chaque coeur trouvé
 			 */  
 			for (int i = 0 ; i < this.cartes.size() ; i++) {
 				if (plateauCourant.get(i).getSymbole().equals(Symbole.Coeur)) {
@@ -218,69 +210,46 @@ public class Plateau {
 				}
 			}
 			
-			aAjouter = aAjouter + nbCoeurs; 
+			aAjouter += nbCoeurs; 
 		}
 		
 		return aAjouter;		
 	}
 	
+	
 	/**
-	 * Cette méthode ajoute les points du tour au joueur perdant, ensuite 
-	 * Elle retire les cartes sur le plateau des mains des joueurs 
 	 * 
-	 * @param joueurs Les joueurs de la partie 
+	 * @param joueurs
+	 * @param indicePerdant 
 	 */
 	public void ajouterPointsTour(Joueur[] joueurs) {
-		
-		int aAjouter = pointsAAjouter();          // Contient les points à ajouter au perdant  
-		int perdant = getPerdant(joueurs);        // Contient l'indice du joueur perdant
-		joueurs[perdant].ajouterPoints(aAjouter); // Ajoute au joueur perdant les points du tour
-		
-		/* On récupère toutes cartes du plateau courant */
-		ArrayList<Carte> plateauCourant = this.cartes;
-		
-		/*
-		 * On retire la carte que chaque joueur a joué sur le plateau de 
-		 * leur main respective.
-		 */
-		for(int i = 0; i < plateauCourant.size(); i++ ) {
-			
-			// On récupère la carte d'indice i dans une variable 
-			Carte aTester = plateauCourant.get(i);
-			
-			// On crée un indice permettant de récupérer l'indice
-			// du joueur possédant la carte
-			int indice = rechercherCarte(joueurs, aTester.getSymbole(),
-					                     aTester.getValeur());
-			
-			joueurs[indice].retirerCarte(aTester);
-		}		
+		int aAjouter = this.pointsAAjouter();
+		int indicePerdant = this.getPerdant(joueurs);
+		joueurs[indicePerdant].ajouterPointsManche(aAjouter);
 	}
 	
 	
-	/*------------------------------------------------------------------------
-	 * |||||||||||| Methodes de comptage a la fin des manches ||||||||||||||||
-	 * -----------------------------------------------------------------------
-	 */
-	
 	/**
-	 *Methode permettant de savoir si un joueur a réussi a demenager a 
-	 *la cloche de bois
-	 *
-	 *@param joueurs les joueurs de la partie
+	 * Méthode permettant de savoir si un joueur à réussi à déménager à la 
+	 * cloche de bois ou non.
+	 * @param joueurs Les joueurs de la partie.
+	 * @return Vrai si un joueur à réussi à accumuler 26 points durant une 
+	 *         seule manche sinon faux.
 	 */
+	// TODO A mettre en static -> classe utilitaire.
 	public boolean clocheReussie(Joueur[] joueurs) {
-		boolean clocheReussie = false;
-		for(int i = 0; i<joueurs.length || clocheReussie == false; i++) {
-			if(joueurs[i].getPoints()== 26) {
-				clocheReussie = true;
+		for (int i = 0 ; i < joueurs.length ; i++) {
+			if (joueurs[i].getPointsManche() == 26) {
+				return true;
 			}
 		}
-		return clocheReussie;
+		
+		return false;
 	}
 	
+	
 	/**
-	 * Methode qui donne 26 points a tyous les joueurs sauf celui qui a réalisé 
+	 * Méthode qui donne 26 points à tous les joueurs sauf celui qui a réalisé
 	 * la cloche de bois
 	 * 
 	 * @param indiceJoueur Le joueur ayant réalisé la cloche de bois
@@ -290,42 +259,38 @@ public class Plateau {
 		int indice =-1;
 		// On recherche le joueur qui a réalisé la cloche
 		for (int i=0;i<joueurs.length;i ++) {
-			if (joueurs[i].getPoints() == 26 ) {
+			if (joueurs[i].getPointsManche() == 26 ) {
 				indice = i; 
 			}
 		}
 		
-		// On echange les points. 
+		// On échange les points. 
 		for( int i = 0; i<joueurs.length; i++) {
 			if(i != indice) {
-				joueurs[i].modifPoints(26);
+				joueurs[i].modifPointsManche(26);
 			} else {
-				joueurs[i].modifPoints(0);
+				joueurs[i].modifPointsManche(0);
 			}
 		}
 	}
 	
+	
 	/**
-	 * Methode permettant d'ajouter les points au points totaux 
-	 * a la fin d'une manche
-	 * Cette methode  reinitialise par la même les points de la 
-	 * manche en cours
-	 * @param joueurs les joueurs de la partie 
+	 * 
+	 * @param joueurs
 	 */
-	public void ajouterPointsTotaux(Joueur[] joueurs) {
-		int points;
-		boolean clocheReussie = clocheReussie(joueurs);
-		// Si besoin on réalise la cloche de bois
-		if( clocheReussie == true ) {
+	public void ajouterPointsTot(Joueur[] joueurs) {		
+		if (this.clocheReussie(joueurs)) {
 			clocheBois(joueurs);
-		}
-		// On ajoute les points aux points totaux 
-		for(int i=0;i<joueurs.length;i++) {
-			points = joueurs[i].getPoints();
-			joueurs[i].ajouterPointsManche(points);
-			joueurs[i].resetPoints();
+		} else {
+			for (int j = 0 ; j < joueurs.length ; j++) {
+				int pointsManche = joueurs[j].getPointsManche();
+				joueurs[j].ajouterPointsTot(pointsManche);
+				joueurs[j].viderPointsManche();
+			}
 		}
 	}
+	
 	
 	@Override
 	public String toString() {

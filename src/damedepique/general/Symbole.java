@@ -16,15 +16,14 @@ package damedepique.general;
  *   le carreau (♦), le coeur (♥), le pique (♠) et le trèfle (♣).
  * </p>
  * 
- * @author Loïc B. Julien B. Margaux B. Justine R.
+ * @author Julien B.
  * @version 1.0
  */
-@SuppressWarnings("javadoc")
 public enum Symbole {
 
 	Carreau,
 	Coeur,
 	Pique,
-	Trefle;
+	Trefle
 	
 }

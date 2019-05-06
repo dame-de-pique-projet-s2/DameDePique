@@ -5,15 +5,17 @@
 
 package damedepique.ia;
 
+import java.util.ArrayList;
+
 import damedepique.general.Carte;
 import damedepique.general.Joueur;
-import static damedepique.general.OutilCarte.*;
+import damedepique.general.OutilCarte;
 import damedepique.general.Symbole;
 import damedepique.general.Valeur;
 
 /**
  * <p>
- * Cette classe sert à gérer l'inteligence artificielle qui servira 
+ * Cette classe sert à  gérer l'inteligence artificielle qui servira 
  * d'adversaire au joueur humain.
  * </p>
  * <ul>
@@ -21,16 +23,16 @@ import damedepique.general.Valeur;
  *         Pour cela cette classe va :
  *    </li>
  *    <li>
- *            - échanger 3 cartes (pour l'instant dans l'ordre et par la suite 
+ *            -echanger 3 cartes (pour l'instant dans l'ordre et par la suite 
  *             de façon plus réfléchie)
  *    </li>
  *    <li>
- *            - jouer les cartes qu'elle a le droit de jouer (pour l'instant 
+ *            -jouer les cartes qu'elle a le droit de jouer (pour l'instant 
  *             dans l'ordre puis par la suite de maniÃ¨re à la faire gagner)
  *    </li>
  * </ul>
  * 
- * @author Loïc B. Julien B. Margaux B. Justine R.
+ * @author Julien B.
  * @version 1.0
  */
 public class IA extends Joueur {
@@ -45,9 +47,9 @@ public class IA extends Joueur {
 	
 	
 	/**
-     * Choix des 3 cartes à échanger au début des manches
-	 * Les 3 cartes sont par défaut les 3 premieres de la main
-	 * @return aEchanger les cartes que l'IA choisit d'échanger
+     * méthode qui choisi 3 cartes à échanger au début des manches
+	 * Les 3 cartes sont (pour le moment) les 3 premieres de la main
+	 * @return .
 	 * 
      */
 	public Carte[] choisirCartesAEchanger() {
@@ -63,28 +65,30 @@ public class IA extends Joueur {
     }
 	
 	
-	 // TODO : améliorer cette classe
+	 // TODO à finir la deuxième méthode
 	/**
-	 * Choix d'une carte à jouer
-	 * La carte pré-sélectionnée est par défaut celle en première position 
-	 * dans la main courante
+	 * méthode qui joue une carte
+	 * La carte est (pour le moment) la premiere possible de la main
 	 *
-	 * @return aJouer la carte jouée
+	 * @return aJouer la carte qui vas être jouée
 	 */
 	public Carte jouerCarte() {
 		return this.getMain().get(0);
 	}
 	
-	/* TODO : a supprimer et trouver une alternative, changer dans DameDePique */
+	
 	/**
-	 * TODO : commenter le rôle de cette méthode
-	 * @param symboleDemande
+	 * 
+	 * @param symboleDemande 
 	 * @return .
 	 */
 	public Carte jouerCarte(Symbole symboleDemande) {
-
-		// Récupère les cartes possibles dans la main de l'IA;
-		return this.getCartesPossibles().get(0);
+		ArrayList<Carte> cartesPossibles;
+		
+		// Récupère les cartes possibles dans la main de l'IA
+		cartesPossibles = OutilCarte.cartesPossibles(this, symboleDemande);
+		
+		return cartesPossibles.get(0);
 	}
 	
 	
@@ -93,7 +97,7 @@ public class IA extends Joueur {
 	 * @return La carte deux de trèfle.
 	 */
 	public Carte jouerDeuxTrefle() {
-		return recuperationCarte(this, Symbole.Trefle, Valeur.Deux);
+		return OutilCarte.recuperationCarte(this, Symbole.Trefle, Valeur.Deux);
 	}
 	
 }

@@ -10,13 +10,13 @@ import java.util.ArrayList;
 /**
  * <p>
  *   Cette classe contient tous les éléments qui caractérisent un joueur 
- *   jouant au jeu de la dame de pique. 
- *   Un joueur est caractérisé par un pseudo non modifiable qui lui est assigné 
- *   par défaut, un nombre de points qui évolue au cours de la partie 
- *   et d'une main dans laquelle le joueur possède les cartes qu'il peut jouer.
+ *   jouant au jeu de la dame de pique. Un joueur est caractérisé par un pseudo 
+ *   non modifiable qui lui est assigné par défaut, un nombre de pointsTot qui 
+ *   évolue au cours de la partie et d'une main dans laquelle le joueur possède 
+ *   les cartes qu'il peut jouer.
  * </p>
  * 
- * @author Loïc B. Julien B. Margaux B. Justine R.
+ * @author Julien B.
  * @version 1.0
  */
 public class Joueur {
@@ -25,18 +25,16 @@ public class Joueur {
 	private Pseudo pseudo;
 	
 	
-	/** Nombre de points de ce (this) Joueur pour la manche en cours */
-	private int pointsTour;
+	/** Nombre de points totaux de ce (this) Joueur. */
+	private int pointsTot;
 	
 	
-	/** Nombre de points de ce (this) Joueur pour les manches precédentes */
-	private int pointsTotaux;	
+	/** Nombre de points par tour de ce (this) Joueur. */
+	private int pointsManche;
+	
 	
 	/** Carte(s) dans la main de ce (this) Joueur. */
 	private ArrayList<Carte> main;
-	
-	/** Cartes que le joueur peux jouer a ce tour */
-	private ArrayList<Carte> cartesPossibles;
 	
 	
 	/**
@@ -46,8 +44,8 @@ public class Joueur {
 	 */
 	public Joueur() {
 		this.affectationPseudo();    // Affecte un pseudo par défaut.
-		this.pointsTour = 0;
-		/* TODO : Rajouter les points manches */
+		this.pointsTot = 0;
+		this.pointsManche = 0;
 		this.main = new ArrayList<>();
 	}
 	
@@ -66,13 +64,12 @@ public class Joueur {
 	
 	
 	/**
-	 * Génère et affecte un pseudonyme aléatoire à ce (this) Joueur.
+	 * Génère et affecte un pseudonyme aléatoire pour ce (this) Joueur.
 	 * Les pseudonymes générés aléatoirement sont prédéfinis. Il n'est pas 
-	 * possible pour le joueur de le changer.
+	 * possible pour le joueur de changer son pseudonyme.
 	 * @see damedepique.general.Pseudo
 	 */
 	private void affectationPseudo() {
-		
 		// Stocke dans un tableau tous les pseudonymes prédéfinis.
 		Pseudo[] pseudos = Pseudo.values();
 		
@@ -90,73 +87,59 @@ public class Joueur {
 	/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 	 * * * * * * * * * * * * * * PARTIE POINTS * * * * * * * * * * * * * * *
 	 * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
-	
-	/*---------------------------------------------------------------------
-	 * ||||||||||||||||||| Points de la manche en cours |||||||||||||||||||
-	 * --------------------------------------------------------------------
-	 */
-	/**
-	 * Récupère les points de ce (this) Joueur sous la forme d'un entier.
-	 * 
-	 * @return Le(s) point(s) du joueur.
-	 */
-	public int getPoints() {
-		return this.pointsTour;
-	}
+	// TODO Refaire les Javadocs.
 	
 	/**
-	 * Réinitialise les points de ce joueur a la fin de la manche en cours
-	 * pour reutiliser la valeur pour la manche suivante
-	 * Avant de les reinitialiser les ajoute au total des manches precedentes
+	 * Récupère les points totaux de ce (this) Joueur.
+	 * @return Le(s) point(s) totaux du joueur.
 	 */
-	public void resetPoints() {
-		ajouterPointsManche(this.pointsTour); 
-		this.pointsTour = 0;
-	}
-	
-	/**
-	 * Ajoute des points du tour à ce (this) Joueur.
-	 * 
-	 * @param aAjouter Le nombre de points à ajouter.
-	 */
-	public void ajouterPoints(int aAjouter) {
-		this.pointsTour += aAjouter;
-	}
-	
-	/**
-	 * TODO : dire ce que la methode fait
-	 * @param pourRemplacer valeur a mettre a la place de 
-	 *                      la valeur presente dans les points
-	 */
-	public void modifPoints(int pourRemplacer) {
-		this.pointsTour = pourRemplacer;
+	public int getPointsTot() {
+		return this.pointsTot;
 	}
 	
 	
-	
-	/*
-	 * --------------------------------------------------------------------
-	 *|||||||||||||||||| Total des manches precedentes ||||||||||||||||||||
-	 * --------------------------------------------------------------------
-	 */
 	/**
-	 * Récupère les points de ce (this) Joueur sous la forme d'un entier.
-	 * 
-	 * @return Le(s) point(s) du joueur.
+	 * Ajoute des points totaux à ce (this) Joueur.
+	 * @param aAjouter Le nombre de points totaux à ajouter.
 	 */
-	public int getPointsTotaux() {
-		return this.pointsTotaux;
+	public void ajouterPointsTot(int aAjouter) {
+		this.pointsTot += aAjouter;
 	}
 	
+	
 	/**
-	 * Ajoute des points de la manche à ce (this) Joueur.
-	 * 
-	 * @param aAjouter Le nombre de points à ajouter.
+	 * Récupère les points du tour de ce (this) Joueur.
+	 * @return Le(s) point(s) du tour du joueur.
+	 */
+	public int getPointsManche() {
+		return this.pointsManche;
+	}
+	
+	
+	/**
+	 * Ajoute des points pour un tour à ce (this) Joueur.
+	 * @param aAjouter Le nombre de points pour un tour à ajouter.
 	 */
 	public void ajouterPointsManche(int aAjouter) {
-		this.pointsTotaux += aAjouter;
+		this.pointsManche += aAjouter;
 	}
 	
+	
+	/**
+	 * Vide les points d'une manche de ce (this) Joueur.
+	 */
+	public void viderPointsManche() {
+		this.pointsManche = 0;
+	}
+	
+	
+	/**
+	 * 
+	 * @param aRemplacer 
+	 */
+	public void modifPointsManche(int aRemplacer) {
+		this.pointsManche = aRemplacer;
+	}
 	
 	
 	/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
@@ -178,7 +161,7 @@ public class Joueur {
 	 * temps à jouer une carte. Attention, cette méthode change l'état de la 
 	 * main du joueur concerné.
 	 */
-	public void triMainCroissant() {
+	public void trierMain() {
 		// Tri les cartes dans la main du joueur suivant un ordre croissant.
 		this.main.sort(Carte.ordreCroissant);
 	}
@@ -201,34 +184,6 @@ public class Joueur {
 		this.main.remove(aRetirer);
 	}
 	
-	/*----------------------------------------------------
-	 * |||||||||||| Partie cartes Possibles|||||||||||||||
-	 * ---------------------------------------------------
-	 */
-	/**
-	 * Récupère les cartes possibles de ce (this) Joueur.
-	 * @return Les cartes possibles dans la main du joueur.
-	 */
-	public ArrayList<Carte> getCartesPossibles() {
-		return this.cartesPossibles;
-	}
-	
-	/**
-	 * Ajoute des cartes dans les cartesPossibles de ce (this) Joueur.
-	 * @param aAjouter La carte à ajouter.
-	 */
-	public void ajouterCartesPossibles(ArrayList<Carte> aRajouter) {
-		this.cartesPossibles.addAll(aRajouter);
-	}
-	
-	/**
-	 * Supprime la totalité des cartes possibles de la main du joueur
-	 * afin de pouvoir en creer une nouvelle pour le tour suivant 
-	 */
-	public void resetCartesPossibles() {
-		this.cartesPossibles.clear();
-	}
-	
 	
 	@Override
 	public String toString() {
@@ -238,7 +193,7 @@ public class Joueur {
 			listeCartes += "\n    => " + carte.toString();
 		}
 		
-		return this.pseudo.toString() + " (" + this.pointsTour + " points)" 
+		return this.pseudo.toString() + " (" + this.pointsTot + " pointsTot)" 
 		                              + listeCartes;
 	}
 	

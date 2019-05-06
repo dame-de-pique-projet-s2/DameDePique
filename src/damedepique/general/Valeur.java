@@ -22,24 +22,12 @@ package damedepique.general;
  *   </li>
  * </ul>
  * 
- * @author Loïc B. Julien B. Margaux B. Justine R.
+ * @author Julien B.
  * @version 1.0
  */
-@SuppressWarnings("javadoc")
 public enum Valeur {
 	
-	Deux, 
-	Trois,
-	Quatre, 
-	Cinq, 
-	Six, 
-	Sept, 
-	Huit, 
-	Neuf, 
-	Dix,
-	Valet, 
-	Dame, 
-	Roi, 
-	As;
+	Deux, Trois, Quatre, Cinq, Six, Sept, Huit, Neuf, Dix,
+	Valet, Dame, Roi, As
 	
 }

@@ -31,7 +31,7 @@ import java.util.ArrayList;
  *   </li>
  * </ul>
  * 
- * @author Loïc B. Julien B. Margaux B. Justine R.
+ * @author Julien B.
  * @version 1.0
  */
 public class Paquet {

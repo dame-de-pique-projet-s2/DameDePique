@@ -12,7 +12,7 @@ import damedepique.ia.IA;
 
 /**
  * Cette classe contient toutes les méthodes de test de la classe IA.
- * @author Loïc B. Julien B. Margaux B. Justine R.
+ * @author Julien B.
  * @version 1.0
  */
 public class TestIA {
@@ -43,7 +43,7 @@ public class TestIA {
 	    paquet.distribuer(joueurs);
 	
 	    // Tri de la main pour le joueur I.A du test.
-	    joueurs[0].triMainCroissant();
+	    joueurs[0].trierMain();
 	
 	    // Affichage de la main du joueur
         System.out.println("\n" + joueurs[0]);

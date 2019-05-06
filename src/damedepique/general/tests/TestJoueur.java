@@ -11,7 +11,7 @@ import damedepique.general.Pseudo;
 
 /**
  * Cette classe contient toutes les méthodes de test de la classe Joueur.
- * @author Loïc B. Julien B. Margaux B. Justine R.
+ * @author Julien B.
  * @version 1.0
  */
 public class TestJoueur {
@@ -108,7 +108,7 @@ public class TestJoueur {
 			
 		System.out.println(joueurs[0]);
 		
-		joueurs[0].triMainCroissant();
+		joueurs[0].trierMain();
 		
 		System.out.println("\n" + joueurs[0]);
 				

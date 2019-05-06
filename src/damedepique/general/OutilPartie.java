@@ -5,16 +5,12 @@
 
 package damedepique.general;
 
-import damedepique.general.Plateau;
-import damedepique.general.Joueur;
-
 /**
  * <p>
- *   Classe utilitaire comportant les méthodes associées au déroulement de la
- *   partie de cartes.
+ *   
  * </p>
  * 
- * @author Loïc B. Julien B. Margaux B. Justine R.
+ * @author Julien B.
  * @version 1.0
  */
 public class OutilPartie {
@@ -26,20 +22,19 @@ public class OutilPartie {
 	 *         les 100 points) sinon faux.
 	 */
 	public static boolean finPartie(Joueur[] joueurs) {
-		boolean finPartie = false;
 		// Parcours des quatre joueurs de la partie.
 		for (int i = 0 ; i < joueurs.length ; i++) {
 			
 			// Vérifie si un joueur a dépassé 100 points ou non
-			if (joueurs[i].getPoints() >= 100) {
+			if (joueurs[i].getPointsTot() >= 100) {
 				
 				// Retourne vrai au premier joueur qui a dépassé 100 points.
-				finPartie = true;
+				return true;
 			}
 		}
 		
 		// Retourne faux si aucun joueur n'a dépassé 100 points.
-		return finPartie;
+		return false;
 	}
 	
 	
@@ -52,31 +47,12 @@ public class OutilPartie {
 	 *         joueur spécifié) sinon faux.
 	 */
 	public static boolean finManche(Joueur joueur) {
-		boolean finManche = false;
 		// Vérifie si la main du joueur est vide ou non.
 		if (joueur.getMain().isEmpty()) {
-			finManche = true;    // Retourne vrai si la main du joueur est vide.
+			return true;    // Retourne vrai si la main du joueur est vide.
 		}
 		
-		return finManche;    // Retourne faux si la main du joueur n'est pas vide.
+		return false;    // Retourne faux si la main du joueur n'est pas vide.
 	}
-	
-	
-	/**
-	 * Détermine si un tour est terminé ou non.
-	 * @param plateau Le plateau de la partie.
-	 * @return Vrai si le tour est fini (exactement quatre cartes disposées sur 
-	 *         le plateau de jeu) sinon faux.
-	 */
-	public static boolean finTour(Plateau plateau) {
-		boolean finTour = false;
-		// Vérifie si le plateau contient exactement quatre cartes.
-		if (plateau.getCartes().size() == 4) {
-			// Retourne vrai si le plateau dispose d'exactement quatre cartes.
-			finTour = true;
-		}
-		
-		return finTour;    // Retourne faux si le plateau n'a pas quatre cartes.
-	}	
 	
 }

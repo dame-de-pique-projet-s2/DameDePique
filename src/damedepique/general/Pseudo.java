@@ -7,26 +7,16 @@ package damedepique.general;
 
 /**
  * <p>
- *   Cette interface d'enumération regroupe tous les pseudonymes prédéfinis à attribuer 
+ *   Cette énumération regroupe tous les pseudonymes prédéfinis à attribuer 
  *   aléatoirement au joueur humain ainsi qu'aux intelligences artificielles.
  * </p>
  * 
- * @author Loïc B. Julien B. Margaux B. Justine R.
+ * @author Julien B.
  * @version 1.0
  */
-@SuppressWarnings("javadoc")
 public enum Pseudo {
 	
-	
-	Camille, 
-	Emilie, 
-	Jade, 
-	Aurore, 
-	Brigitte,
-	Pierre, 
-	Paul, 
-	Jacques, 
-	Georges, 
-	Thomas;
+	Camille, Emilie, Jade, Aurore, Brigitte,
+	Pierre, Paul, Jacques, Georges, Thomas
 
 }
