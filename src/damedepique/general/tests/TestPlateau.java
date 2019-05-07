@@ -15,8 +15,11 @@ import damedepique.general.Symbole;
 import damedepique.ia.IA;
 
 /**
- * Cette classe contient toutes les méthodes de test de la classe Plateau.
- * @author Julien B.
+ * <p>
+ *   Cette classe contient toutes les méthodes de test de la classe Plateau.
+ * </p>
+ *   
+ * @author Loïc B. | Julien B. | Margaux B. | Justine R.
  * @version 1.0
  */
 public class TestPlateau {

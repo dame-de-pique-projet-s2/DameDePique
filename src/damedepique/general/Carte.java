@@ -9,19 +9,10 @@ import java.util.Comparator;
 
 /**
  * <p>
- *   Cette classe contient tous les éléments qui caractérisent une carte pour 
- *   jouer au jeu de la dame de pique.
+ *   TODO Faire la description de cette classe.
  * </p>
- * <ul>
- *   <li>
- *     
- *   </li>
- *   <li>
- *     
- *   </li>
- * </ul>
  * 
- * @author Julien B.
+ * @author Loïc B. | Julien B. | Margaux B. | Justine R.
  * @version 1.0
  */
 public class Carte {

@@ -11,12 +11,12 @@ import java.util.ArrayList;
  * <p>
  *   Cette classe contient tous les éléments qui caractérisent un joueur 
  *   jouant au jeu de la dame de pique. Un joueur est caractérisé par un pseudo 
- *   non modifiable qui lui est assigné par défaut, un nombre de pointsTot qui 
- *   évolue au cours de la partie et d'une main dans laquelle le joueur possède 
- *   les cartes qu'il peut jouer.
+ *   non modifiable qui lui est assigné par défaut, un nombre de points totaux 
+ *   qui évolue au cours de la partie et d'une main dans laquelle le joueur 
+ *   possède les cartes qu'il peut jouer.
  * </p>
  * 
- * @author Julien B.
+ * @author Loïc B. | Julien B. | Margaux B. | Justine R.
  * @version 1.0
  */
 public class Joueur {
@@ -87,7 +87,6 @@ public class Joueur {
 	/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 	 * * * * * * * * * * * * * * PARTIE POINTS * * * * * * * * * * * * * * *
 	 * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
-	// TODO Refaire les Javadocs.
 	
 	/**
 	 * Récupère les points totaux de ce (this) Joueur.
@@ -99,8 +98,8 @@ public class Joueur {
 	
 	
 	/**
-	 * Ajoute des points totaux à ce (this) Joueur.
-	 * @param aAjouter Le nombre de points totaux à ajouter.
+	 * Ajoute des points aux points totaux à ce (this) Joueur.
+	 * @param aAjouter Le nombre de points à ajouter.
 	 */
 	public void ajouterPointsTot(int aAjouter) {
 		this.pointsTot += aAjouter;
@@ -108,8 +107,8 @@ public class Joueur {
 	
 	
 	/**
-	 * Récupère les points du tour de ce (this) Joueur.
-	 * @return Le(s) point(s) du tour du joueur.
+	 * Récupère les points de la manche de ce (this) Joueur.
+	 * @return Le(s) point(s) de la manche du joueur.
 	 */
 	public int getPointsManche() {
 		return this.pointsManche;
@@ -117,17 +116,18 @@ public class Joueur {
 	
 	
 	/**
-	 * TODO A enlever.
-	 * @param aAjouter
+	 * Met à jour le nombre de points de ce (this) Joueur pendant une manche.
+	 * Cette méthode est utile lors de la détection de la cloche de bois.
+	 * @param aRemplacer La nouvelle valeur des points de la manche.
 	 */
-	public void setPointsManche(int aAjouter) {
-		this.pointsManche = aAjouter;
+	public void setPointsManche(int aRemplacer) {
+		this.pointsManche = aRemplacer;
 	}
 	
 	
 	/**
-	 * Ajoute des points pour un tour à ce (this) Joueur.
-	 * @param aAjouter Le nombre de points pour un tour à ajouter.
+	 * Ajoute des points aux points d'une manche à ce (this) Joueur.
+	 * @param aAjouter Le nombre de points à ajouter.
 	 */
 	public void ajouterPointsManche(int aAjouter) {
 		this.pointsManche += aAjouter;
@@ -193,8 +193,8 @@ public class Joueur {
 			listeCartes += "\n    => " + carte.toString();
 		}
 		
-		return this.pseudo.toString() + " (" + this.pointsTot + " pointsTot)" 
-		                              + listeCartes;
+		return this.pseudo.toString() + " (" + this.pointsTot + " points au "
+				                      + "total)" + listeCartes;
 	}
 	
 }

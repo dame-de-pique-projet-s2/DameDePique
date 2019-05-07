@@ -11,96 +11,14 @@ import damedepique.ia.IA;
 
 /**
  * <p>
- *   
+ *   TODO Faire la description de cette classe.
  * </p>
  * 
- * @author Julien B.
+ * @author Loïc B. | Julien B. | Margaux B. | Justine R.
  * @version 1.0
  */
 public class OutilCarte {
 
-	/**
-	 * Récupère une carte dans la main d'un joueur en fonction de son symbole 
-	 * et de sa valeur.
-	 * @param joueur Le joueur visé par la recherche.
-	 * @param symbole Le symbole à chercher dans la main du joueur.
-	 * @param valeur La valeur à chercher dans la main du joueur.
-	 * @return Une carte si le symbole et la valeur correspondent à une carte 
-	 *         dans la main du joueur sinon la méthode renvoie la valeur null 
-	 *         qui signifie que le joueur ne possède pas la carte associée au 
-	 *         symbole et à la valeur spécifiés dans sa main de jeu.
-	 */
-	public static Carte recuperationCarte(Joueur joueur, Symbole symbole, 
-			                                             Valeur valeur) {
-		
-		// Stocke les cartes dans la main du joueur spécifié.
-		ArrayList<Carte> mainJoueur = joueur.getMain();
-		
-		// Parcours des cartes dans la main du joueur passé en argument.
-		for (int i = 0 ; i < mainJoueur.size() ; i++) {
-			
-			/*
-			 * Recherche d'une occurrence entre la carte courante de la main 
-			 * du joueur et le symbole et la valeur passés en argument.
-			 */
-			if (estEgale(mainJoueur.get(i), symbole, valeur)) {
-				
-				// Retourne la carte associée au symbole et à la valeur.
-				return mainJoueur.get(i);
-			}
-		}
-		
-		return null;    // Retourne null si aucune occurrence n'a été trouvé.
-	}
-	
-	
-	/**
-	 * Recherche l'indice d'un joueur ayant une carte spécifique.
-	 * @param joueurs Les joueurs de la partie.
-	 * @param symbole Le symbole de la carte recherchée.
-	 * @param valeur La valeur de la carte recherchée.
-	 * @return L'indice du joueur ayant la carte associée au symbole et à la 
-	 *         valeur spécifiés sinon la méthode renvoie la valeur null qui 
-	 *         signifie qu'aucun joueur de la partie ne possède cette carte 
-	 *         (par exemple si la carte ayant ce symbole et cette valeur a déjà 
-	 *         été jouée).
-	 */
-	public static int rechercherCarte(Joueur[] joueurs, Symbole symbole,
-			                                            Valeur valeur) {
-		// TODO Refaire la Javadoc.
-		// Mémoire qui stocke les cartes dans la main du joueur courant.
-		ArrayList<Carte> mainJoueurCourant;
-		
-		// Parcours des joueurs de la partie.
-		for (int i = 1 ; i < joueurs.length ; i++) {
-			
-			// Stocke les cartes du joueur courant.
-			mainJoueurCourant = joueurs[i].getMain();
-			
-			// Parcours des cartes dans la main du joueur courant.
-			for (int j = 0 ; j < mainJoueurCourant.size() ; j++) {
-				
-				/*
-				 * Recherche d'une occurrence entre la carte courante de la 
-				 * main du joueur courant et le symbole et la valeur passés 
-				 * en argument.
-				 */
-				if (estEgale(mainJoueurCourant.get(j), symbole, valeur)) {
-					
-					/* 
-					 * Retourne l'indice du joueur possédant la carte 
-					 * comportant le même symbole et la même valeur spécifiés 
-					 * en argument.
-					 */
-					return i;
-				}
-			}
-		}
-		
-		return 0;    // Retourne 0 si aucune occurrence n'a été trouvé.
-	}
-	
-	
 	/**
 	 * Vérifie si une carte spécifiée possède à la fois le symbole et la 
 	 * valeur passés en argument.
@@ -130,6 +48,90 @@ public class OutilCarte {
 	
 	
 	/**
+	 * Récupère une carte dans la main d'un joueur en fonction de son symbole 
+	 * et de sa valeur.
+	 * @param joueur Le joueur visé par la recherche.
+	 * @param symbole Le symbole à chercher dans la main du joueur.
+	 * @param valeur La valeur à chercher dans la main du joueur.
+	 * @return Une carte si le symbole et la valeur correspondent à une carte 
+	 *         dans la main du joueur sinon la méthode renvoie la valeur null 
+	 *         qui signifie que le joueur ne possède pas la carte associée au 
+	 *         symbole et à la valeur spécifiés dans sa main de jeu.
+	 */
+	public static Carte recuperationCarte(Joueur joueur, Symbole symbole, 
+			                                             Valeur valeur) {
+		
+		// Stocke les cartes dans la main du joueur spécifié.
+		ArrayList<Carte> mainJoueur = joueur.getMain();
+		
+		// Parcours des cartes dans la main du joueur passé en argument.
+		for (Carte carteCourante : mainJoueur) {
+			
+			/*
+			 * Recherche d'une occurrence entre la carte courante de la main 
+			 * du joueur et le symbole et la valeur passés en argument.
+			 */
+			if (estEgale(carteCourante, symbole, valeur)) {
+				
+				// Retourne la carte associée au symbole et à la valeur.
+				return carteCourante;
+			}
+		}
+		
+		return null;    // Retourne null si aucune occurrence n'a été trouvé.
+	}
+	
+	
+	/**
+	 * Recherche l'indice d'un joueur ayant une carte spécifique.
+	 * @param joueurs Les joueurs de la partie.
+	 * @param symbole Le symbole de la carte recherchée.
+	 * @param valeur La valeur de la carte recherchée.
+	 * @return L'indice du joueur ayant la carte associée au symbole et à la 
+	 *         valeur spécifiés.
+	 */
+	public static int rechercherCarte(Joueur[] joueurs, Symbole symbole,
+			                                            Valeur valeur) {
+		
+		// FIXME Problème à résoudre, carte introuvable.
+		// Mémoire qui stocke les cartes dans la main du joueur courant.
+		ArrayList<Carte> mainJoueurCourant;
+		
+		// Parcours des joueurs de la partie excepté le premier joueur.
+		for (int i = 1 ; i < joueurs.length ; i++) {
+			
+			// Stocke les cartes du joueur courant.
+			mainJoueurCourant = joueurs[i].getMain();
+			
+			// Parcours des cartes dans la main du joueur courant.
+			for (int j = 0 ; j < mainJoueurCourant.size() ; j++) {
+				
+				/*
+				 * Recherche d'une occurrence entre la carte courante de la 
+				 * main du joueur courant et le symbole et la valeur passés 
+				 * en argument.
+				 */
+				if (estEgale(mainJoueurCourant.get(j), symbole, valeur)) {
+					
+					/* 
+					 * Retourne l'indice du joueur possédant la carte 
+					 * comportant le même symbole et la même valeur spécifiés 
+					 * en argument.
+					 */
+					return i;
+				}
+			}
+		}
+		
+		/*
+		 * Si aucun joueur n'a trouvé été trouvé en possession de la carte 
+		 * indiquée alors le premier joueur est assuré de posséder cette carte.
+		 */
+		return 0;    // FIXME Attention !
+	}
+	
+	
+	/**
 	 * Récupère les cartes jouables par un joueur selon sa main par rapport à 
 	 * un symbole demandé.
 	 * @param joueur Le joueur à vérifier.
@@ -146,14 +148,14 @@ public class OutilCarte {
 		ArrayList<Carte> cartesJouables = new ArrayList<>();
 		
 		// Parcours des cartes dans la main du joueur passé en argument.
-		for (int i = 0 ; i < mainJoueur.size() ; i++) {
+		for (Carte carteCourante : mainJoueur) {
 			
 			/*
 			 * Recherche de toutes les cartes ayant un symbole équivalent
 			 * au symbole demandé en argument.
 			 */
-			if (mainJoueur.get(i).getSymbole().equals(symboleDemande)) {
-				cartesJouables.add(mainJoueur.get(i));
+			if (carteCourante.getSymbole().equals(symboleDemande)) {
+				cartesJouables.add(carteCourante);
 			}
 		}
 		
@@ -201,83 +203,131 @@ public class OutilCarte {
 	
 	
 	/**
-	 * Échange des cartes choisies par les joueurs entre eux.
-	 * Dans ce méthode, l'échange se fait vers la gauche.
+	 * Échange les trois cartes choisies par les joueurs entre eux.
+	 * Dans cette méthode, l'échange se fait vers la gauche.
 	 * @param joueurs Les joueurs de la partie.
 	 */
 	public static void echangeGauche(Joueur[] joueurs) {
+		// Demande et stocke les cartes à échanger du premier joueur.
 		Carte[] cartesJ0 = ((Humain) joueurs[0]).choisirCartesAEchanger();
+		
+		// Demande et stocke les cartes à échanger du second joueur.
 		Carte[] cartesJ1 = ((IA) joueurs[1]).choisirCartesAEchanger();
+		
+		// Demande et stocke les cartes à échanger du troisième joueur.
 		Carte[] cartesJ2 = ((IA) joueurs[2]).choisirCartesAEchanger();
+
+		// Demande et stocke les cartes à échanger du quatrième joueur.
 		Carte[] cartesJ3 = ((IA) joueurs[3]).choisirCartesAEchanger();
 		
+		// Parcours des tableaux de cartes à échanger.
 		for (int i = 0 ; i < cartesJ0.length ; i++) {
+			// joueurs[0] donne les cartes au joueurs[1].
 			joueurs[1].ajouterCarte(cartesJ0[i]);
+			// joueurs[1] donne les cartes au joueurs[2].
 			joueurs[2].ajouterCarte(cartesJ1[i]);
+			// joueurs[2] donne les cartes au joueurs[3].
 			joueurs[3].ajouterCarte(cartesJ2[i]);
+			// joueurs[3] donne les cartes au joueurs[0].
 			joueurs[0].ajouterCarte(cartesJ3[i]);
 		}
 	}
 	
 	
 	/**
-	 * @param joueurs 
-	 * 
+	 * Échange les trois cartes choisies par les joueurs entre eux.
+	 * Dans cette méthode, l'échange se fait vers la droite.
+	 * @param joueurs Les joueurs de la partie.
 	 */
 	public static void echangeDroit(Joueur[] joueurs) {
+		// Demande et stocke les cartes à échanger du premier joueur.
 		Carte[] cartesJ0 = ((Humain) joueurs[0]).choisirCartesAEchanger();
+		
+		// Demande et stocke les cartes à échanger du second joueur.
 		Carte[] cartesJ1 = ((IA) joueurs[1]).choisirCartesAEchanger();
+		
+		// Demande et stocke les cartes à échanger du troisième joueur.
 		Carte[] cartesJ2 = ((IA) joueurs[2]).choisirCartesAEchanger();
+		
+		// Demande et stocke les cartes à échanger du quatrième joueur.
 		Carte[] cartesJ3 = ((IA) joueurs[3]).choisirCartesAEchanger();
 		
+		// Parcours des tableaux de cartes à échanger.
 		for (int i = 0 ; i < cartesJ0.length ; i++) {
+			// joueurs[0] donne les cartes au joueurs[3].
 			joueurs[3].ajouterCarte(cartesJ0[i]);
+			// joueurs[3] donne les cartes au joueurs[2].
 			joueurs[2].ajouterCarte(cartesJ3[i]);
+			// joueurs[2] donne les cartes au joueurs[1].
 			joueurs[1].ajouterCarte(cartesJ2[i]);
+			// joueurs[1] donne les cartes au joueurs[0].
 			joueurs[0].ajouterCarte(cartesJ1[i]);
 		}
 	}
 	
 	
 	/**
-	 * @param joueurs 
-	 * 
+	 * Échange les trois cartes choisies par les joueurs entre eux.
+	 * Dans cette méthode, l'échange se fait en face.
+	 * @param joueurs Les joueurs de la partie.
 	 */
 	public static void echangeFace(Joueur[] joueurs) {
+		// Demande et stocke les cartes à échanger du premier joueur.
 		Carte[] cartesJ0 = ((Humain) joueurs[0]).choisirCartesAEchanger();
+		
+		// Demande et stocke les cartes à échanger du second joueur.
 		Carte[] cartesJ1 = ((IA) joueurs[1]).choisirCartesAEchanger();
+		
+		// Demande et stocke les cartes à échanger du troisième joueur.
 		Carte[] cartesJ2 = ((IA) joueurs[2]).choisirCartesAEchanger();
+		
+		// Demande et stocke les cartes à échanger du quatrième joueur.
 		Carte[] cartesJ3 = ((IA) joueurs[3]).choisirCartesAEchanger();
 		
+		// Parcours des tableaux de cartes à échanger.
 		for (int i = 0 ; i < cartesJ0.length ; i++) {
+			// joueurs[0] donne les cartes au joueurs[2].
 			joueurs[2].ajouterCarte(cartesJ0[i]);
+			// joueurs[2] donne les cartes au joueurs[0].
 			joueurs[0].ajouterCarte(cartesJ2[i]);
+			// joueurs[3] donne les cartes au joueurs[1].
 			joueurs[1].ajouterCarte(cartesJ3[i]);
+			// joueurs[1] donne les cartes au joueurs[3].
 			joueurs[3].ajouterCarte(cartesJ1[i]);
 		}
 	}
 	
 	
 	/**
-	 * 
-	 * @param joueurs 
-	 * @param noManche 
+	 * Échange les cartes suivant le numéro de la manche courante.
+	 * Le sens des échanges sont définis par rapport au numéro de la manche.
+	 * @param joueurs Les joueurs de la partie.
+	 * @param noManche Le numéro de la manche de la partie.
 	 */
 	public static void echangerCartes(Joueur[] joueurs, int noManche) {
 		System.out.println("Début de l'échange des cartes !\n"
 				           + "********************************");
 		
 		if (noManche % 4 == 0) {
+			// Échange des cartes vers le joueur positionné à gauche. 
 			echangeGauche(joueurs);
 			System.out.println("L'échange des cartes est terminé !");
+			
+			// Tri la main du joueur après l'échange des cartes.
 			trierMains(joueurs);
 		} else if (noManche % 4 == 1) {
+			// Échange des cartes vers le joueur positionné à droite.
 			echangeDroit(joueurs);
 			System.out.println("L'échange des cartes est terminé !");
+			
+			// Tri la main du joueur après l'échange des cartes.
 			trierMains(joueurs);
 		} else if (noManche % 4 == 2) {
+			// Échange des cartes vers le joueur positionné en face.
 			echangeFace(joueurs);
 			System.out.println("L'échange des cartes est terminé !");
+			
+			// Tri la main du joueur après l'échange des cartes.
 			trierMains(joueurs);
 		} else {
 			System.out.println("Il n'y a pas d'échange de cartes ce tour !");
@@ -287,14 +337,14 @@ public class OutilCarte {
 	
 	/**
 	 * Tri les cartes dans la main des joueurs passés en argument.
-	 * @param joueurs Les joueurs de la partie dont il faut trier les mains.
+	 * @param joueurs Les joueurs de la partie.
 	 */
 	public static void trierMains(Joueur[] joueurs) {
 		// Parcours des joueurs de la partie.
-		for (int i = 0 ; i < joueurs.length ; i++) {
+		for (Joueur joueurCourant : joueurs) {
 			
 			// Tri de la main du joueur courant.
-			joueurs[i].trierMain();
+			joueurCourant.trierMain();
 		}
 	}
 	

@@ -11,19 +11,21 @@ import static damedepique.general.OutilPartie.*;
 import damedepique.ia.IA;
 
 /**
+ * <p>
+ *   TODO Faire la description de cette classe.
+ * </p>
  * 
- * @author Julien B.
+ * @author Loïc B. | Julien B. | Margaux B. | Justine R.
  * @version 1.0
  */
 public class DameDePique {
 
-	/**
-	 * 
-	 */
+	/** Le nombre de joueurs que le jeu peut accueillir simultanément. */
 	private static final int NB_JOUEURS = 4;
 	
+	
 	/**
-	 * 
+	 * Point d'entrée de l'application de la dame de pique.
 	 * @param args Non utilisé.
 	 */
 	public static void main(String[] args) {
@@ -51,11 +53,11 @@ public class DameDePique {
 		int premier = 0;
 		
 		while (!finPartie(joueurs)) {
-			for (int z = 0 ; z < joueurs.length ; z++) {
-				if (z == 0) {
+			for (int j = 0 ; j < NB_JOUEURS ; j++) {
+				if (j == 0) {
 					System.out.println(joueurs[0] + " (vous)");
 				} else {
-					System.out.println(joueurs[z]);
+					System.out.println(joueurs[j]);
 				}
 			}
 			
@@ -91,13 +93,13 @@ public class DameDePique {
 					
 				Symbole symboleDebut = plateau.getSymboleDebut();
 					
-				for (int i = premier + 1 ; i != premier ; i++) {
-					if (i == joueurs.length) { i = 0; }
+				for (int k = premier + 1 ; k != premier ; k++) {
+					if (k == joueurs.length) { k = 0; }
 						
-					if (joueurs[i] instanceof Humain) {
-						carteJouee = ((Humain) joueurs[i]).jouerCarte(symboleDebut);
+					if (joueurs[k] instanceof Humain) {
+						carteJouee = ((Humain) joueurs[k]).jouerCarte(symboleDebut);
 					} else {
-						carteJouee = ((IA) joueurs[i]).jouerCarte(symboleDebut);
+						carteJouee = ((IA) joueurs[k]).jouerCarte(symboleDebut);
 					}
 						
 					plateau.ajouterCarte(carteJouee);
@@ -105,28 +107,37 @@ public class DameDePique {
 								       + "actuel : " + plateau + "\n\n");
 					
 					// TODO A améliorer.
-					if (premier == 0 && i == 3) { i = -1; };
+					if (premier == 0 && k == 3) { k = -1; };
 				}
 				
 				premier = plateau.getPerdant(joueurs);
 				
-				// Faire l'ajout des points avant de retirer les cartes du plateau.
 				plateau.ajouterPointsTour(joueurs);
 				
 				plateau.retirerCartesJouees(joueurs);
 					
-				System.out.println(joueurs[premier].getPseudo() + " a perdu(e) le tour " + (numeroTour + 1)+ "/13.");
+				System.out.println(joueurs[premier].getPseudo() + " a "
+						           + "perdu(e) le tour " + (numeroTour + 1) 
+						           + "/13.\nRécapitulatif des points de cette "
+						           + "manche : ");
+				
+				for (int m = 0 ; m < NB_JOUEURS ; m++) {
+					System.out.println("\n    => " + joueurs[m].getPseudo() 
+							           + " possède " 
+							           + joueurs[m].getPointsManche() 
+							           + " point(s).");
+				}
 				
 				numeroTour++;
 			}
 			
-			plateau.ajouterPointsTot(joueurs);
+			ajouterPointsTot(joueurs);
 			
 			numeroManche++;
 
 		}
 		
-		plateau.getGagnant(joueurs);
+		getGagnant(joueurs);
 
 	}
 

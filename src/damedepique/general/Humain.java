@@ -12,10 +12,10 @@ import java.util.Objects;
 
 /**
  * <p>
- *   
+ *   TODO Faire la description de cette classe.
  * </p>
  * 
- * @author Julien B.
+ * @author Loïc B. | Julien B. | Margaux B. | Justine R.
  * @version 1.0
  */
 public class Humain extends Joueur {
@@ -70,10 +70,10 @@ public class Humain extends Joueur {
 		
 		do {
 			// Demande à cet (this) Humain d'entrer la valeur d'une carte.
-			valeur = saisirValeur("Entrez la valeur d'une carte : ");
+			valeur = saisirValeur();
 			
 			// Demande à cet (this) Humain d'entrer le symbole d'une carte.
-			symbole = saisirSymbole("Entrez le symbole d'une carte : ");
+			symbole = saisirSymbole();
 			
 			/*
 			 * Récupère la carte jouée dans la main du joueur à partir du 
@@ -130,10 +130,10 @@ public class Humain extends Joueur {
 		
 		do {
 			// Demande à cet (this) Humain d'entrer la valeur d'une carte.
-			valeur = saisirValeur("Entrez la valeur d'une carte : ");
+			valeur = saisirValeur();
 						
 			// Demande à cet (this) Humain d'entrer le symbole d'une carte.
-			symbole = saisirSymbole("Entrez le symbole d'une carte : ");
+			symbole = saisirSymbole();
 			
 			/*
 			 * Récupère la carte jouée dans la main du joueur à partir du 
@@ -178,16 +178,17 @@ public class Humain extends Joueur {
 		Valeur valeur;
 		
 		do {
-			valeur = saisirValeur("Entrez la valeur d'une carte à jouer : ");
-			symbole = saisirSymbole("Entrez le symbole d'une carte à jouer : ");
+			valeur = saisirValeur();
+			symbole = saisirSymbole();
 			
 			aJouer = recuperationCarte(this, Symbole.Trefle, Valeur.Deux);
 			nok = !estEgale(aJouer, symbole, valeur);
 			
-			// TODO Faire un message plus explicite.
 			if (nok) {
-				System.out.println("\nIl faut jouer le " 
-			                       + aJouer.toString().toLowerCase() + "\n");
+				System.out.println("\nVous possedez le " 
+			                       + aJouer.toString().toLowerCase() + " dans "
+			                       + "votre main il vous faut donc le jouer en"
+			                       + " premier\n");
 			}
 		} while (nok);
 		

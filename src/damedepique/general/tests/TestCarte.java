@@ -10,8 +10,11 @@ import damedepique.general.Valeur;
 import damedepique.general.Symbole;
 
 /**
- * Cette classe contient toutes les méthodes de test de la classe Carte.
- * @author Julien B.
+ * <p>
+ *   Cette classe contient toutes les méthodes de test de la classe Carte.
+ * </p>
+ *   
+ * @author Loïc B. | Julien B. | Margaux B. | Justine R.
  * @version 1.0
  */
 public class TestCarte {

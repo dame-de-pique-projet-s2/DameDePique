@@ -14,7 +14,7 @@ import java.util.Scanner;
  *   Cette classe contient des méthodes outils pour effectuer des saisies.
  * </p>
  * 
- * @author Julien B.
+ * @author Loïc B. | Julien B. | Margaux B. | Justine R.
  * @version 1.0
  */
 public class OutilSaisie {
@@ -113,10 +113,9 @@ public class OutilSaisie {
 	
 	/**
 	 * Demande à un joueur d'entrer un symbole.
-	 * @param message Le message à afficher pour demander de saisir un symbole.
 	 * @return Le symbole valide d'une carte.
 	 */
-	public static Symbole saisirSymbole(String message) {
+	public static Symbole saisirSymbole() {
 		String symbole;     // Symbole entrée par le joueur.
 		boolean correct;    // Indicateur de bonne saisie (symbole valide).
 		
@@ -126,7 +125,7 @@ public class OutilSaisie {
 		 */
 		do {
 			// Affichage d'un message pour demander d'entrer un symbole.
-			System.out.print(message);
+			System.out.print("Entrez le symbole d'une carte à jouer : ");
 			symbole = sc.next() + sc.nextLine();
 			correct = symboleEstValide(symbole);
 			
@@ -149,10 +148,9 @@ public class OutilSaisie {
 	
 	/**
 	 * Demande à un joueur d'entrer une valeur.
-	 * @param message Le message à afficher pour demander de saisir une valeur.
 	 * @return La valeur valide d'une carte.
 	 */
-	public static Valeur saisirValeur(String message) {
+	public static Valeur saisirValeur() {
 		String valeur;      // Valeur entrée par le joueur.
 		boolean correct;    // Indicateur de bonne saisie (valeur valide).
 		
@@ -162,7 +160,7 @@ public class OutilSaisie {
 		 */
 		do {
 			// Affichage d'un message pour demander d'entrer une valeur.
-			System.out.print(message);
+			System.out.print("Entrez la valeur d'une carte à jouer : ");
 			valeur = sc.next() + sc.nextLine();
 			correct = valeurEstValide(valeur);
 			

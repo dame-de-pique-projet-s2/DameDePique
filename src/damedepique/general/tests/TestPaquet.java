@@ -9,8 +9,11 @@ import damedepique.general.Joueur;
 import damedepique.general.Paquet;
 
 /**
- * Cette classe contient toutes les méthodes de test de la classe Paquet.
- * @author Julien B.
+ * <p>
+ *   Cette classe contient toutes les méthodes de test de la classe Paquet.
+ * </p>
+ *   
+ * @author Loïc B. | Julien B. | Margaux B. | Justine R.
  * @version 1.0
  */
 public class TestPaquet {

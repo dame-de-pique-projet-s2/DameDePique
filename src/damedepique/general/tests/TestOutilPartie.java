@@ -6,8 +6,11 @@
 package damedepique.general.tests;
 
 /**
+ * <p>
+ *   Cette classe contient les méthodes de test de la classe OutilPartie.
+ * </p>
  * 
- * @author Julien B.
+ * @author Loïc B. | Julien B. | Margaux B. | Justine R.
  * @version 1.0
  */
 public class TestOutilPartie {

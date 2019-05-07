@@ -10,8 +10,11 @@ import damedepique.general.OutilSaisie;
 import damedepique.general.Symbole;
 
 /**
- * Cette classe contient toutes les méthodes de test de la classe OutilSaisie.
- * @author Julien B.
+ * <p>
+ *   Cette classe contient les méthodes de test de la classe OutilSaisie.
+ * </p>
+ * 
+ * @author Loïc B. | Julien B. | Margaux B. | Justine R.
  * @version 1.0
  */
 public class TestOutilSaisie {
@@ -89,7 +92,7 @@ public class TestOutilSaisie {
 		Symbole symbole;
 		
 		for (int i = 0 ; i < OutilTest.NB_TESTS ; i++) {
-			symbole = OutilSaisie.saisirSymbole("Entrez un symbole : ");
+			symbole = OutilSaisie.saisirSymbole();
 			System.out.println("    => " + symbole.toString() + "\n");
 		}
 		
@@ -107,7 +110,7 @@ public class TestOutilSaisie {
 		Valeur valeur;
 		
 		for (int i = 0 ; i < OutilTest.NB_TESTS ; i++) {
-			valeur = OutilSaisie.saisirValeur("Entrez une valeur : ");
+			valeur = OutilSaisie.saisirValeur();
 			System.out.println("    => " + valeur.toString() + "\n");
 		}
 		

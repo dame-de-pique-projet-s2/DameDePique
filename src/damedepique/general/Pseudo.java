@@ -11,7 +11,7 @@ package damedepique.general;
  *   aléatoirement au joueur humain ainsi qu'aux intelligences artificielles.
  * </p>
  * 
- * @author Julien B.
+ * @author Loïc B. | Julien B. | Margaux B. | Justine R.
  * @version 1.0
  */
 public enum Pseudo {
