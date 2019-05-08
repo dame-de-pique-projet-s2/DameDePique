@@ -20,13 +20,17 @@ import java.util.ArrayList;
  */
 public class Plateau {
 
+	/** Nombre de cartes maximum sur un plateau de cartes. */
+	private final int NB_CARTES_PLATEAU_MAX = 4;
+	
+	
 	/** Cartes qui composent ce (this) Plateau. */
 	private ArrayList<Carte> cartes;
 	
 	
 	/** Création d'un nouveau plateau de jeu. */
 	public Plateau() {
-		this.cartes = new ArrayList<>();
+		this.cartes = new ArrayList<>(NB_CARTES_PLATEAU_MAX);
 	}
 	
 	
@@ -78,6 +82,9 @@ public class Plateau {
 			plateauCourant.add(carte);
 		}
 		
+		// Taille du plateau courant.
+		int taillePlateauCourant = plateauCourant.size();
+		
 		// Stocke le symbole demandé au début du tour.
 		Symbole symboleDemande = this.getSymboleDebut();
 		
@@ -85,20 +92,28 @@ public class Plateau {
 		Valeur valeur;
 		
 		/* 
+		 * Nombre de cartes supprimées sur le plateau courant à cause d'un 
+		 * symbole différent de celui demandé.
+		 */
+		int nbSupp = 0;
+		
+		/* 
 		 * Parcours des cartes du plateau pour vérifier quelles ont bien toutes 
 		 * le même symbole. Si une ou plusieurs n'ont pas le même symbole alors 
 		 * elles sont supprimées de la copie du plateau.
 		 */
-		for (int i = 0 ; i < plateauCourant.size() ; i++) {
+		for (int i = 0 ; i < taillePlateauCourant ; i++) {
 			
 			/* 
 			 * Vérifie si le symbole de la carte courante est équivalent à 
 			 * celui demandé au début du tour.
 			 */
-			if (!plateauCourant.get(i).getSymbole().equals(symboleDemande)) {
+			if (!plateauCourant.get(i - nbSupp).getSymbole()
+					                           .equals(symboleDemande)) {
 				
 				// Retire s'ils ne sont pas équivalent.
-				plateauCourant.remove(plateauCourant.get(i));
+				plateauCourant.remove(plateauCourant.get(i - nbSupp));
+				nbSupp++;    // Incrémente le nombre de suppressions.
 			}
 		}
 		
@@ -118,6 +133,7 @@ public class Plateau {
 	 * @param joueurs Les joueurs de la partie.
 	 */
 	public void retirerCartesJouees(Joueur[] joueurs) {
+		
 		for (Carte carteCourante : this.cartes) {
 			int i = rechercherCarte(joueurs, carteCourante.getSymbole(), 
 					                         carteCourante.getValeur());

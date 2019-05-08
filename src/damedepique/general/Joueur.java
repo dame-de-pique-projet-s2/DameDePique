@@ -21,6 +21,10 @@ import java.util.ArrayList;
  */
 public class Joueur {
 	
+	/** Nombre de cartes maximum dans la main d'un joueur. */
+	private final int NB_CARTES_MAIN_MAX = 13;
+	
+	
 	/** Pseudo de ce (this) Joueur. */
 	private Pseudo pseudo;
 	
@@ -46,7 +50,7 @@ public class Joueur {
 		this.affectationPseudo();    // Affecte un pseudo par défaut.
 		this.pointsTot = 0;
 		this.pointsManche = 0;
-		this.main = new ArrayList<>();
+		this.main = new ArrayList<>(NB_CARTES_MAIN_MAX);
 	}
 	
 	

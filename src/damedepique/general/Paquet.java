@@ -36,13 +36,17 @@ import java.util.ArrayList;
  */
 public class Paquet {
 
+	/** Nombre de cartes qu'un paquet traditionnel contient. */
+	private final int NB_CARTES_PAQUET = 52;
+	
+	
 	/** Cartes qui composent ce (this) Paquet. */
 	private ArrayList<Carte> cartes;
 	
 	
 	/** Création d'un nouveau paquet de cartes. */
 	public Paquet() {
-		this.cartes = new ArrayList<>();
+		this.cartes = new ArrayList<>(NB_CARTES_PAQUET);
 	}
 	
 	

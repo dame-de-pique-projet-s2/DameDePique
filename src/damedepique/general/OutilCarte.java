@@ -18,35 +18,7 @@ import damedepique.ia.IA;
  * @version 1.0
  */
 public class OutilCarte {
-
-	/**
-	 * Vérifie si une carte spécifiée possède à la fois le symbole et la 
-	 * valeur passés en argument.
-	 * @param aVerifier La carte à vérifier.
-	 * @param symbole Le symbole à chercher.
-	 * @param valeur La valeur à chercher.
-	 * @return Vrai si le symbole et la valeur correspondent à la carte 
-	 *         spécifiée sinon faux.
-	 */
-	public static boolean estEgale(Carte aVerifier, Symbole symbole, 
-			                                        Valeur valeur) {
 		
-		/*
-		 * Regarde si le symbole est égal au symbole de la carte aVerifier et 
-		 * si la valeur est égale à la valeur de la carte aVerifier.
-		 */
-		if (aVerifier.getSymbole().equals(symbole) 
-			&& aVerifier.getValeur().equals(valeur)) {
-			
-			// Vrai si les symboles et les valeurs correspondent.
-			return true;
-		}
-		
-		// Faux si les symboles et les valeurs ne correspondent pas.
-		return false;
-	}
-	
-	
 	/**
 	 * Récupère une carte dans la main d'un joueur en fonction de son symbole 
 	 * et de sa valeur.
@@ -71,7 +43,8 @@ public class OutilCarte {
 			 * Recherche d'une occurrence entre la carte courante de la main 
 			 * du joueur et le symbole et la valeur passés en argument.
 			 */
-			if (estEgale(carteCourante, symbole, valeur)) {
+			if (carteCourante.getSymbole().equals(symbole) 
+				&& carteCourante.getValeur().equals(valeur)) {
 				
 				// Retourne la carte associée au symbole et à la valeur.
 				return carteCourante;
@@ -93,7 +66,6 @@ public class OutilCarte {
 	public static int rechercherCarte(Joueur[] joueurs, Symbole symbole,
 			                                            Valeur valeur) {
 		
-		// FIXME Problème à résoudre, carte introuvable.
 		// Mémoire qui stocke les cartes dans la main du joueur courant.
 		ArrayList<Carte> mainJoueurCourant;
 		
@@ -111,7 +83,8 @@ public class OutilCarte {
 				 * main du joueur courant et le symbole et la valeur passés 
 				 * en argument.
 				 */
-				if (estEgale(mainJoueurCourant.get(j), symbole, valeur)) {
+				if (mainJoueurCourant.get(j).getSymbole().equals(symbole) 
+					&& mainJoueurCourant.get(j).getValeur().equals(valeur)) {
 					
 					/* 
 					 * Retourne l'indice du joueur possédant la carte 
@@ -127,7 +100,7 @@ public class OutilCarte {
 		 * Si aucun joueur n'a trouvé été trouvé en possession de la carte 
 		 * indiquée alors le premier joueur est assuré de posséder cette carte.
 		 */
-		return 0;    // FIXME Attention !
+		return 0;
 	}
 	
 	

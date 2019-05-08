@@ -74,6 +74,7 @@ public class DameDePique {
 				if (numeroTour == 0) {
 					premier = rechercherCarte(joueurs, Symbole.Trefle, Valeur.Deux);
 					if (joueurs[premier] instanceof Humain) {
+						System.out.println("C'est à vous de commencer cette manche, vous avez le deux de trèfle.");
 						carteJouee = ((Humain) joueurs[premier]).jouerDeuxTrefle();
 					} else {
 						carteJouee = ((IA) joueurs[premier]).jouerDeuxTrefle();
@@ -81,6 +82,7 @@ public class DameDePique {
 					plateau.ajouterCarte(carteJouee);
 				} else {
 					if (joueurs[premier] instanceof Humain) {
+						System.out.println("C'est à vous de commencer ce tour.");
 						carteJouee = ((Humain) joueurs[premier]).jouerCarte();
 					} else {
 						carteJouee = ((IA) joueurs[premier]).jouerCarte();
@@ -88,27 +90,28 @@ public class DameDePique {
 					plateau.ajouterCarte(carteJouee);
 				}
 					
-				System.out.println("\n\nVoici le plateau de jeu "
-					               + "actuel : " + plateau + "\n\n");
-					
 				Symbole symboleDebut = plateau.getSymboleDebut();
-					
+				
+				// Jeu dans le sens des aiguilles d'une montre.
 				for (int k = premier + 1 ; k != premier ; k++) {
 					if (k == joueurs.length) { k = 0; }
 						
 					if (joueurs[k] instanceof Humain) {
+						System.out.println("\n\nVoici le plateau de jeu "
+							               + "actuel : " + plateau + "\n\n");
 						carteJouee = ((Humain) joueurs[k]).jouerCarte(symboleDebut);
 					} else {
 						carteJouee = ((IA) joueurs[k]).jouerCarte(symboleDebut);
 					}
-						
+					
 					plateau.ajouterCarte(carteJouee);
-					System.out.println("\n\nVoici le plateau de jeu "
-								       + "actuel : " + plateau + "\n\n");
 					
 					// TODO A améliorer.
 					if (premier == 0 && k == 3) { k = -1; };
 				}
+				
+				System.out.println("\n\nVoici le plateau de jeu "
+			                       + "actuel : " + plateau + "\n\n");
 				
 				premier = plateau.getPerdant(joueurs);
 				

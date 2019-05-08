@@ -182,7 +182,8 @@ public class Humain extends Joueur {
 			symbole = saisirSymbole();
 			
 			aJouer = recuperationCarte(this, Symbole.Trefle, Valeur.Deux);
-			nok = !estEgale(aJouer, symbole, valeur);
+			nok = !aJouer.getSymbole().equals(symbole) 
+				  || !aJouer.getValeur().equals(valeur);
 			
 			if (nok) {
 				System.out.println("\nVous possedez le " 

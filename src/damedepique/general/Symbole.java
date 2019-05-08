@@ -13,7 +13,7 @@ package damedepique.general;
  * </p>
  * <p>
  *   Les quatre symboles sont les suivantes : 
- *   le carreau (♦), le coeur (♥), le pique (♠) et le trèfle (♣).
+ *   le pique (♠), le carreau (♦), le trèfle (♣) et le coeur (♥).
  * </p>
  * 
  * @author Loïc B. | Julien B. | Margaux B. | Justine R.
@@ -21,9 +21,9 @@ package damedepique.general;
  */
 public enum Symbole {
 
-	Carreau,
-	Coeur,
 	Pique,
-	Trefle
+	Carreau,
+	Trefle,
+	Coeur
 	
 }
