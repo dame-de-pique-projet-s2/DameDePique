@@ -61,7 +61,7 @@ public class Humain extends Joueur {
 		
 		do {
 			// Affichage d'un message demandant l'indice de la carte à jouer.
-			System.out.print("Entrez la position d'une carte à échanger : ");
+			System.out.print("~ Entrez la position d'une carte à échanger : ");
 			
 			/*
 			 * Demande et stockage de l'indice de la carte à jouer. Si la 
@@ -79,11 +79,11 @@ public class Humain extends Joueur {
 			
 			// Affichage d'un message d'indication au joueur.
 			if (nok) {
-				System.out.println("La position que vous avez donné ne "
+				System.out.println("\nLa position que vous avez donné ne "
 						           + "correspond à aucune carte dans votre "
 						           + "main.\nMerci d'entrer une position de "
 						           + "carte comprise entre 0 et " 
-						           + (cartesJouables.size() - 1));
+						           + (cartesJouables.size() - 1) + ".\n");
 			}
 			
 			sc.nextLine();    // Vidage du tampon.
@@ -100,8 +100,8 @@ public class Humain extends Joueur {
 	 * carte possédant un coeur n'a été encore défaussé dans la manche.
 	 */
 	public Carte jouerCarte(boolean coeurDefausse) {
-		System.out.println("C'est à vous de commencer ce tour car vous avez "
-				           + "perdu le tour précedent.");
+		System.out.println("### C'est à vous de commencer ce tour car vous avez "
+				           + "perdu le tour précedent.\n");
 		
 		// Cartes jouables dans la main de ce (this) Humain.
 		ArrayList<Carte> cartesJouables = cartesPossibles(this, coeurDefausse);
@@ -110,14 +110,16 @@ public class Humain extends Joueur {
 		int indiceCarte;    // Indice de la carte choisie.
 		
 		// Affichage les cartes présentes dans la main du joueur.
+		System.out.println("### Votre main actuelle : ");
 		afficherCartes(this.getMain());
 	    
 		// Affichage des cartes jouables dans la main de cet (this) Humain.
+		System.out.println("### Les cartes que vous pouvez jouer : ");
 		afficherCartesIndice(cartesJouables);
 		
 		do {
 			// Affichage d'un message demandant l'indice de la carte à jouer.
-			System.out.print("Entrez la position d'une carte à jouer : ");
+			System.out.print("~ Entrez la position d'une carte à jouer : ");
 			
 			/*
 			 * Demande et stockage de l'indice de la carte à jouer. Si la 
@@ -135,15 +137,12 @@ public class Humain extends Joueur {
 			
 			// Affichage d'un message d'indication au joueur.
 			if (nok) {
-				System.out.println("La position que vous avez donné ne "
+				System.out.println("\nLa position que vous avez donné ne "
 				                    + "correspond à aucune carte dans les "
 				                    + "cartes que vous pouvez jouer.\nMerci "
 				                    + "d'entrer une position de carte comprise"
 				                    + " entre 0 et " 
-				                    + (cartesJouables.size() - 1));
-				
-				// Affichage des cartes possibles pour jouer.
-				afficherCartes(cartesJouables);
+				                    + (cartesJouables.size() - 1) + ".\n");
 			}
 			
 			sc.nextLine();    // Vidage du tampon.
@@ -162,8 +161,8 @@ public class Humain extends Joueur {
 	 * et la dame de pique ne sont pas jouables.
 	 */
 	public Carte jouerCarte(Symbole symboleDemande, int noTour) {
-		System.out.println("Le symbole demandé au début du tour est le " 
-	                       + symboleDemande.toString().toLowerCase() + ".");
+		System.out.println("### Le symbole demandé au début du tour est le " 
+	                       + symboleDemande.toString().toLowerCase() + ".\n");
 		
 		// Cartes jouables dans la main de ce (this) Humain.
 		ArrayList<Carte> cartesJouables = cartesPossibles(this, symboleDemande, 
@@ -173,14 +172,16 @@ public class Humain extends Joueur {
 		int indiceCarte;    // Indice de la carte choisie.
 		
 		// Affichage les cartes présentes dans la main du joueur.
+		System.out.println("### Votre main actuelle : ");
 		afficherCartes(this.getMain());
 		
-		// Affichage les cartes possibles pour jouer dans la main du jouer.	           
+		// Affichage les cartes possibles pour jouer dans la main du jouer.
+		System.out.println("### Les cartes que vous pouvez jouer : ");
 		afficherCartesIndice(cartesJouables);
 		
 		do {
 			// Affichage d'un message demandant l'indice de la carte à jouer.
-			System.out.print("Entrez la position d'une carte à jouer : ");
+			System.out.print("~ Entrez la position d'une carte à jouer : ");
 			
 			/*
 			 * Demande et stockage de l'indice de la carte à jouer. Si la 
@@ -198,15 +199,12 @@ public class Humain extends Joueur {
 			
 			// Affichage d'un message d'indication au joueur.
 			if (nok) {
-				System.out.println("La position que vous avez donné ne "
+				System.out.println("\nLa position que vous avez donné ne "
 	                               + "correspond à aucune carte dans les "
 	                               + "cartes que vous pouvez jouer.\nMerci "
 	                               + "d'entrer une position de carte comprise"
 	                               + " entre 0 et " 
-	                               + (cartesJouables.size() - 1));
-	
-				// Affichage des cartes possibles pour jouer.
-				afficherCartes(cartesJouables);
+	                               + (cartesJouables.size() - 1) + ".\n");
 			}
 			
 			sc.nextLine();
@@ -222,8 +220,8 @@ public class Humain extends Joueur {
 	 * deux de trèfle situé dans sa main.
 	 */
 	public Carte jouerDeuxTrefle() {
-		System.out.println("C'est à vous de commencer cette manche, vous avez "
-				           + "le deux de trèfle.");
+		System.out.println("### C'est à vous de commencer cette manche, vous "
+				           + "avez le deux de trèfle.\n");
 		
 		ArrayList<Carte> mainJoueur = this.getMain();
 		
@@ -234,6 +232,7 @@ public class Humain extends Joueur {
 		int indiceDeuxTrefle = indiceDeuxTrefle(this);
 		
 		// Affichage des cartes dans la main de cet (this) Humain.
+		System.out.println("### Les cartes que vous pouvez jouer : ");
 		afficherCartesIndice(mainJoueur);
 		
 		/*
@@ -242,7 +241,7 @@ public class Humain extends Joueur {
 		 */
 		do {
 			// Affichage d'un message demandant l'indice du deux de trèfle.
-			System.out.print("Entrez la position du deux de trèfle : ");
+			System.out.print("~ Entrez la position du deux de trèfle : ");
 						
 			/*
 			 * Demande et stockage de l'indice de la carte à jouer. Si la 
@@ -261,10 +260,7 @@ public class Humain extends Joueur {
 						           + "votre main.\nVous êtes obligé de le "
 						           + "jouer pour commencer cette manche.\nLe "
 						           + "deux de trèfle est à la position numéro " 
-						           + indiceDeuxTrefle + " dans votre main.");
-				
-				// Affichage de la main du joueur.
-				afficherCartes(mainJoueur);
+						           + indiceDeuxTrefle + " dans votre main.\n");
 			}
 			
 			sc.nextLine();    // Vidage du tampon.
@@ -285,7 +281,7 @@ public class Humain extends Joueur {
 		
 		// Demande trois fois de choisir une carte au joueur.
 		for (int i = 0 ; i < aEchanger.length ; i++) {
-			System.out.println("Échange numéro " + (i + 1) + "/3");
+			System.out.println("\n### Échange numéro " + (i + 1) + " sur 3");
 			
 			// Demande une carte et la stocke dans la case courante.
 			aEchanger[i] = this.jouerCarte();

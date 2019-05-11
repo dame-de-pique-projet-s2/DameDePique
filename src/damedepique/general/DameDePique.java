@@ -57,11 +57,12 @@ public class DameDePique {
 		int premier = 0;
 		
 		while (!finPartie(joueurs)) {
+			System.out.println("Les joueurs de la partie : ");
 			for (int j = 0 ; j < NB_JOUEURS ; j++) {
 				if (j == 0) {
-					System.out.println(joueurs[0] + " (vous)");
+					System.out.println("    > " + joueurs[0].getPseudo() + " (vous)");
 				} else {
-					System.out.println(joueurs[j]);
+					System.out.println("    > " + joueurs[j].getPseudo());
 				}
 			}
 			
@@ -100,8 +101,8 @@ public class DameDePique {
 					if (k == joueurs.length) { k = 0; }
 						
 					if (joueurs[k] instanceof Humain) {
-						System.out.println("\n\nVoici le plateau de jeu "
-							               + "actuel : " + plateau + "\n\n");
+						System.out.println("### Le plateau de jeu "
+							               + "actuel : " + plateau + "\n");
 						carteJouee = joueurs[k].jouerCarte(symboleDebut, numeroTour);
 					} else {
 						carteJouee = joueurs[k].jouerCarte(symboleDebut, numeroTour);
@@ -113,8 +114,8 @@ public class DameDePique {
 					if (premier == 0 && k == 3) { k = -1; };
 				}
 				
-				System.out.println("\n\nVoici le plateau de jeu "
-			                       + "actuel : " + plateau + "\n\n");
+				System.out.println("\n### Le plateau de jeu "
+			                       + "final : " + plateau + "\n");
 				
 				coeurDefausse = plateau.avecCoeur();
 				
@@ -123,18 +124,20 @@ public class DameDePique {
 				plateau.ajouterPointsTour(joueurs);
 				
 				plateau.retirerCartesJouees(joueurs);
-					
+				
 				System.out.println(joueurs[premier].getPseudo() + " a "
 						           + "perdu(e) le tour " + (numeroTour + 1) 
 						           + "/13.\nRécapitulatif des points de cette "
-						           + "manche : ");
+						           + "manche :");
 				
 				for (int m = 0 ; m < NB_JOUEURS ; m++) {
-					System.out.println("\n    => " + joueurs[m].getPseudo() 
+					System.out.println("    > " + joueurs[m].getPseudo() 
 							           + " possède " 
 							           + joueurs[m].getPointsManche() 
 							           + " point(s).");
 				}
+				
+				System.out.println();
 				
 				numeroTour++;
 			}

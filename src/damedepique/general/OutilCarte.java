@@ -218,6 +218,11 @@ public class OutilCarte {
 			// joueurs[3] donne les cartes au joueurs[0].
 			joueurs[0].ajouterCarte(cartesJ3[i]);
 		}
+		
+		System.out.println("\n(-) Vous donnez vos cartes à " + joueurs[1].getPseudo() + " ...");
+		System.out.println("(+) Vous recevez les cartes de " + joueurs[3].getPseudo() + " ...");
+		System.out.println("(/) " + joueurs[2].getPseudo() + " donne ces cartes à " + joueurs[3].getPseudo() + " ...");
+		System.out.println("(/) " + joueurs[1].getPseudo() + " donne ces cartes à " + joueurs[2].getPseudo() + " ...\n");
 	}
 	
 	
@@ -253,6 +258,11 @@ public class OutilCarte {
 			// joueurs[1] donne les cartes au joueurs[0].
 			joueurs[0].ajouterCarte(cartesJ1[i]);
 		}
+		
+		System.out.println("\n(-) Vous donnez vos cartes à " + joueurs[3].getPseudo() + " ...");
+		System.out.println("(+) Vous recevez les cartes de " + joueurs[1].getPseudo() + " ...");
+		System.out.println("(/) " + joueurs[3].getPseudo() + " donne ces cartes à " + joueurs[2].getPseudo() + " ...");
+		System.out.println("(/) " + joueurs[2].getPseudo() + " donne ces cartes à " + joueurs[1].getPseudo() + " ...\n");
 	}
 	
 	
@@ -288,6 +298,10 @@ public class OutilCarte {
 			// joueurs[1] donne les cartes au joueurs[3].
 			joueurs[3].ajouterCarte(cartesJ1[i]);
 		}
+		
+		System.out.println("\n(-) Vous donnez vos cartes à " + joueurs[2].getPseudo() + " ...");
+		System.out.println("(+) Vous recevez les cartes de " + joueurs[2].getPseudo() + " ...");
+		System.out.println("(/) " + joueurs[1].getPseudo() + " et " + joueurs[3].getPseudo() + " échangent leurs cartes entre eux ...\n");
 	}
 	
 	
@@ -298,36 +312,58 @@ public class OutilCarte {
 	 * @param noManche Le numéro de la manche de la partie.
 	 */
 	public static void echangerCartes(Joueur[] joueurs, int noManche) {
-		System.out.println("Début de l'échange des cartes !\n"
-				           + "********************************");
+		System.out.println("\n  * * * * * * * * * * * * * * * * *\n"
+				           + "* * * * * * * * * * * * * * * * * * *\n"
+				           + "* * Début de l'échange des cartes * *\n"
+				           + "* * * * * * * * * * * * * * * * * * *\n"
+				           + "  * * * * * * * * * * * * * * * * *");
 		
 		if (noManche % 4 == 0) {
 			// Échange des cartes vers le joueur positionné à gauche. 
 			echangeGauche(joueurs);
-			System.out.println("L'échange des cartes est terminé !");
+			System.out.println("### Votre nouvelle main après l'échange : ");
+			afficherCartes(joueurs[0].getMain());
+			// Tri la main du joueur après l'échange des cartes.
+			trierMains(joueurs);
+			System.out.println("  * * * * * * * * * * * * * * * *\n"
+	                           + "* * * * * * * * * * * * * * * * * *\n"
+	                           + "* * Fin de l'échange des cartes * *\n"
+	                           + "* * * * * * * * * * * * * * * * * *\n"
+	                           + "  * * * * * * * * * * * * * * * *\n");
 			
 			// Tri la main du joueur après l'échange des cartes.
 			trierMains(joueurs);
 		} else if (noManche % 4 == 1) {
 			// Échange des cartes vers le joueur positionné à droite.
 			echangeDroit(joueurs);
-			System.out.println("L'échange des cartes est terminé !");
+			System.out.println("### Votre nouvelle main après l'échange : ");
+			afficherCartes(joueurs[0].getMain());
+			// Tri la main du joueur après l'échange des cartes.
+			trierMains(joueurs);
+			System.out.println("  * * * * * * * * * * * * * * * *\n"
+	                           + "* * * * * * * * * * * * * * * * * *\n"
+	                           + "* * Fin de l'échange des cartes * *\n"
+	                           + "* * * * * * * * * * * * * * * * * *\n"
+	                           + "  * * * * * * * * * * * * * * * *\n");
 			
 			// Tri la main du joueur après l'échange des cartes.
 			trierMains(joueurs);
 		} else if (noManche % 4 == 2) {
 			// Échange des cartes vers le joueur positionné en face.
 			echangeFace(joueurs);
-			System.out.println("L'échange des cartes est terminé !");
-			
+			System.out.println("### Votre nouvelle main après l'échange : ");
+			afficherCartes(joueurs[0].getMain());
 			// Tri la main du joueur après l'échange des cartes.
 			trierMains(joueurs);
+			System.out.println("\n  * * * * * * * * * * * * * * * *\n"
+			                   + "* * * * * * * * * * * * * * * * * *\n"
+			                   + "* * Fin de l'échange des cartes * *\n"
+			                   + "* * * * * * * * * * * * * * * * * *\n"
+			                   + "  * * * * * * * * * * * * * * * *\n");
 		} else {
+			// TODO Faire un meilleur affichage.
 			System.out.println("Il n'y a pas d'échange de cartes ce tour !");
 		}
-		
-		System.out.println("Voici votre nouvelle main : ");
-		afficherCartes(joueurs[0].getMain());
 	}
 	
 	
