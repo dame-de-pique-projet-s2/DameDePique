@@ -1,5 +1,5 @@
 /*
- * Carte.java                                                        30/04/2019
+ * Carte.java                                                        11/05/2019
  * Projet de la dame de pique | IUT de Rodez | 2018 - 2019
  */
 
@@ -9,11 +9,20 @@ import java.util.Comparator;
 
 /**
  * <p>
- *   TODO Faire la description de cette classe.
+ *   Cette classe contient toutes les caractéristiques d'une carte de jeu. Une 
+ *   carte de jeu est principalement caractérisée à l'aide d'un symbole et 
+ *   d'une valeur.
  * </p>
  * 
- * @author Loïc B. | Julien B. | Margaux B. | Justine R.
+ * @author Julien B.
+ * @author Loïc B.
+ * @author Margaux B.
+ * @author Justine R.
+ * 
  * @version 1.0
+ * 
+ * @see damedepique.general.Symbole
+ * @see damedepique.general.Valeur
  */
 public class Carte {
 
@@ -27,7 +36,8 @@ public class Carte {
 	
 	/**
 	 * Création d'une nouvelle carte comportant un symbole valide 
-	 * et une valeur valide.
+	 * et une valeur valide. Ces symboles et valeurs sont situés respectivement 
+	 * dans les énumérations Symbole et Valeur.
 	 * @param symbole Symbole pour la carte à créer.
 	 * @param valeur Valeur pour la carte à créer.
 	 */
@@ -42,7 +52,7 @@ public class Carte {
 	 * @return Le symbole de la carte.
 	 */
 	public Symbole getSymbole() {
-		return this.symbole;
+		return this.symbole;    // Retourne une valeur de type Symbole.
 	}
 	
 	
@@ -51,7 +61,7 @@ public class Carte {
 	 * @return La valeur de la carte.
 	 */
 	public Valeur getValeur() {
-		return this.valeur;
+		return this.valeur;    // Retourne une valeur de type Valeur.
 	}
 	
 	
@@ -64,7 +74,8 @@ public class Carte {
 	
 	/**
 	 * Création d'un comparateur pour trier les cartes dans un ordre croissant 
-	 * suivant la position des objets des énumérations Symbole et Valeur.
+	 * suivant la position des symboles et des valeurs dans les énumérations 
+	 * Symbole et Valeur.
 	 * @see damedepique.general.Symbole
 	 * @see damedepique.general.Valeur
 	 */

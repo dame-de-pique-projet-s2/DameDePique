@@ -1,5 +1,5 @@
 /*
- * Paquet.java                                                       27/04/2019
+ * Paquet.java                                                       11/05/2019
  * Projet de la dame de pique | IUT de Rodez | 2018 - 2019
  */
 
@@ -9,35 +9,40 @@ import java.util.ArrayList;
 
 /**
  * <p>
- *   Cette classe contient toutes les méthodes qui concernent la manipulation
- *   d'un paquet de cartes.
+ *   Cette classe contient toutes les caractéristiques d'un paquet de cartes.
  * </p>
  * <ul>
  *   <li>
- *     La méthode creer() permet comme son nom l'indique de créer et 
+ *     La méthode <i>creer()</i> permet comme son nom l'indique de créer et 
  *     d'initialiser une paquet de 52 cartes pour jouer au jeu de la dame de 
  *     pique. Chaque symbole est associé à exactement une valeur sinon le jeu 
  *     de cartes n'est pas valide (doublons).
  *   </li>
  *   <li>
- *     La méthode melanger() permet de mélanger un paquet de cartes créé au 
- *     préalable. Attention, l'utilisation de cette méthode modifie l'état de 
- *     la liste de cartes.
+ *     La méthode <i>melanger()</i> permet de mélanger un paquet de cartes créé 
+ *     au préalable. Attention, l'utilisation de cette méthode modifie l'état 
+ *     de la liste de cartes.
  *   </li>
  *   <li>
- *     La méthode distribuer() permet de répartir les 52 cartes entre les 
- *     quatre joueurs de la partie. Chaque joueur reçoit 13 cartes dans sa main 
- *     et aucun joueur n'est avantagé lors de cette distribution.
+ *     La méthode <i>distribuer()</i> permet de répartir les 52 cartes entre 
+ *     les quatre joueurs de la partie. Chaque joueur reçoit 13 cartes dans sa 
+ *     main et aucun joueur n'est avantagé lors de cette distribution.
  *   </li>
  * </ul>
  * 
- * @author Loïc B. | Julien B. | Margaux B. | Justine R.
+ * @author Julien B.
+ * @author Loïc B.
+ * @author Margaux B.
+ * @author Justine R.
+ * 
  * @version 1.0
+ * 
+ * @see damedepique.general.Carte
  */
 public class Paquet {
 
 	/** Nombre de cartes qu'un paquet traditionnel contient. */
-	private final int NB_CARTES_PAQUET = 52;
+	private static final int NB_CARTES_PAQUET = 52;
 	
 	
 	/** Cartes qui composent ce (this) Paquet. */
@@ -123,6 +128,10 @@ public class Paquet {
 	}
 	
 	
+	/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+	 * * * * * * * * * * * * * PARTIE PRESENTATION * * * * * * * * * * * * *
+	 * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
+	// TODO A modifier pour l'affichage.
 	@Override
 	public String toString() {
 		String listeCartes = "";

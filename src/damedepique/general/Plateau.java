@@ -1,5 +1,5 @@
 /*
- * Plateau.java                                                      28/04/2019
+ * Plateau.java                                                      11/05/2019
  * Projet de la dame de pique | IUT de Rodez | 2018 - 2019
  */
 
@@ -15,13 +15,17 @@ import java.util.ArrayList;
  *   TODO Finir de commenter les méthodes.
  * </p>
  * 
- * @author Loïc B. | Julien B. | Margaux B. | Justine R.
+ * @author Julien B.
+ * @author Loïc B.
+ * @author Margaux B.
+ * @author Justine R.
+ * 
  * @version 1.0
  */
 public class Plateau {
 
 	/** Nombre de cartes maximum sur un plateau de cartes. */
-	private final int NB_CARTES_PLATEAU_MAX = 4;
+	private static final int NB_CARTES_PLATEAU_MAX = 4;
 	
 	
 	/** Cartes qui composent ce (this) Plateau. */
@@ -112,7 +116,7 @@ public class Plateau {
 					                           .equals(symboleDemande)) {
 				
 				// Retire s'ils ne sont pas équivalent.
-				plateauCourant.remove(plateauCourant.get(i - nbSupp));
+				plateauCourant.remove(i - nbSupp);
 				nbSupp++;    // Incrémente le nombre de suppressions.
 			}
 		}
@@ -227,6 +231,10 @@ public class Plateau {
 		joueurs[indicePerdant].ajouterPointsManche(aAjouter);
 	}
 	
+	
+	/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+	 * * * * * * * * * * * * * PARTIE PRESENTATION * * * * * * * * * * * * *
+	 * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 	
 	@Override
 	public String toString() {

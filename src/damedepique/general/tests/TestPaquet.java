@@ -7,6 +7,7 @@ package damedepique.general.tests;
 
 import damedepique.general.Joueur;
 import damedepique.general.Paquet;
+import damedepique.ia.IA;
 
 /**
  * <p>
@@ -74,7 +75,7 @@ public class TestPaquet {
 		// Instantiation et initialisation de quatre joueurs.
 		Joueur[] joueurs = new Joueur[4];
 		for (int i = 0 ; i < joueurs.length ; i++) {
-			joueurs[i] = new Joueur();
+			joueurs[i] = new IA();
 		}
 		
 		// Création du nouveau paquet de cartes.

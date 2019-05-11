@@ -15,7 +15,11 @@ import damedepique.ia.IA;
  *   TODO Faire la description de cette classe.
  * </p>
  * 
- * @author Loïc B. | Julien B. | Margaux B. | Justine R.
+ * @author Julien B.
+ * @author Loïc B.
+ * @author Margaux B.
+ * @author Justine R.
+ * 
  * @version 1.0
  */
 public class DameDePique {
@@ -62,6 +66,7 @@ public class DameDePique {
 			}
 			
 			int numeroTour = 0;
+			boolean coeurDefausse = false;
 			
 			paquet.melanger();
 			paquet.distribuer(joueurs);
@@ -74,18 +79,16 @@ public class DameDePique {
 				if (numeroTour == 0) {
 					premier = rechercherCarte(joueurs, Symbole.Trefle, Valeur.Deux);
 					if (joueurs[premier] instanceof Humain) {
-						System.out.println("C'est à vous de commencer cette manche, vous avez le deux de trèfle.");
-						carteJouee = ((Humain) joueurs[premier]).jouerDeuxTrefle();
+						carteJouee = joueurs[premier].jouerDeuxTrefle();
 					} else {
-						carteJouee = ((IA) joueurs[premier]).jouerDeuxTrefle();
+						carteJouee = joueurs[premier].jouerDeuxTrefle();
 					}
 					plateau.ajouterCarte(carteJouee);
 				} else {
 					if (joueurs[premier] instanceof Humain) {
-						System.out.println("C'est à vous de commencer ce tour.");
-						carteJouee = ((Humain) joueurs[premier]).jouerCarte();
+						carteJouee = joueurs[premier].jouerCarte(coeurDefausse);
 					} else {
-						carteJouee = ((IA) joueurs[premier]).jouerCarte();
+						carteJouee = joueurs[premier].jouerCarte(coeurDefausse);
 					}
 					plateau.ajouterCarte(carteJouee);
 				}
@@ -99,9 +102,9 @@ public class DameDePique {
 					if (joueurs[k] instanceof Humain) {
 						System.out.println("\n\nVoici le plateau de jeu "
 							               + "actuel : " + plateau + "\n\n");
-						carteJouee = ((Humain) joueurs[k]).jouerCarte(symboleDebut);
+						carteJouee = joueurs[k].jouerCarte(symboleDebut, numeroTour);
 					} else {
-						carteJouee = ((IA) joueurs[k]).jouerCarte(symboleDebut);
+						carteJouee = joueurs[k].jouerCarte(symboleDebut, numeroTour);
 					}
 					
 					plateau.ajouterCarte(carteJouee);
@@ -112,6 +115,8 @@ public class DameDePique {
 				
 				System.out.println("\n\nVoici le plateau de jeu "
 			                       + "actuel : " + plateau + "\n\n");
+				
+				coeurDefausse = plateau.avecCoeur();
 				
 				premier = plateau.getPerdant(joueurs);
 				

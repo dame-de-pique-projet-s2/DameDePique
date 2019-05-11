@@ -1,5 +1,5 @@
 /*
- * Joueur.java                                                       25/04/2019
+ * Joueur.java                                                       11/05/2019
  * Projet de la dame de pique | IUT de Rodez | 2018 - 2019
  */
 
@@ -13,16 +13,20 @@ import java.util.ArrayList;
  *   jouant au jeu de la dame de pique. Un joueur est caractérisé par un pseudo 
  *   non modifiable qui lui est assigné par défaut, un nombre de points totaux 
  *   qui évolue au cours de la partie et d'une main dans laquelle le joueur 
- *   possède les cartes qu'il peut jouer.
+ *   possède les cartes qu'il peut jouer durant une manche.
  * </p>
  * 
- * @author Loïc B. | Julien B. | Margaux B. | Justine R.
+ * @author Julien B.
+ * @author Loïc B.
+ * @author Margaux B.
+ * @author Justine R.
+ * 
  * @version 1.0
  */
-public class Joueur {
+public abstract class Joueur {
 	
 	/** Nombre de cartes maximum dans la main d'un joueur. */
-	private final int NB_CARTES_MAIN_MAX = 13;
+	private static final int NB_CARTES_MAIN_MAX = 13;
 	
 	
 	/** Pseudo de ce (this) Joueur. */
@@ -60,7 +64,7 @@ public class Joueur {
 	
 	/**
 	 * Récupère le pseudonyme de ce (this) Joueur.
-	 * @return Le pseudo du joueur.
+	 * @return Le pseudonyme du joueur.
 	 */
 	public Pseudo getPseudo() {
 		return this.pseudo;
@@ -102,7 +106,7 @@ public class Joueur {
 	
 	
 	/**
-	 * Ajoute des points aux points totaux à ce (this) Joueur.
+	 * Ajoute des points aux points totaux de ce (this) Joueur.
 	 * @param aAjouter Le nombre de points à ajouter.
 	 */
 	public void ajouterPointsTot(int aAjouter) {
@@ -121,7 +125,9 @@ public class Joueur {
 	
 	/**
 	 * Met à jour le nombre de points de ce (this) Joueur pendant une manche.
-	 * Cette méthode est utile lors de la détection de la cloche de bois.
+	 * Cette méthode est utile lors de la détection de la cloche de bois, elle 
+	 * permet d'ajouter automatiquement 26 points aux joueurs quelque soit 
+	 * leurs nombres de points durant une manche.
 	 * @param aRemplacer La nouvelle valeur des points de la manche.
 	 */
 	public void setPointsManche(int aRemplacer) {
@@ -152,7 +158,7 @@ public class Joueur {
 	
 	/**
 	 * Récupère la main de ce (this) Joueur.
-	 * @return Les cartes dans la main du joueur.
+	 * @return La liste des cartes dans la main du joueur.
 	 */
 	public ArrayList<Carte> getMain() {
 		return this.main;
@@ -189,6 +195,59 @@ public class Joueur {
 	}
 	
 	
+	/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+	 * * * * * * * * * * * * * * PARTIE ACTION * * * * * * * * * * * * * * *
+	 * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
+	
+	/**
+	 * Joue une carte sans aucune restriction.
+	 * @return La carte à jouer par ce (this) Joueur.
+	 */
+	public abstract Carte jouerCarte();
+	
+	
+	/**
+	 * Joue une carte en vérifiant qu'un coeur a été défaussé ou non. Si un 
+	 * coeur n'a jamais été défaussé alors le joueur ne peut pas commencer par 
+	 * une carte comportant du coeur.
+	 * @param coeurDefausse Vrai si une carte possédant le symbole coeur a déjà 
+	 *                      été défaussé au cours d'une manche sinon faux.
+	 * @return La carte à jouer par ce (this) Joueur.
+	 */
+	public abstract Carte jouerCarte(boolean coeurDefausse);
+	
+	
+	/**
+	 * Joue une carte en vérifiant que le symbole joué corresponde bien au 
+	 * symbole demandé au début du tour. Si cette méthode est appelée au 
+	 * premier tour d'une manche alors toutes les cartes possédant du coeur 
+	 * et la dame de pique ne sont pas jouables.
+	 * @param symboleDemande Le symbole demandé au début d'un tour.
+	 * @param noTour Le numéro du tour de la manche.
+	 * @return La carte à jouer par ce (this) Joueur.
+	 */
+	public abstract Carte jouerCarte(Symbole symboleDemande, int noTour);
+	
+	
+	/**
+	 * Joue le deux de trèfle. Cette méthode n'est utile que pour le premier 
+	 * tour d'une manche.
+	 * @return Le carte possédant le symbole trèfle et la valeur deux.
+	 */
+	public abstract Carte jouerDeuxTrefle();
+	
+	
+	/**
+	 * Échange trois cartes soumises à aucune restriction.
+	 * @return Un tableau contenant les trois cartes à échanger.
+	 */
+	public abstract Carte[] choisirCartesAEchanger();
+	
+	
+	/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+	 * * * * * * * * * * * * * PARTIE PRESENTATION * * * * * * * * * * * * *
+	 * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
+	// TODO A modifier pour l'affichage.
 	@Override
 	public String toString() {
 		String listeCartes = "";

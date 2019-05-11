@@ -1,28 +1,43 @@
 /*
- * Humain.java                                                       30/04/2019
+ * Humain.java                                                       11/05/2019
  * Projet de la dame de pique | IUT de Rodez | 2018 - 2019
  */
 
 package damedepique.general;
 
 import static damedepique.general.OutilCarte.*;
-import static damedepique.general.OutilSaisie.*;
 
-import java.util.Objects;
+import java.util.ArrayList;
+import java.util.Scanner;
 
 /**
  * <p>
- *   TODO Faire la description de cette classe.
+ *   Cette classe contient toutes les actions qu'un joueur humain peut faire.
+ *   Ces actions sont principalement basées sur le jeu d'un carte avec des 
+ *   vérifications visant à confirmer la validité de la carte jouée.
  * </p>
  * 
- * @author Loïc B. | Julien B. | Margaux B. | Justine R.
+ * @author Julien B.
+ * @author Loïc B.
+ * @author Margaux B.
+ * @author Justine R.
+ * 
  * @version 1.0
+ * 
+ * @see damedepique.general.Joueur
  */
 public class Humain extends Joueur {
 
+	/** Analyseur lexical de l'entrée standard texte. */
+	private static Scanner sc = new Scanner(System.in);
+	
+	
+	/** Valeur impossible lors des saisies d'indice de carte. */
+	private static final int IMPOSSIBLE = -1;
+	
+	
 	/**
 	 * Création d'un nouveau humain avec les caractéristiques d'un joueur.
-	 * @see damedepique.general.Joueur
 	 */
 	public Humain() {
 		super();
@@ -30,9 +45,239 @@ public class Humain extends Joueur {
 	
 	
 	/**
+	 * Demande à cet (this) Humain d'entrer l'indice (la position) d'une carte 
+	 * afin de la jouer. Il n'y a aucune restriction mis à part d'entrer un 
+	 * indice d'une carte présente dans sa main.
+	 */
+	public Carte jouerCarte() {
+		// Cartes jouables dans la main de cet (this) Humain.
+		ArrayList<Carte> cartesJouables = this.getMain();
+		
+		boolean nok;        // Indicateur de mauvaise carte choisie.
+		int indiceCarte;    // Indice de la carte choisie.
+		
+		// Affichage des cartes jouables dans la main de cet (this) Humain.
+		afficherCartesIndice(cartesJouables);
+		
+		do {
+			// Affichage d'un message demandant l'indice de la carte à jouer.
+			System.out.print("Entrez la position d'une carte à échanger : ");
+			
+			/*
+			 * Demande et stockage de l'indice de la carte à jouer. Si la 
+			 * valeur entrée par le joueur n'est pas un entier alors la valeur 
+			 * affectée à la variable est -1 (valeur impossible) pour que la 
+			 * saisie soit recommencée.
+			 */
+			indiceCarte = sc.hasNextInt() ? sc.nextInt() : IMPOSSIBLE;
+			
+			/* 
+			 * Vérifie si l'indice donné est bien compris dans l'intervalle 
+			 * des cartes jouables.
+			 */
+			nok = (indiceCarte < 0 || cartesJouables.size() <= indiceCarte);
+			
+			// Affichage d'un message d'indication au joueur.
+			if (nok) {
+				System.out.println("La position que vous avez donné ne "
+						           + "correspond à aucune carte dans votre "
+						           + "main.\nMerci d'entrer une position de "
+						           + "carte comprise entre 0 et " 
+						           + (cartesJouables.size() - 1));
+			}
+			
+			sc.nextLine();    // Vidage du tampon.
+		} while (nok);
+		
+		// Retourne la carte jouée par le joueur.
+		return cartesJouables.get(indiceCarte);
+	}
+	
+	
+	/**
+	 * Demande à cet (this) Humain d'entrer l'indice (la position) d'une carte 
+	 * afin de la jouer. La carte jouée ne doit pas être un coeur si aucune 
+	 * carte possédant un coeur n'a été encore défaussé dans la manche.
+	 */
+	public Carte jouerCarte(boolean coeurDefausse) {
+		System.out.println("C'est à vous de commencer ce tour car vous avez "
+				           + "perdu le tour précedent.");
+		
+		// Cartes jouables dans la main de ce (this) Humain.
+		ArrayList<Carte> cartesJouables = cartesPossibles(this, coeurDefausse);
+		
+		boolean nok;        // Indicateur de mauvaise carte choisie.
+		int indiceCarte;    // Indice de la carte choisie.
+		
+		// Affichage les cartes présentes dans la main du joueur.
+		afficherCartes(this.getMain());
+	    
+		// Affichage des cartes jouables dans la main de cet (this) Humain.
+		afficherCartesIndice(cartesJouables);
+		
+		do {
+			// Affichage d'un message demandant l'indice de la carte à jouer.
+			System.out.print("Entrez la position d'une carte à jouer : ");
+			
+			/*
+			 * Demande et stockage de l'indice de la carte à jouer. Si la 
+			 * valeur entrée par le joueur n'est pas un entier alors la valeur 
+			 * affectée à la variable est -1 (valeur impossible) pour que la 
+			 * saisie soit recommencée.
+			 */
+			indiceCarte = sc.hasNextInt() ? sc.nextInt() : IMPOSSIBLE;
+			
+			/* 
+			 * Vérifie si l'indice donné est bien compris dans l'intervalle 
+			 * des cartes jouables.
+			 */
+			nok = (indiceCarte < 0 || cartesJouables.size() <= indiceCarte);
+			
+			// Affichage d'un message d'indication au joueur.
+			if (nok) {
+				System.out.println("La position que vous avez donné ne "
+				                    + "correspond à aucune carte dans les "
+				                    + "cartes que vous pouvez jouer.\nMerci "
+				                    + "d'entrer une position de carte comprise"
+				                    + " entre 0 et " 
+				                    + (cartesJouables.size() - 1));
+				
+				// Affichage des cartes possibles pour jouer.
+				afficherCartes(cartesJouables);
+			}
+			
+			sc.nextLine();    // Vidage du tampon.
+		} while (nok);
+		
+		// Retourne la carte jouée par le joueur.
+		return cartesJouables.get(indiceCarte);
+	}
+	
+	
+	/**
+	 * Demande à cet (this) Humain d'entrer l'indice (la position) d'une carte 
+	 * afin de la jouer. La carte choisie doit possédé le même symbole que le 
+	 * symbole demandé au début d'un tour. Si cette méthode est appelée au 
+	 * premier tour d'une manche alors toutes les cartes possédant du coeur 
+	 * et la dame de pique ne sont pas jouables.
+	 */
+	public Carte jouerCarte(Symbole symboleDemande, int noTour) {
+		System.out.println("Le symbole demandé au début du tour est le " 
+	                       + symboleDemande.toString().toLowerCase() + ".");
+		
+		// Cartes jouables dans la main de ce (this) Humain.
+		ArrayList<Carte> cartesJouables = cartesPossibles(this, symboleDemande, 
+				                                                noTour);
+		
+		boolean nok;        // Indicateur de mauvaise carte choisie.
+		int indiceCarte;    // Indice de la carte choisie.
+		
+		// Affichage les cartes présentes dans la main du joueur.
+		afficherCartes(this.getMain());
+		
+		// Affichage les cartes possibles pour jouer dans la main du jouer.	           
+		afficherCartesIndice(cartesJouables);
+		
+		do {
+			// Affichage d'un message demandant l'indice de la carte à jouer.
+			System.out.print("Entrez la position d'une carte à jouer : ");
+			
+			/*
+			 * Demande et stockage de l'indice de la carte à jouer. Si la 
+			 * valeur entrée par le joueur n'est pas un entier alors la valeur 
+			 * affectée à la variable est -1 (valeur impossible) pour que la 
+			 * saisie soit recommencée.
+			 */
+			indiceCarte = sc.hasNextInt() ? sc.nextInt() : IMPOSSIBLE;
+			
+			/* 
+			 * Vérifie si l'indice donné est bien compris dans l'intervalle 
+			 * des cartes jouables.
+			 */
+			nok = (indiceCarte < 0 || cartesJouables.size() <= indiceCarte);
+			
+			// Affichage d'un message d'indication au joueur.
+			if (nok) {
+				System.out.println("La position que vous avez donné ne "
+	                               + "correspond à aucune carte dans les "
+	                               + "cartes que vous pouvez jouer.\nMerci "
+	                               + "d'entrer une position de carte comprise"
+	                               + " entre 0 et " 
+	                               + (cartesJouables.size() - 1));
+	
+				// Affichage des cartes possibles pour jouer.
+				afficherCartes(cartesJouables);
+			}
+			
+			sc.nextLine();
+		} while (nok);
+		
+		// Retourne la carte jouée par le joueur.
+		return cartesJouables.get(indiceCarte);
+	}
+	
+	
+	/**
+	 * Demande à cet (this) Humain d'entrer l'indice de la carte comportant le 
+	 * deux de trèfle situé dans sa main.
+	 */
+	public Carte jouerDeuxTrefle() {
+		System.out.println("C'est à vous de commencer cette manche, vous avez "
+				           + "le deux de trèfle.");
+		
+		ArrayList<Carte> mainJoueur = this.getMain();
+		
+		boolean nok;        // Indicateur de mauvaise carte choisie.
+		int indiceCarte;    // Indice de la carte choisie.
+		
+		// Stockage de l'indice du deux de trèfle.
+		int indiceDeuxTrefle = indiceDeuxTrefle(this);
+		
+		// Affichage des cartes dans la main de cet (this) Humain.
+		afficherCartesIndice(mainJoueur);
+		
+		/*
+		 * Si le joueur entre un indice différent de celui du deux 
+		 * de trèfle alors la saisie est recommencée.
+		 */
+		do {
+			// Affichage d'un message demandant l'indice du deux de trèfle.
+			System.out.print("Entrez la position du deux de trèfle : ");
+						
+			/*
+			 * Demande et stockage de l'indice de la carte à jouer. Si la 
+			 * valeur entrée par le joueur n'est pas un entier alors la valeur 
+			 * affectée à la variable est -1 (valeur impossible) pour que la 
+			 * saisie soit recommencée.
+			 */
+			indiceCarte = sc.hasNextInt() ? sc.nextInt() : IMPOSSIBLE;
+			
+			// Vérifie si l'indice donné est égal à celui du deux de trèfle.
+			nok = (indiceDeuxTrefle != indiceCarte);
+			
+			// Affichage d'un message d'indication au joueur.
+			if (nok) {
+				System.out.println("\nVous possédez le deux de trèfle dans "
+						           + "votre main.\nVous êtes obligé de le "
+						           + "jouer pour commencer cette manche.\nLe "
+						           + "deux de trèfle est à la position numéro " 
+						           + indiceDeuxTrefle + " dans votre main.");
+				
+				// Affichage de la main du joueur.
+				afficherCartes(mainJoueur);
+			}
+			
+			sc.nextLine();    // Vidage du tampon.
+		} while (nok);
+		
+		// Retourne le deux de trèfle joué par le joueur.
+		return mainJoueur.get(indiceCarte);
+	}
+	
+	
+	/**
 	 * Demande à cet (this) Humain d'entrer trois cartes à échanger lors de 
 	 * l'échange des trois cartes entre les quatre joueurs en début de manche.
-	 * @return Un tableau contenant les trois cartes à échanger.
 	 */
 	public Carte[] choisirCartesAEchanger() {	
 		// Initialise un tableau de trois éléments de type Carte.
@@ -40,6 +285,8 @@ public class Humain extends Joueur {
 		
 		// Demande trois fois de choisir une carte au joueur.
 		for (int i = 0 ; i < aEchanger.length ; i++) {
+			System.out.println("Échange numéro " + (i + 1) + "/3");
+			
 			// Demande une carte et la stocke dans la case courante.
 			aEchanger[i] = this.jouerCarte();
 			
@@ -47,153 +294,8 @@ public class Humain extends Joueur {
 			this.retirerCarte(aEchanger[i]);
 		}
 		
-		return aEchanger;    // Renvoie le tableau contenant les trois cartes.
-	}
-	
-	
-	/**
-	 * Demande à cet (this) Humain d'entrer une carte afin de la jouer.
-	 * Il n'a aucune restriction mis à part d'entrer une carte présente 
-	 * dans sa main.
-	 * @return La carte jouée par cet (this) Humain.
-	 */
-	public Carte jouerCarte() {
-		// Indicateur de mauvaise carte choisie, elle n'est pas dans la main.
-		boolean nok;
-		
-		Carte carte;        // Carte choisie par le joueur.
-		Symbole symbole;    // Symbole de la carte choisie par le joueur.
-		Valeur valeur;      // Valeur de la carte choisie par le joueur.
-		
-		// Affichage les cartes présentes dans la main du joueur.
-		afficherCartes(this.getMain());
-		
-		do {
-			// Demande à cet (this) Humain d'entrer la valeur d'une carte.
-			valeur = saisirValeur();
-			
-			// Demande à cet (this) Humain d'entrer le symbole d'une carte.
-			symbole = saisirSymbole();
-			
-			/*
-			 * Récupère la carte jouée dans la main du joueur à partir du 
-			 * symbole et de la valeur donnés.
-			 */
-			carte = recuperationCarte(this, symbole, valeur);
-			
-			/*
-			 * Si la carte correspondant au symbole et à la valeur joués 
-			 * précédemment n'est pas présente dans la main du joueur alors la 
-			 * valeur renvoyée par l'instruction antérieure est null. 
-			 * L'indicateur de mauvaise carte choisie passe donc à vrai pour 
-			 * que la demande soit renouvelée.
-			 */
-			nok = Objects.isNull(carte);
-			
-			// Affichage d'un message d'indication au joueur.
-			if (nok) {
-				System.out.println("\nCette carte n'est pas dans votre main.\n"
-						           + "Veuillez choisir une carte disponible "
-						           + "dans votre main de jeu.\n"); 
-				
-				// Affichage les cartes présentes dans la main du joueur.
-				afficherCartes(this.getMain());
-			}
-		} while (nok);
-		
-		return carte;    // Retourne la carte jouée par le joueur.
-	}
-	
-	
-	/**
-	 * Demande à cet (this) Humain d'entrer une carte afin de la jouer.
-	 * Le joueur doit joué une carte possédant le même symbole mentionné en 
-	 * argument sinon la demande est renouvelé. Si le joueur ne possède pas de 
-	 * carte ayant le même symbole que celui mentionné alors, le joueur peut 
-	 * jouer n'importe quelle carte.
-	 * @param symboleDemande Le symbole demandé.
-	 * @return La carte jouée par cet (this) Humain.
-	 */
-	public Carte jouerCarte(Symbole symboleDemande) {
-		boolean nok;        // Indicateur de mauvaise carte choisie.
-		
-		Carte carte;        // Carte choisie par le joueur.
-		Symbole symbole;    // Symbole de la carte choisie par le joueur.
-		Valeur valeur;      // Valeur de la carte choisie par le joueur.
-		
-		// Affichage les cartes présentes dans la main du joueur.
-		afficherCartes(this.getMain());
-		
-		// Affichage les cartes possibles pour jouer dans la main du jouer.
-		System.out.println("\nCarte(s) que vous pouvez jouer : ");		           
-		afficherCartes(cartesPossibles(this, symboleDemande));
-		
-		do {
-			// Demande à cet (this) Humain d'entrer la valeur d'une carte.
-			valeur = saisirValeur();
-						
-			// Demande à cet (this) Humain d'entrer le symbole d'une carte.
-			symbole = saisirSymbole();
-			
-			/*
-			 * Récupère la carte jouée dans la main du joueur à partir du 
-			 * symbole et de la valeur donnés.
-			 */
-			carte = recuperationCarte(this, symbole, valeur);
-			
-			/*
-			 * Si la carte correspondant au symbole et à la valeur joués 
-			 * précédemment n'est pas présente dans la main du joueur ou n'est 
-			 * pas dans la liste des cartes possibles alors l'indicateur de 
-			 * mauvaise carte choisie passe à vrai pour que la demande soit 
-			 * renouvelée.
-			 */
-			nok = Objects.isNull(carte) 
-			      || !estCartePossible(this, symboleDemande, carte);
-			
-			// Affichage d'un message d'indication au joueur.
-			if (nok) {
-				System.out.println("\nVous ne pouvez pas jouer cette carte.\n"
-						           + "Voici les cartes que vous pouvez jouer "
-						           + "pour ce tour.\n");
-				
-				// Affichage les cartes possibles pour jouer.
-				afficherCartes(cartesPossibles(this, symboleDemande));
-			}
-		} while (nok);
-		
-		return carte;    // Retourne la carte jouée par le joueur.
-	}
-	
-	
-	/**
-	 * 
-	 * @return .
-	 */
-	public Carte jouerDeuxTrefle() {
-		boolean nok;
-		
-		Carte aJouer;
-		Symbole symbole;
-		Valeur valeur;
-		
-		do {
-			valeur = saisirValeur();
-			symbole = saisirSymbole();
-			
-			aJouer = recuperationCarte(this, Symbole.Trefle, Valeur.Deux);
-			nok = !aJouer.getSymbole().equals(symbole) 
-				  || !aJouer.getValeur().equals(valeur);
-			
-			if (nok) {
-				System.out.println("\nVous possedez le " 
-			                       + aJouer.toString().toLowerCase() + " dans "
-			                       + "votre main il vous faut donc le jouer en"
-			                       + " premier\n");
-			}
-		} while (nok);
-		
-		return aJouer;
+		// Renvoie le tableau contenant les trois cartes à échanger.
+		return aEchanger;
 	}
 	
 }

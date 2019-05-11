@@ -51,7 +51,7 @@ public class TestPlateau {
 		plateau.ajouterCarte(carteJouee);
 		debut = plateau.getSymboleDebut();
 		for (int j = 1 ; j < joueurs.length ; j++) {
-			carteJouee = ((IA) joueurs[j]).jouerCarte(debut);
+			carteJouee = ((IA) joueurs[j]).jouerCarte(debut, 0);
 			plateau.ajouterCarte(carteJouee);
 		}
 		

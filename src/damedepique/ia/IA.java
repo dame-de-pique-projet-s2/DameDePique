@@ -11,7 +11,6 @@ import damedepique.general.Carte;
 import damedepique.general.Joueur;
 import damedepique.general.OutilCarte;
 import damedepique.general.Symbole;
-import damedepique.general.Valeur;
 
 /**
  * <p>
@@ -39,7 +38,6 @@ public class IA extends Joueur {
 
 	/**
 	 * Création d'une nouvelle IA avec les caractéristiques d'un joueur.
-	 * @see damedepique.general.Joueur
 	 */
 	public IA() {
 		super();
@@ -77,16 +75,27 @@ public class IA extends Joueur {
 	}
 	
 	
+	public Carte jouerCarte(boolean coeurDefausse) {
+		ArrayList<Carte> cartesPossibles;
+		
+		cartesPossibles = OutilCarte.cartesPossibles(this, coeurDefausse);
+
+		return cartesPossibles.get(0);
+	}
+	
+	
 	/**
 	 * 
 	 * @param symboleDemande 
+	 * @param noTour Le numéro du tour de la partie.
 	 * @return .
 	 */
-	public Carte jouerCarte(Symbole symboleDemande) {
+	public Carte jouerCarte(Symbole symboleDemande, int noTour) {
 		ArrayList<Carte> cartesPossibles;
 		
 		// Récupère les cartes possibles dans la main de l'IA
-		cartesPossibles = OutilCarte.cartesPossibles(this, symboleDemande);
+		cartesPossibles = OutilCarte.cartesPossibles(this, symboleDemande, 
+				                                           noTour);
 		
 		return cartesPossibles.get(0);
 	}
@@ -97,7 +106,7 @@ public class IA extends Joueur {
 	 * @return La carte deux de trèfle.
 	 */
 	public Carte jouerDeuxTrefle() {
-		return OutilCarte.recuperationCarte(this, Symbole.Trefle, Valeur.Deux);
+		return this.getMain().get(OutilCarte.indiceDeuxTrefle(this));
 	}
 	
 }

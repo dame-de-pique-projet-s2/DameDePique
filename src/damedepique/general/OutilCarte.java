@@ -1,5 +1,5 @@
 /*
- * OutilCarte.java                                                   02/05/2019
+ * OutilCarte.java                                                   11/05/2019
  * Projet de la dame de pique | IUT de Rodez | 2018 - 2019
  */
 
@@ -7,53 +7,19 @@ package damedepique.general;
 
 import java.util.ArrayList;
 
-import damedepique.ia.IA;
-
 /**
  * <p>
- *   TODO Faire la description de cette classe.
+ *   Cette classe contient des outils concernant la manipulation de cartes.
  * </p>
  * 
- * @author Loïc B. | Julien B. | Margaux B. | Justine R.
+ * @author Julien B.
+ * @author Loïc B.
+ * @author Margaux B.
+ * @author Justine R.
+ * 
  * @version 1.0
  */
 public class OutilCarte {
-		
-	/**
-	 * Récupère une carte dans la main d'un joueur en fonction de son symbole 
-	 * et de sa valeur.
-	 * @param joueur Le joueur visé par la recherche.
-	 * @param symbole Le symbole à chercher dans la main du joueur.
-	 * @param valeur La valeur à chercher dans la main du joueur.
-	 * @return Une carte si le symbole et la valeur correspondent à une carte 
-	 *         dans la main du joueur sinon la méthode renvoie la valeur null 
-	 *         qui signifie que le joueur ne possède pas la carte associée au 
-	 *         symbole et à la valeur spécifiés dans sa main de jeu.
-	 */
-	public static Carte recuperationCarte(Joueur joueur, Symbole symbole, 
-			                                             Valeur valeur) {
-		
-		// Stocke les cartes dans la main du joueur spécifié.
-		ArrayList<Carte> mainJoueur = joueur.getMain();
-		
-		// Parcours des cartes dans la main du joueur passé en argument.
-		for (Carte carteCourante : mainJoueur) {
-			
-			/*
-			 * Recherche d'une occurrence entre la carte courante de la main 
-			 * du joueur et le symbole et la valeur passés en argument.
-			 */
-			if (carteCourante.getSymbole().equals(symbole) 
-				&& carteCourante.getValeur().equals(valeur)) {
-				
-				// Retourne la carte associée au symbole et à la valeur.
-				return carteCourante;
-			}
-		}
-		
-		return null;    // Retourne null si aucune occurrence n'a été trouvé.
-	}
-	
 	
 	/**
 	 * Recherche l'indice d'un joueur ayant une carte spécifique.
@@ -105,14 +71,74 @@ public class OutilCarte {
 	
 	
 	/**
+	 * Récupère les cartes jouables par un joueur en prenant en compte si un 
+	 * coeur a déjà été défaussé ou non.
+	 * @param joueur Le joueur à vérifier.
+	 * @param coeurDefausse Vrai si un coeur a déjà été défaussé sinon faux.
+	 * @return La liste des cartes pouvant être jouées par le joueur.
+	 */
+	public static ArrayList<Carte> cartesPossibles(Joueur joueur,
+			                                       boolean coeurDefausse) {
+		
+		// Copie de la main du joueur spécifié en argument.
+		ArrayList<Carte> cartesJouables = new ArrayList<>();
+		for (Carte carte : joueur.getMain()) {
+			cartesJouables.add(carte);
+		}
+		
+		// Nombre de cartes supprimées dans la copie de la main du joueur.
+		int nbSupp = 0;
+		
+		// Taille fixe de la main du joueur.
+		int tailleMain = cartesJouables.size();
+		
+		// Vérifie si un coeur a déjà été défaussé ou non.
+		if (!coeurDefausse) {
+			
+			/*
+			 * Si aucune carte possédant le symbole coeur n'a été défaussé 
+			 * alors on parcours toute la main du joueur spécifié afin de 
+			 * retirer les cartes disposant d'un symbole coeur.
+			 */
+			for (int i = 0 ; i < tailleMain ; i++) {
+				
+				// Vérifie si la carte courante possède un coeur en symbole.
+				if (cartesJouables.get(i - nbSupp).getSymbole()
+						                          .equals(Symbole.Coeur)) {
+					
+					// Retire la carte des cartes possibles si c'est un coeur.
+					cartesJouables.remove(i - nbSupp);
+					nbSupp++;    // Incrémente le nombre de suppressions.
+				}
+			}
+		}
+		
+		/*
+		 * Si le joueur ne possède aucun autre symbole que du coeur, ou 
+		 * autrement dit si il possède que du coeur et qu'aucune carte ayant 
+		 * le symbole coeur n'a été défaussé alors le joueur peut jouer du 
+		 * coeur. Attention, ceci est un cas particulier. 
+		 */
+		if (cartesJouables.isEmpty()) {
+			return joueur.getMain();
+		}
+ 		
+		// Retourne la liste des cartes jouables par le joueur.
+		return cartesJouables;
+	}
+	
+	
+	/**
 	 * Récupère les cartes jouables par un joueur selon sa main par rapport à 
 	 * un symbole demandé.
 	 * @param joueur Le joueur à vérifier.
 	 * @param symboleDemande Le symbole demandé au début du tour.
+	 * @param noTour Le numéro du tour de la partie.
 	 * @return La liste des cartes pouvant être jouées par le joueur.
 	 */
 	public static ArrayList<Carte> cartesPossibles(Joueur joueur,
-			                                       Symbole symboleDemande) {
+			                                       Symbole symboleDemande,
+			                                       int noTour) {
 		
 		// Stocke la main du joueur passé en argument.
 		ArrayList<Carte> mainJoueur = joueur.getMain();
@@ -129,6 +155,17 @@ public class OutilCarte {
 			 */
 			if (carteCourante.getSymbole().equals(symboleDemande)) {
 				cartesJouables.add(carteCourante);
+			}
+		}
+		
+		if (noTour == 0) {
+			for (Carte carteJouable : cartesJouables) {
+				if (carteJouable.getSymbole().equals(Symbole.Coeur) 
+					|| (carteJouable.getSymbole().equals(Symbole.Pique) 
+						&& carteJouable.getValeur().equals(Valeur.Dame))) {
+					
+					cartesJouables.remove(carteJouable);
+				}
 			}
 		}
 		
@@ -150,57 +187,34 @@ public class OutilCarte {
 	
 	
 	/**
-	 * Vérifie si une carte est jouable ou non par rapport à un symbole 
-	 * demandé au début d'un tour.
-	 * @param joueur Le joueur à vérifier.
-	 * @param symboleDemande Le symbole demandé au début d'un tour.
-	 * @param carteJouee La carte jouée par le joueur spécifié.
-	 * @return Vrai si la carte jouée est présente dans la liste des cartes 
-	 *         jouables (même symbole que celui demandé) sinon faux.
-	 */
-	public static boolean estCartePossible(Joueur joueur, 
-			                               Symbole symboleDemande, 
-			                               Carte carteJouee) {
-		
-		// Liste des cartes jouables par le joueur passé en argument.
-		ArrayList<Carte> cartesJouables = cartesPossibles(joueur, 
-				                                          symboleDemande);
-		
-		// Vérifie si la carte jouée est contenue dans la liste des cartes.
-		if (cartesJouables.contains(carteJouee)) {
-			return true;    // Vrai si une occurrence a été trouvée.
-		}
-		
-		return false;    // Faux si aucune occurrence n'a été trouvée.
-	}
-	
-	
-	/**
 	 * Échange les trois cartes choisies par les joueurs entre eux.
 	 * Dans cette méthode, l'échange se fait vers la gauche.
 	 * @param joueurs Les joueurs de la partie.
 	 */
 	public static void echangeGauche(Joueur[] joueurs) {
 		// Demande et stocke les cartes à échanger du premier joueur.
-		Carte[] cartesJ0 = ((Humain) joueurs[0]).choisirCartesAEchanger();
+		Carte[] cartesJ0 = joueurs[0].choisirCartesAEchanger();
 		
 		// Demande et stocke les cartes à échanger du second joueur.
-		Carte[] cartesJ1 = ((IA) joueurs[1]).choisirCartesAEchanger();
+		Carte[] cartesJ1 = joueurs[1].choisirCartesAEchanger();
 		
 		// Demande et stocke les cartes à échanger du troisième joueur.
-		Carte[] cartesJ2 = ((IA) joueurs[2]).choisirCartesAEchanger();
+		Carte[] cartesJ2 = joueurs[2].choisirCartesAEchanger();
 
 		// Demande et stocke les cartes à échanger du quatrième joueur.
-		Carte[] cartesJ3 = ((IA) joueurs[3]).choisirCartesAEchanger();
+		Carte[] cartesJ3 = joueurs[3].choisirCartesAEchanger();
 		
 		// Parcours des tableaux de cartes à échanger.
 		for (int i = 0 ; i < cartesJ0.length ; i++) {
 			// joueurs[0] donne les cartes au joueurs[1].
 			joueurs[1].ajouterCarte(cartesJ0[i]);
+			
 			// joueurs[1] donne les cartes au joueurs[2].
 			joueurs[2].ajouterCarte(cartesJ1[i]);
+			
 			// joueurs[2] donne les cartes au joueurs[3].
 			joueurs[3].ajouterCarte(cartesJ2[i]);
+			
 			// joueurs[3] donne les cartes au joueurs[0].
 			joueurs[0].ajouterCarte(cartesJ3[i]);
 		}
@@ -214,25 +228,28 @@ public class OutilCarte {
 	 */
 	public static void echangeDroit(Joueur[] joueurs) {
 		// Demande et stocke les cartes à échanger du premier joueur.
-		Carte[] cartesJ0 = ((Humain) joueurs[0]).choisirCartesAEchanger();
+		Carte[] cartesJ0 = joueurs[0].choisirCartesAEchanger();
 		
 		// Demande et stocke les cartes à échanger du second joueur.
-		Carte[] cartesJ1 = ((IA) joueurs[1]).choisirCartesAEchanger();
+		Carte[] cartesJ1 = joueurs[1].choisirCartesAEchanger();
 		
 		// Demande et stocke les cartes à échanger du troisième joueur.
-		Carte[] cartesJ2 = ((IA) joueurs[2]).choisirCartesAEchanger();
+		Carte[] cartesJ2 = joueurs[2].choisirCartesAEchanger();
 		
 		// Demande et stocke les cartes à échanger du quatrième joueur.
-		Carte[] cartesJ3 = ((IA) joueurs[3]).choisirCartesAEchanger();
+		Carte[] cartesJ3 = joueurs[3].choisirCartesAEchanger();
 		
 		// Parcours des tableaux de cartes à échanger.
 		for (int i = 0 ; i < cartesJ0.length ; i++) {
 			// joueurs[0] donne les cartes au joueurs[3].
 			joueurs[3].ajouterCarte(cartesJ0[i]);
+			
 			// joueurs[3] donne les cartes au joueurs[2].
 			joueurs[2].ajouterCarte(cartesJ3[i]);
+			
 			// joueurs[2] donne les cartes au joueurs[1].
 			joueurs[1].ajouterCarte(cartesJ2[i]);
+			
 			// joueurs[1] donne les cartes au joueurs[0].
 			joueurs[0].ajouterCarte(cartesJ1[i]);
 		}
@@ -246,25 +263,28 @@ public class OutilCarte {
 	 */
 	public static void echangeFace(Joueur[] joueurs) {
 		// Demande et stocke les cartes à échanger du premier joueur.
-		Carte[] cartesJ0 = ((Humain) joueurs[0]).choisirCartesAEchanger();
+		Carte[] cartesJ0 = joueurs[0].choisirCartesAEchanger();
 		
 		// Demande et stocke les cartes à échanger du second joueur.
-		Carte[] cartesJ1 = ((IA) joueurs[1]).choisirCartesAEchanger();
+		Carte[] cartesJ1 = joueurs[1].choisirCartesAEchanger();
 		
 		// Demande et stocke les cartes à échanger du troisième joueur.
-		Carte[] cartesJ2 = ((IA) joueurs[2]).choisirCartesAEchanger();
+		Carte[] cartesJ2 = joueurs[2].choisirCartesAEchanger();
 		
 		// Demande et stocke les cartes à échanger du quatrième joueur.
-		Carte[] cartesJ3 = ((IA) joueurs[3]).choisirCartesAEchanger();
+		Carte[] cartesJ3 = joueurs[3].choisirCartesAEchanger();
 		
 		// Parcours des tableaux de cartes à échanger.
 		for (int i = 0 ; i < cartesJ0.length ; i++) {
 			// joueurs[0] donne les cartes au joueurs[2].
 			joueurs[2].ajouterCarte(cartesJ0[i]);
+			
 			// joueurs[2] donne les cartes au joueurs[0].
 			joueurs[0].ajouterCarte(cartesJ2[i]);
+			
 			// joueurs[3] donne les cartes au joueurs[1].
 			joueurs[1].ajouterCarte(cartesJ3[i]);
+			
 			// joueurs[1] donne les cartes au joueurs[3].
 			joueurs[3].ajouterCarte(cartesJ1[i]);
 		}
@@ -305,6 +325,36 @@ public class OutilCarte {
 		} else {
 			System.out.println("Il n'y a pas d'échange de cartes ce tour !");
 		}
+		
+		System.out.println("Voici votre nouvelle main : ");
+		afficherCartes(joueurs[0].getMain());
+	}
+	
+	
+	/**
+	 * Recherche l'indice du deux de trèfle dans la main d'un joueur.
+	 * @param joueur Le joueur supposé avoir le deux de trèfle.
+	 * @return Un entier correspondant à l'indice du deux de trèfle.
+	 *         Si le joueur spécifié ne possède pas le deux de trèfle dans sa 
+	 *         main alors l'entier -1 est renvoyé.
+	 */
+	public static int indiceDeuxTrefle(Joueur joueur) {		
+		// Parcours de la main du joueur spécifié en argument.
+		for (Carte carte : joueur.getMain()) {
+			
+			/* 
+			 * Vérifie si la carte courante possède le symbole trèfle et 
+			 * la valeur deux.
+			 */
+			if (carte.getSymbole().equals(Symbole.Trefle) 
+				&& carte.getValeur().equals(Valeur.Deux)) {
+				
+				// Retourne l'indice de la carte cherchée.
+				return joueur.getMain().indexOf(carte);
+			}
+		}
+		
+		return -1;    // Retourne la valeur -1 en cas d'absence d'occurrence.
 	}
 	
 	
@@ -330,7 +380,22 @@ public class OutilCarte {
 		String listeCartes = "";
 		
 		for (Carte carte : cartes) {
-			listeCartes += "    => " + carte.toString() + "\n";
+			listeCartes += "=> " + carte.toString() + "\n";
+		}
+		
+		System.out.println(listeCartes);
+	}
+	
+	
+	/**
+	 * 
+	 * @param cartes
+	 */
+	public static void afficherCartesIndice(ArrayList<Carte> cartes) {
+		String listeCartes = "";
+		
+		for (int i = 0 ; i < cartes.size() ; i++) {
+			listeCartes += "(" + i + ") => " + cartes.get(i).toString() + "\n";
 		}
 		
 		System.out.println(listeCartes);

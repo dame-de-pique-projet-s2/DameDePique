@@ -8,6 +8,7 @@ package damedepique.general.tests;
 import damedepique.general.Joueur;
 import damedepique.general.Paquet;
 import damedepique.general.Pseudo;
+import damedepique.ia.IA;
 
 /**
  * <p>
@@ -35,7 +36,7 @@ public class TestJoueur {
 		 */
 		Joueur[] joueurs = new Joueur[100];
 		for (int i = 0 ; i < joueurs.length ; i++) {
-			joueurs[i] = new Joueur();
+			joueurs[i] = new IA();
 			
 			switch (joueurs[i].getPseudo()) {
 			case Aurore:
@@ -97,7 +98,7 @@ public class TestJoueur {
 		// Instantiation et initialisation de quatre joueurs.
 		Joueur[] joueurs = new Joueur[4];
 		for (int i = 0 ; i < joueurs.length ; i++) {
-		    joueurs[i] = new Joueur();
+		    joueurs[i] = new IA();
 		}
 				
 		// Création du nouveau paquet de cartes.

@@ -1,5 +1,5 @@
 /*
- * Symbole.java                                                      30/04/2019
+ * Symbole.java                                                      11/05/2019
  * Projet de la dame de pique | IUT de Rodez | 2018 - 2019
  */
 
@@ -16,7 +16,11 @@ package damedepique.general;
  *   le pique (♠), le carreau (♦), le trèfle (♣) et le coeur (♥).
  * </p>
  * 
- * @author Loïc B. | Julien B. | Margaux B. | Justine R.
+ * @author Julien B.
+ * @author Loïc B.
+ * @author Margaux B.
+ * @author Justine R.
+ * 
  * @version 1.0
  */
 public enum Symbole {
