@@ -124,18 +124,6 @@ public abstract class Joueur {
 	
 	
 	/**
-	 * Met à jour le nombre de points de ce (this) Joueur pendant une manche.
-	 * Cette méthode est utile lors de la détection de la cloche de bois, elle 
-	 * permet d'ajouter automatiquement 26 points aux joueurs quelque soit 
-	 * leurs nombres de points durant une manche.
-	 * @param aRemplacer La nouvelle valeur des points de la manche.
-	 */
-	public void setPointsManche(int aRemplacer) {
-		this.pointsManche = aRemplacer;
-	}
-	
-	
-	/**
 	 * Ajoute des points aux points d'une manche à ce (this) Joueur.
 	 * @param aAjouter Le nombre de points à ajouter.
 	 */
@@ -242,22 +230,5 @@ public abstract class Joueur {
 	 * @return Un tableau contenant les trois cartes à échanger.
 	 */
 	public abstract Carte[] choisirCartesAEchanger();
-	
-	
-	/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
-	 * * * * * * * * * * * * * PARTIE PRESENTATION * * * * * * * * * * * * *
-	 * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
-	// TODO A modifier pour l'affichage.
-	@Override
-	public String toString() {
-		String listeCartes = "";
-		
-		for (Carte carte : this.main) {
-			listeCartes += "\n    => " + carte.toString();
-		}
-		
-		return this.pseudo.toString() + " (" + this.pointsTot + " points au "
-				                      + "total)" + listeCartes;
-	}
 	
 }

@@ -25,9 +25,9 @@ package damedepique.general;
  */
 public enum Symbole {
 
-	Pique,
-	Carreau,
 	Trefle,
+	Carreau,
+	Pique,
 	Coeur
 	
 }

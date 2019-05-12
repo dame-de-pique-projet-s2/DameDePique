@@ -11,8 +11,9 @@ import java.util.ArrayList;
 
 /**
  * <p>
- *   TODO Faire la description de cette classe.
- *   TODO Finir de commenter les méthodes.
+ *   Cette classe contient toutes les caractéristiques d'un plateau de jeu.
+ *   Un plateau de jeu peut être vide ou il peut disposer d'une ou plusieurs 
+ *   cartes, avec un maximum de quatre cartes simultanément.
  * </p>
  * 
  * @author Julien B.
@@ -133,19 +134,21 @@ public class Plateau {
 	
 	
 	/**
-	 * 
+	 * Retire les cartes jouées de la main des joueurs de la partie.
 	 * @param joueurs Les joueurs de la partie.
 	 */
 	public void retirerCartesJouees(Joueur[] joueurs) {
-		
+		// Parcours de toutes les cartes du plateau.
 		for (Carte carteCourante : this.cartes) {
+			// Recherche l'indice du joueur correspondant à la carte courante.
 			int i = rechercherCarte(joueurs, carteCourante.getSymbole(), 
 					                         carteCourante.getValeur());
-				
+			
+			// Retire la carte courante de la main du joueur trouvé.
 			joueurs[i].retirerCarte(carteCourante);
 		}
 		
-		this.vider();
+		this.vider();    // Vide le plateau.
 	}
 	
 	
@@ -156,12 +159,18 @@ public class Plateau {
 	 *         ayant la valeur coeur.
 	 */
 	public boolean avecCoeur() {
+		// Parcours de toutes les cartes du plateau.
 		for (Carte carteCourante : this.cartes) {
+			
+			// Vérifie si la carte courante contient le symbole coeur.
 			if (carteCourante.getSymbole().equals(Symbole.Coeur)) {
+				
+				// A la première occurrence la méthode renvoie vrai.
 				return true;
 			}
 		}
 		
+		// Si aucune occurrence n'est trouvée alors la méthode renvoie faux.
 		return false;
 	}
 	
@@ -172,14 +181,19 @@ public class Plateau {
 	 * @return Un booléen exprimant la présence ou non de la dame de pique.
 	 */
 	public boolean avecDamePique() {
+		// Parcours de toutes les cartes du plateau.
 		for (Carte carteCourante : this.cartes) {
+			
+			// Vérifie si la carte courante est la dame de pique.
 			if (carteCourante.getSymbole().equals(Symbole.Pique) 
 				&& carteCourante.getValeur().equals(Valeur.Dame)) {
 				
+				// A la première occurrence la méthode renvoie vrai.
 				return true;
 			}
 		}
 		
+		// Si aucune occurrence n'est trouvée alors la méthode renvoie faux.
 		return false;
 	}
 	
@@ -187,8 +201,8 @@ public class Plateau {
 	/**
 	 * Cette méthode calcule le nombre de points à ajouter au joueur qui perd 
 	 * le tour. Elle teste tout d'abord la présence de la dame de pique sur le 
-	 * plateau avec la méthode avecDamePique(), ensuite elle teste la présence 
-	 * de coeur sur le plateau avec la méthode avecCoeur().
+	 * plateau avec la méthode <i>avecDamePique()</i>, ensuite elle teste la 
+	 * présence de coeur sur le plateau avec la méthode <i>avecCoeur()</i>.
 	 * 
 	 * Si la dame de pique est sur le plateau, elle rajoute 13 points aux 
 	 * points à ajouter. Si il y a des coeurs sur le plateau alors elle les 
@@ -229,22 +243,6 @@ public class Plateau {
 		
 		// Ajoute les points à ajouter aux points de la manche courante.
 		joueurs[indicePerdant].ajouterPointsManche(aAjouter);
-	}
-	
-	
-	/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
-	 * * * * * * * * * * * * * PARTIE PRESENTATION * * * * * * * * * * * * *
-	 * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
-	
-	@Override
-	public String toString() {
-		String listeCartes = "";
-		
-		for (Carte carte : this.cartes) {
-			listeCartes += "\n    => " + carte.toString();
-		}
-		
-		return listeCartes;
 	}
 	
 }

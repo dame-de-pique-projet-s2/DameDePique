@@ -127,20 +127,4 @@ public class Paquet {
 		}
 	}
 	
-	
-	/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
-	 * * * * * * * * * * * * * PARTIE PRESENTATION * * * * * * * * * * * * *
-	 * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
-	// TODO A modifier pour l'affichage.
-	@Override
-	public String toString() {
-		String listeCartes = "";
-		
-		for (Carte carte : this.cartes) {
-			listeCartes += "\n    => " + carte.toString();
-		}
-		
-		return listeCartes;
-	}
-	
 }

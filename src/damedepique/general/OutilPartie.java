@@ -1,5 +1,5 @@
 /*
- * OutilPartie.java                                                  11/05/2019
+ * OutilPartie.java                                                  12/05/2019
  * Projet de la dame de pique | IUT de Rodez | 2018 - 2019
  */
 
@@ -8,7 +8,6 @@ package damedepique.general;
 /**
  * <p>
  *   TODO Faire la description de cette classe.
- *   TODO Finir de commenter les méthodes.
  * </p>
  * 
  * @author Julien B.
@@ -95,9 +94,9 @@ public class OutilPartie {
 			 * joueur est ajouté à la liste des gagnants.
 			 */
 			if (joueur.getPointsTot() == minPointsTot) {
-				listeGagnant += "\n    => " + joueur.getPseudo() + " avec " 
-			                                + joueur.getPointsTot() 
-			                                + " point(s)";
+				listeGagnant += "\n    > " + joueur.getPseudo() + " avec " 
+			                               + joueur.getPointsTot() 
+			                               + " point(s)";
 			}
 		}
 		
@@ -113,37 +112,76 @@ public class OutilPartie {
 	 *         seule manche sinon faux.
 	 */
 	public static int clocheReussie(Joueur[] joueurs) {
+		// Parcours les scores durant une manche des joueurs de la partie.
 		for (int i = 0 ; i < joueurs.length ; i++) {
+			
+			/* 
+			 * Vérifie si un joueur à effectué un "grand chelem" ou a "déménagé 
+			 * à la cloche de bois", cela signifie qu'il a atteint le score 
+			 * maximum qu'un joueur peut faire durant une manche, 26 points.
+			 */
 			if (joueurs[i].getPointsManche() == 26) {
+				
+				// A la première occurrence, on renvoie l'indice du joueur.
 				return i;
 			}
 		}
 		
+		/* 
+		 * Si aucun joueur n'a réussi à faire un "grand chelem" alors l'indice 
+		 * -1 (indice impossible) est renvoyé.
+		 */
 		return -1;
 	}
 	
 	
 	/**
-	 * 
-	 * @param joueurs
+	 * Ajoute les points aux scores totaux des joueurs de la partie.
+	 * @param joueurs Les joueurs de la partie.
 	 */
 	public static void ajouterPointsTot(Joueur[] joueurs) {		
-		int cloche = clocheReussie(joueurs);
+		/* 
+		 * Récupère l'indice du joueur ayant effectué un "grand chelem" 
+		 * s'il existe (-1 si aucun joueur).
+		 */
+		int indiceCloche = clocheReussie(joueurs);
 		
-		if (cloche != -1) {
-			for (int i = 0 ; i < joueurs.length ; i++) {
-				if (cloche == i) {
-					joueurs[cloche].viderPointsManche();
+		// Vérifie si la cloche de bois a été réussie ou non.
+		boolean clocheEchec = (indiceCloche == -1);
+		
+		// Mémorise les points de la manche à ajouter aux points totaux.
+		int pointsManche;
+		
+		// Parcours des joueurs de la partie spécifiés en argument.
+		for (int i = 0 ; i < joueurs.length ; i++) {
+			
+			// Vérifie si aucun joueur n'a effectué un "grand chelem".
+			if (clocheEchec) {
+				// Récupère les points de la manche du joueur courant.
+				pointsManche = joueurs[i].getPointsManche();
+				
+				// Ajoute les points de la manche aux points totaux.
+				joueurs[i].ajouterPointsTot(pointsManche);
+			
+			// Si un joueur a effectué un "grand chelem".
+			} else {
+				
+				/*
+				 * Si l'indice courant ne correspond pas à l'indice du joueur 
+				 * ayant effectué un "grand chelem", alors il reçoit  
+				 * automatiquement 26 points. Au contraire si cette condition 
+				 * est fausse alors le joueur ayant effectué un "grand chelem" 
+				 * ne se voit attribuer aucun point.
+				 */
+				if (indiceCloche != i) {
+					joueurs[i].ajouterPointsTot(26);
 				} else {
-					joueurs[i].setPointsManche(26);
+					joueurs[indiceCloche].ajouterPointsTot(0);
 				}
 			}
-		}
-		
-		for (int j = 0 ; j < joueurs.length ; j++) {
-			int pointsManche = joueurs[j].getPointsManche();
-			joueurs[j].ajouterPointsTot(pointsManche);
-			joueurs[j].viderPointsManche();
+			
+			// Vide le compteur de points pour la manche du joueur courant.
+			joueurs[i].viderPointsManche();
 		}
 	}
 	

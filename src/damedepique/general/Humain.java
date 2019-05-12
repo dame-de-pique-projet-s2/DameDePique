@@ -6,6 +6,7 @@
 package damedepique.general;
 
 import static damedepique.general.OutilCarte.*;
+import static damedepique.general.OutilAffichage.*;
 
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -57,7 +58,8 @@ public class Humain extends Joueur {
 		int indiceCarte;    // Indice de la carte choisie.
 		
 		// Affichage des cartes jouables dans la main de cet (this) Humain.
-		afficherCartesIndice(cartesJouables);
+		afficherCartesIndice(cartesJouables, 
+				             "\n### Les cartes que vous pouvez échanger : ");
 		
 		do {
 			// Affichage d'un message demandant l'indice de la carte à jouer.
@@ -100,8 +102,8 @@ public class Humain extends Joueur {
 	 * carte possédant un coeur n'a été encore défaussé dans la manche.
 	 */
 	public Carte jouerCarte(boolean coeurDefausse) {
-		System.out.println("### C'est à vous de commencer ce tour car vous avez "
-				           + "perdu le tour précedent.\n");
+		System.out.println("### C'est à vous de commencer ce tour car vous "
+				           + "avez perdu le tour précedent.\n");
 		
 		// Cartes jouables dans la main de ce (this) Humain.
 		ArrayList<Carte> cartesJouables = cartesPossibles(this, coeurDefausse);
@@ -110,12 +112,11 @@ public class Humain extends Joueur {
 		int indiceCarte;    // Indice de la carte choisie.
 		
 		// Affichage les cartes présentes dans la main du joueur.
-		System.out.println("### Votre main actuelle : ");
-		afficherCartes(this.getMain());
+		afficherCartes(this.getMain(), "### Votre main actuelle : ");
 	    
 		// Affichage des cartes jouables dans la main de cet (this) Humain.
-		System.out.println("### Les cartes que vous pouvez jouer : ");
-		afficherCartesIndice(cartesJouables);
+		afficherCartesIndice(cartesJouables, 
+				             "### Les cartes que vous pouvez jouer : ");
 		
 		do {
 			// Affichage d'un message demandant l'indice de la carte à jouer.
@@ -161,9 +162,6 @@ public class Humain extends Joueur {
 	 * et la dame de pique ne sont pas jouables.
 	 */
 	public Carte jouerCarte(Symbole symboleDemande, int noTour) {
-		System.out.println("### Le symbole demandé au début du tour est le " 
-	                       + symboleDemande.toString().toLowerCase() + ".\n");
-		
 		// Cartes jouables dans la main de ce (this) Humain.
 		ArrayList<Carte> cartesJouables = cartesPossibles(this, symboleDemande, 
 				                                                noTour);
@@ -172,12 +170,11 @@ public class Humain extends Joueur {
 		int indiceCarte;    // Indice de la carte choisie.
 		
 		// Affichage les cartes présentes dans la main du joueur.
-		System.out.println("### Votre main actuelle : ");
-		afficherCartes(this.getMain());
+		afficherCartes(this.getMain(), "### Votre main actuelle : ");
 		
 		// Affichage les cartes possibles pour jouer dans la main du jouer.
-		System.out.println("### Les cartes que vous pouvez jouer : ");
-		afficherCartesIndice(cartesJouables);
+		afficherCartesIndice(cartesJouables, 
+				             "### Les cartes que vous pouvez jouer : ");
 		
 		do {
 			// Affichage d'un message demandant l'indice de la carte à jouer.
@@ -232,8 +229,8 @@ public class Humain extends Joueur {
 		int indiceDeuxTrefle = indiceDeuxTrefle(this);
 		
 		// Affichage des cartes dans la main de cet (this) Humain.
-		System.out.println("### Les cartes que vous pouvez jouer : ");
-		afficherCartesIndice(mainJoueur);
+		afficherCartesIndice(mainJoueur, 
+				             "### Les cartes que vous pouvez jouer : ");
 		
 		/*
 		 * Si le joueur entre un indice différent de celui du deux 
@@ -281,7 +278,7 @@ public class Humain extends Joueur {
 		
 		// Demande trois fois de choisir une carte au joueur.
 		for (int i = 0 ; i < aEchanger.length ; i++) {
-			System.out.println("\n### Échange numéro " + (i + 1) + " sur 3");
+			System.out.println("\n### Échange numéro " + (i + 1) + " sur 3.");
 			
 			// Demande une carte et la stocke dans la case courante.
 			aEchanger[i] = this.jouerCarte();

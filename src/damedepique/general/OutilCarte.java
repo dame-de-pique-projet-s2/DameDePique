@@ -5,6 +5,8 @@
 
 package damedepique.general;
 
+import static damedepique.general.OutilAffichage.*;
+
 import java.util.ArrayList;
 
 /**
@@ -89,7 +91,7 @@ public class OutilCarte {
 		// Nombre de cartes supprimées dans la copie de la main du joueur.
 		int nbSupp = 0;
 		
-		// Taille fixe de la main du joueur.
+		// Taille fixe de la main du joueur au début de la recherche.
 		int tailleMain = cartesJouables.size();
 		
 		// Vérifie si un coeur a déjà été défaussé ou non.
@@ -115,9 +117,9 @@ public class OutilCarte {
 		
 		/*
 		 * Si le joueur ne possède aucun autre symbole que du coeur, ou 
-		 * autrement dit si il possède que du coeur et qu'aucune carte ayant 
+		 * autrement dit si il ne possède que du coeur et qu'aucune carte ayant 
 		 * le symbole coeur n'a été défaussé alors le joueur peut jouer du 
-		 * coeur. Attention, ceci est un cas particulier. 
+		 * coeur. Attention, ceci est un cas particulier, très rare. 
 		 */
 		if (cartesJouables.isEmpty()) {
 			return joueur.getMain();
@@ -130,9 +132,9 @@ public class OutilCarte {
 	
 	/**
 	 * Récupère les cartes jouables par un joueur selon sa main par rapport à 
-	 * un symbole demandé.
+	 * un symbole demandé au début d'un tour.
 	 * @param joueur Le joueur à vérifier.
-	 * @param symboleDemande Le symbole demandé au début du tour.
+	 * @param symboleDemande Le symbole demandé au début d'un tour.
 	 * @param noTour Le numéro du tour de la partie.
 	 * @return La liste des cartes pouvant être jouées par le joueur.
 	 */
@@ -158,12 +160,27 @@ public class OutilCarte {
 			}
 		}
 		
+		// Vérifie si le numéro du tour passé en argument est égal à 0.
 		if (noTour == 0) {
+			
+			/*
+			 * Si le numéro du tour spécifié est 0, ou autrement dit si c'est 
+			 * le premier tour d'une manche, alors le joueur spécifié a 
+			 * interdiction de poser une carte comportant un symbole coeur ou 
+			 * la dame de pique. On fait donc le parcours de sa main pour 
+			 * trouver une ou plusieurs occurrences.
+			 */
 			for (Carte carteJouable : cartesJouables) {
+				
+				/*
+				 * On vérifie que la carte courante vérifié est une carte 
+				 * interdite au premier tour d'une manche.
+				 */
 				if (carteJouable.getSymbole().equals(Symbole.Coeur) 
 					|| (carteJouable.getSymbole().equals(Symbole.Pique) 
 						&& carteJouable.getValeur().equals(Valeur.Dame))) {
 					
+					// On retire la carte courante si elle est interdite.
 					cartesJouables.remove(carteJouable);
 				}
 			}
@@ -172,7 +189,7 @@ public class OutilCarte {
 		/*
 		 * Si le joueur ne possède aucune carte ayant un symbole équivalent au 
 		 * symbole demandé alors il peut jouer toutes les cartes présentes dans 
-		 * sa main. 
+		 * sa main.
 		 */
 		if (cartesJouables.isEmpty()) {
 			return mainJoueur;
@@ -180,7 +197,7 @@ public class OutilCarte {
 		
 		/* 
 		 * Retourne la liste des cartes jouables par le joueur selon le 
-		 * symbole demandé.
+		 * symbole demandé et le numéro tour.
 		 */
 		return cartesJouables;
 	}
@@ -312,57 +329,72 @@ public class OutilCarte {
 	 * @param noManche Le numéro de la manche de la partie.
 	 */
 	public static void echangerCartes(Joueur[] joueurs, int noManche) {
-		System.out.println("\n  * * * * * * * * * * * * * * * * *\n"
-				           + "* * * * * * * * * * * * * * * * * * *\n"
-				           + "* * Début de l'échange des cartes * *\n"
-				           + "* * * * * * * * * * * * * * * * * * *\n"
-				           + "  * * * * * * * * * * * * * * * * *");
-		
 		if (noManche % 4 == 0) {
+			System.out.println("\n  * * * * * * * * * * * * * * * * *\n"
+                               + "* * * * * * * * * * * * * * * * * * *\n"
+                               + "* * Début de l'échange des cartes * *\n"
+                               + "* * * * * * * * * * * * * * * * * * *\n"
+                               + "  * * * * * * * * * * * * * * * * *");
+			
 			// Échange des cartes vers le joueur positionné à gauche. 
 			echangeGauche(joueurs);
-			System.out.println("### Votre nouvelle main après l'échange : ");
-			afficherCartes(joueurs[0].getMain());
+			
 			// Tri la main du joueur après l'échange des cartes.
 			trierMains(joueurs);
+			afficherCartes(joueurs[0].getMain(), 
+					       "### Votre nouvelle main après l'échange : ");
+			
 			System.out.println("  * * * * * * * * * * * * * * * *\n"
 	                           + "* * * * * * * * * * * * * * * * * *\n"
 	                           + "* * Fin de l'échange des cartes * *\n"
 	                           + "* * * * * * * * * * * * * * * * * *\n"
 	                           + "  * * * * * * * * * * * * * * * *\n");
-			
-			// Tri la main du joueur après l'échange des cartes.
-			trierMains(joueurs);
 		} else if (noManche % 4 == 1) {
+			System.out.println("\n  * * * * * * * * * * * * * * * * *\n"
+                               + "* * * * * * * * * * * * * * * * * * *\n"
+                               + "* * Début de l'échange des cartes * *\n"
+                               + "* * * * * * * * * * * * * * * * * * *\n"
+                               + "  * * * * * * * * * * * * * * * * *");
+			
 			// Échange des cartes vers le joueur positionné à droite.
 			echangeDroit(joueurs);
-			System.out.println("### Votre nouvelle main après l'échange : ");
-			afficherCartes(joueurs[0].getMain());
+			
 			// Tri la main du joueur après l'échange des cartes.
 			trierMains(joueurs);
+			afficherCartes(joueurs[0].getMain(), 
+				           "### Votre nouvelle main après l'échange : ");
+			
 			System.out.println("  * * * * * * * * * * * * * * * *\n"
 	                           + "* * * * * * * * * * * * * * * * * *\n"
 	                           + "* * Fin de l'échange des cartes * *\n"
 	                           + "* * * * * * * * * * * * * * * * * *\n"
 	                           + "  * * * * * * * * * * * * * * * *\n");
+		} else if (noManche % 4 == 2) {
+			System.out.println("\n  * * * * * * * * * * * * * * * * *\n"
+                               + "* * * * * * * * * * * * * * * * * * *\n"
+                               + "* * Début de l'échange des cartes * *\n"
+                               + "* * * * * * * * * * * * * * * * * * *\n"
+                               + "  * * * * * * * * * * * * * * * * *");
+			
+			// Échange des cartes vers le joueur positionné en face.
+			echangeFace(joueurs);
 			
 			// Tri la main du joueur après l'échange des cartes.
 			trierMains(joueurs);
-		} else if (noManche % 4 == 2) {
-			// Échange des cartes vers le joueur positionné en face.
-			echangeFace(joueurs);
-			System.out.println("### Votre nouvelle main après l'échange : ");
-			afficherCartes(joueurs[0].getMain());
-			// Tri la main du joueur après l'échange des cartes.
-			trierMains(joueurs);
-			System.out.println("\n  * * * * * * * * * * * * * * * *\n"
+			afficherCartes(joueurs[0].getMain(), 
+				           "### Votre nouvelle main après l'échange : ");
+			
+			System.out.println("  * * * * * * * * * * * * * * * *\n"
 			                   + "* * * * * * * * * * * * * * * * * *\n"
 			                   + "* * Fin de l'échange des cartes * *\n"
 			                   + "* * * * * * * * * * * * * * * * * *\n"
 			                   + "  * * * * * * * * * * * * * * * *\n");
 		} else {
-			// TODO Faire un meilleur affichage.
-			System.out.println("Il n'y a pas d'échange de cartes ce tour !");
+			System.out.println("\n  * * * * * * * * * * * * * * * *\n"
+	                           + "* * * * * * * * * * * * * * * * * *\n"
+	                           + "* * * Pas d'échange de cartes * * *\n"
+	                           + "* * * * * * * * * * * * * * * * * *\n"
+	                           + "  * * * * * * * * * * * * * * * *\n");
 		}
 	}
 	
@@ -372,7 +404,7 @@ public class OutilCarte {
 	 * @param joueur Le joueur supposé avoir le deux de trèfle.
 	 * @return Un entier correspondant à l'indice du deux de trèfle.
 	 *         Si le joueur spécifié ne possède pas le deux de trèfle dans sa 
-	 *         main alors l'entier -1 est renvoyé.
+	 *         main alors l'entier -1 est renvoyé (indice invalide).
 	 */
 	public static int indiceDeuxTrefle(Joueur joueur) {		
 		// Parcours de la main du joueur spécifié en argument.
@@ -385,7 +417,7 @@ public class OutilCarte {
 			if (carte.getSymbole().equals(Symbole.Trefle) 
 				&& carte.getValeur().equals(Valeur.Deux)) {
 				
-				// Retourne l'indice de la carte cherchée.
+				// Retourne l'indice de la carte cherchée (deux de trèfle).
 				return joueur.getMain().indexOf(carte);
 			}
 		}
@@ -399,42 +431,12 @@ public class OutilCarte {
 	 * @param joueurs Les joueurs de la partie.
 	 */
 	public static void trierMains(Joueur[] joueurs) {
-		// Parcours des joueurs de la partie.
+		// Parcours de tous les joueurs de la partie.
 		for (Joueur joueurCourant : joueurs) {
 			
 			// Tri de la main du joueur courant.
 			joueurCourant.trierMain();
 		}
-	}
-	
-	
-	/**
-	 * Affiche une liste de cartes.
-	 * @param cartes La liste des cartes à afficher.
-	 */
-	public static void afficherCartes(ArrayList<Carte> cartes) {
-		String listeCartes = "";
-		
-		for (Carte carte : cartes) {
-			listeCartes += "=> " + carte.toString() + "\n";
-		}
-		
-		System.out.println(listeCartes);
-	}
-	
-	
-	/**
-	 * 
-	 * @param cartes
-	 */
-	public static void afficherCartesIndice(ArrayList<Carte> cartes) {
-		String listeCartes = "";
-		
-		for (int i = 0 ; i < cartes.size() ; i++) {
-			listeCartes += "(" + i + ") => " + cartes.get(i).toString() + "\n";
-		}
-		
-		System.out.println(listeCartes);
 	}
 	
 }

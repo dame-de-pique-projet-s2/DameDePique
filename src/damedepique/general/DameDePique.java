@@ -1,10 +1,11 @@
 /*
- * DameDePique.java                                                  28/04/2019
+ * DameDePique.java                                                  12/05/2019
  * Projet de la dame de pique | IUT de Rodez | 2018 - 2019
  */
 
 package damedepique.general;
 
+import static damedepique.general.OutilAffichage.*;
 import static damedepique.general.OutilCarte.*;
 import static damedepique.general.OutilPartie.*;
 
@@ -34,88 +35,130 @@ public class DameDePique {
 	 */
 	public static void main(String[] args) {
 		
-		// Création d'un paquet de 52 cartes à jouer.
+		// Instantiation d'un paquet de cartes à jouer.
 		Paquet paquet = new Paquet();
-		paquet.creer();    // Initialisation du paquet de cartes pour jouer.
+		
+		// Création du paquet de 52 cartes pour jouer.
+		paquet.creer();
 		
 		/* 
 		 * Création d'un plateau pour poser les cartes jouées par les
-		 * joueurs durant les tours.
+		 * joueurs durant les tours, les joueurs peuvent voir les cartes posées 
+		 * sur ce plateau de jeu par exemple pour voir le symbole demandé.
 		 */
 		Plateau plateau = new Plateau();
 		
 		// Création d'un groupe de quatre joueurs.
 		Joueur[] joueurs = new Joueur[NB_JOUEURS];
-		joueurs[0] = new Humain();    // Création d'un joueur humain.
-		for (int i = 1 ; i < NB_JOUEURS ; i++) {
-			joueurs[i] = new IA();    // Création de trois joueurs IA.
-		}
-		 
-		int numeroManche = 0;
 		
-		Carte carteJouee;
+		// Création d'un joueur humain.
+		joueurs[0] = new Humain();
+		
+		// Création de trois joueurs intelligences artificielles indépendantes.
+		for (int i = 1 ; i < NB_JOUEURS ; i++) {
+			joueurs[i] = new IA();
+		}
+		
+		/* 
+		 * Le numéro de la manche pour se repérer dans la partie. Cet 
+		 * indicateur sert surtout pour la détermination du sens d'échange des 
+		 * cartes entre les quatre joueurs.
+		 */
+		int noManche = 0;
+		
+		/*
+		 * Le numéro du tour durant une manche, celui-ci sert à déterminer si 
+		 * les joueurs ont le droit de jouer certaines cartes (par exemple 
+		 * l'interdiction de jouer la dame de pique et du coeur au premier).
+		 */
+		int noTour;
+		
+		// Mémorise si un coeur a été défaussé ou non pendant un tour.
+		boolean coeurDefausse;
+		
+		/*
+		 * L'indice du premier joueur à jouer pendant un tour. Lors du premier 
+		 * tour celui-ci est le possesseur du deux de trèfle puis lors des 
+		 * autres tours, c'est le perdant du tour précédant.
+		 */
 		int premier = 0;
 		
+		// La carte choisie par un joueur de la partie lors d'un tour.
+		Carte aJouer;
+		
+		// Mémorise le symbole de la première carte posée sur le plateau.
+		Symbole symboleDebut;
+		
+		// Affiche la liste des pseudonymes des joueurs de la partie.
+		afficherJoueurs(joueurs);
+		
 		while (!finPartie(joueurs)) {
-			System.out.println("Les joueurs de la partie : ");
-			for (int j = 0 ; j < NB_JOUEURS ; j++) {
-				if (j == 0) {
-					System.out.println("    > " + joueurs[0].getPseudo() + " (vous)");
-				} else {
-					System.out.println("    > " + joueurs[j].getPseudo());
-				}
-			}
+			noTour = 0;    // Remise à zéro du compteur de tour.
 			
-			int numeroTour = 0;
-			boolean coeurDefausse = false;
+			// Remise à zéro l'indicateur de coeur défaussé.
+			coeurDefausse = false;
 			
+			// Mélange du paquet de cartes pour qu'il n'y ait pas de triche.
 			paquet.melanger();
+			
+			// Distribution du paquet de cartes mélangé au préalable.
 			paquet.distribuer(joueurs);
 			
+			// Tri des mains des joueurs.
 			trierMains(joueurs);
 
-			echangerCartes(joueurs, numeroManche);
+			/* 
+			 * Échange des trois cartes entre les joueurs de la partie selon 
+			 * le numéro du tour courant.
+			 */
+			echangerCartes(joueurs, noManche);
+			
+			afficherNumeroManche(noManche);
 			
 			while (!finManche(joueurs[0])) {
-				if (numeroTour == 0) {
-					premier = rechercherCarte(joueurs, Symbole.Trefle, Valeur.Deux);
+				afficherNumeroTour(noTour);
+
+				if (noTour == 0) {
+					premier = rechercherCarte(joueurs, Symbole.Trefle, 
+							                           Valeur.Deux);
 					if (joueurs[premier] instanceof Humain) {
-						carteJouee = joueurs[premier].jouerDeuxTrefle();
+						aJouer = joueurs[premier].jouerDeuxTrefle();
 					} else {
-						carteJouee = joueurs[premier].jouerDeuxTrefle();
+						aJouer = joueurs[premier].jouerDeuxTrefle();
 					}
-					plateau.ajouterCarte(carteJouee);
 				} else {
 					if (joueurs[premier] instanceof Humain) {
-						carteJouee = joueurs[premier].jouerCarte(coeurDefausse);
+						aJouer = joueurs[premier].jouerCarte(coeurDefausse);
 					} else {
-						carteJouee = joueurs[premier].jouerCarte(coeurDefausse);
+						aJouer = joueurs[premier].jouerCarte(coeurDefausse);
 					}
-					plateau.ajouterCarte(carteJouee);
 				}
-					
-				Symbole symboleDebut = plateau.getSymboleDebut();
+				
+				// Pose la carte jouée sur le plateau.
+				plateau.ajouterCarte(aJouer);
+				
+				// Récupération du symbole de la première carte posée.
+				symboleDebut = plateau.getSymboleDebut();
 				
 				// Jeu dans le sens des aiguilles d'une montre.
-				for (int k = premier + 1 ; k != premier ; k++) {
-					if (k == joueurs.length) { k = 0; }
+				for (int i = premier + 1 ; i != premier ; i++) {
+					if (i == joueurs.length) { i = 0; }
 						
-					if (joueurs[k] instanceof Humain) {
-						System.out.println("### Le plateau de jeu "
-							               + "actuel : " + plateau + "\n");
-						carteJouee = joueurs[k].jouerCarte(symboleDebut, numeroTour);
+					if (joueurs[i] instanceof Humain) {
+						afficherPlateauActuel(plateau);
+						aJouer = joueurs[i].jouerCarte(symboleDebut, noTour);
 					} else {
-						carteJouee = joueurs[k].jouerCarte(symboleDebut, numeroTour);
+						aJouer = joueurs[i].jouerCarte(symboleDebut, noTour);
 					}
 					
-					plateau.ajouterCarte(carteJouee);
+					// Pose la carte jouée sur le plateau.
+					plateau.ajouterCarte(aJouer);
 					
 					// TODO A améliorer.
-					if (premier == 0 && k == 3) { k = -1; };
+					if (premier == 0 && i == 3) { i = -1; };
 				}
 				
-				System.out.println("\n### Le plateau de jeu "
-			                       + "final : " + plateau + "\n");
+				afficherPlateauFinal(plateau);
 				
 				coeurDefausse = plateau.avecCoeur();
 				
@@ -125,26 +168,16 @@ public class DameDePique {
 				
 				plateau.retirerCartesJouees(joueurs);
 				
-				System.out.println(joueurs[premier].getPseudo() + " a "
-						           + "perdu(e) le tour " + (numeroTour + 1) 
-						           + "/13.\nRécapitulatif des points de cette "
-						           + "manche :");
+				afficherRecapManche(joueurs, noTour, premier);
 				
-				for (int m = 0 ; m < NB_JOUEURS ; m++) {
-					System.out.println("    > " + joueurs[m].getPseudo() 
-							           + " possède " 
-							           + joueurs[m].getPointsManche() 
-							           + " point(s).");
-				}
-				
-				System.out.println();
-				
-				numeroTour++;
+				noTour++;
 			}
 			
 			ajouterPointsTot(joueurs);
 			
-			numeroManche++;
+			afficherRecapPartie(joueurs, noManche);
+			
+			noManche++;
 
 		}
 		
