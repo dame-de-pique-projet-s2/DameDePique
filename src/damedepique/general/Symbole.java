@@ -13,7 +13,7 @@ package damedepique.general;
  * </p>
  * <p>
  *   Les quatre symboles sont les suivantes : 
- *   le pique (♠), le carreau (♦), le trèfle (♣) et le coeur (♥).
+ *   le trèfle (♣), le carreau (♦), le pique (♠) et le coeur (♥).
  * </p>
  * 
  * @author Julien B.
@@ -25,9 +25,31 @@ package damedepique.general;
  */
 public enum Symbole {
 
-	Trefle,
-	Carreau,
-	Pique,
-	Coeur
+	/** Liste des symboles (couleurs) qui composent un jeu de cartes. */
+	Trefle("♣ (trèfle)"), Carreau("♦ (carreau)"), 
+	Pique("♠ (pique)"), Coeur("♥ (coeur)");
+	
+	
+	/** Le symbole d'une carte sous la forme d'une chaîne de caractères. */
+	private String symbole;
+	
+	
+	/**
+	 * Création d'un nouveau symbole pour la présentation à l'écran.
+	 * @param symbole Le symbole sous forme de chaîne de caractères.
+	 */
+	private Symbole(String symbole) {
+		this.symbole = symbole;
+	}
+	
+	
+	/**
+	 * Retourne le symbole d'une carte sous la forme d'une chaîne de caractères 
+	 * pour que les symboles soient plus lisibles pour le joueur humain.
+	 * @return Le symbole avec la bonne présentation.
+	 */
+	public String getSymbole() {
+		return this.symbole;
+	}
 	
 }

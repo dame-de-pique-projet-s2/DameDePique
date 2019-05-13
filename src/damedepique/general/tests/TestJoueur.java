@@ -66,7 +66,7 @@ public class TestJoueur {
 			case Pierre:
 				compteur[8]++;
 				break;
-			case Jérôme:
+			case Thomas:
 				compteur[9]++;
 				break;
 			}

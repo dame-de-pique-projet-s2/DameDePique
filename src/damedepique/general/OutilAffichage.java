@@ -6,6 +6,7 @@
 package damedepique.general;
 
 import java.util.ArrayList;
+import java.util.Scanner;
 
 /**
  * <p>
@@ -21,6 +22,23 @@ import java.util.ArrayList;
  * @version 1.0
  */
 public class OutilAffichage {
+	
+	/** Analyseur lexical de l'entrée standard texte. */
+	private static Scanner sc = new Scanner(System.in);
+	
+	
+	/**
+	 * 
+	 */
+	public static void continuer() {
+		System.out.println("Appuyez sur entrée pour continuer la partie.");
+		sc.nextLine();
+		// TODO Nettoyage de la console.
+	}
+	
+	
+	// TODO Affichage du plateau avec le nom des joueurs.
+	
 	
 	/**
 	 * Affiche une liste de cartes sans les indices associés.

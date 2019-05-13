@@ -121,17 +121,9 @@ public class DameDePique {
 				if (noTour == 0) {
 					premier = rechercherCarte(joueurs, Symbole.Trefle, 
 							                           Valeur.Deux);
-					if (joueurs[premier] instanceof Humain) {
-						aJouer = joueurs[premier].jouerDeuxTrefle();
-					} else {
-						aJouer = joueurs[premier].jouerDeuxTrefle();
-					}
+					aJouer = joueurs[premier].jouerDeuxTrefle();
 				} else {
-					if (joueurs[premier] instanceof Humain) {
-						aJouer = joueurs[premier].jouerCarte(coeurDefausse);
-					} else {
-						aJouer = joueurs[premier].jouerCarte(coeurDefausse);
-					}
+					aJouer = joueurs[premier].jouerCarte(coeurDefausse);
 				}
 				
 				// Pose la carte jouée sur le plateau.
@@ -142,14 +134,13 @@ public class DameDePique {
 				
 				// Jeu dans le sens des aiguilles d'une montre.
 				for (int i = premier + 1 ; i != premier ; i++) {
-					if (i == joueurs.length) { i = 0; }
+					if (i == NB_JOUEURS) { i = 0; }
 						
 					if (joueurs[i] instanceof Humain) {
 						afficherPlateauActuel(plateau);
-						aJouer = joueurs[i].jouerCarte(symboleDebut, noTour);
-					} else {
-						aJouer = joueurs[i].jouerCarte(symboleDebut, noTour);
 					}
+					
+					aJouer = joueurs[i].jouerCarte(symboleDebut, noTour);
 					
 					// Pose la carte jouée sur le plateau.
 					plateau.ajouterCarte(aJouer);
@@ -170,14 +161,14 @@ public class DameDePique {
 				
 				afficherRecapManche(joueurs, noTour, premier);
 				
-				noTour++;
+				noTour++;    // Incrémente le numéro du tour.
 			}
 			
 			ajouterPointsTot(joueurs);
 			
 			afficherRecapPartie(joueurs, noManche);
 			
-			noManche++;
+			noManche++;    // Incrémente le numéro de la manche.
 
 		}
 		

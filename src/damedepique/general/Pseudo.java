@@ -21,6 +21,6 @@ package damedepique.general;
 public enum Pseudo {
 	
 	Camille, Emilie, Jade, Aurore, Brigitte,
-	Pierre, Paul, Jacques, Georges, Jérôme
+	Pierre, Paul, Jacques, Georges, Thomas
 
 }

@@ -72,6 +72,15 @@ public abstract class Joueur {
 	
 	
 	/**
+	 * Met à jour le pseudonyme de ce (this) Joueur.
+	 * @param pseudo Le nouveau pseudonyme du joueur.
+	 */
+	public void setPseudo(Pseudo pseudo) {
+		this.pseudo = pseudo;
+	}
+	
+	
+	/**
 	 * Génère et affecte un pseudonyme aléatoire pour ce (this) Joueur.
 	 * Les pseudonymes générés aléatoirement sont prédéfinis. Il n'est pas 
 	 * possible pour le joueur de changer son pseudonyme.

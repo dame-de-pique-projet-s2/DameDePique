@@ -31,7 +31,31 @@ package damedepique.general;
  */
 public enum Valeur {
 	
-	Deux, Trois, Quatre, Cinq, Six, Sept, Huit, Neuf, Dix,
-	Valet, Dame, Roi, As
+	/** Liste des valeurs qui composent un jeu de cartes. */
+	Deux("2"), Trois("3"), Quatre("4"), Cinq("5"), Six("6"), Sept("7"), 
+	Huit("8"), Neuf("9"), Dix("10"), Valet("Valet"), Dame("Dame"), 
+	Roi("Roi"), As("As");
 	
+	
+	/** La valeur d'une carte sous la forme d'une chaîne de caractères. */
+	private String valeur;
+	
+	
+	/**
+	 * Création d'une nouvelle valeur pour la présentation à l'écran.
+	 * @param valeur La valeur sous forme de chaîne de caractères.
+	 */
+	private Valeur(String valeur) {
+		this.valeur = valeur;
+	}
+	
+	
+	/**
+	 * Retourne la valeur d'une carte sous la forme d'une chaîne de caractères 
+	 * pour que les valeurs soient plus lisibles pour le joueur humain.
+	 * @return La valeur avec la bonne présentation.
+	 */
+	public String getValeur() {
+		return this.valeur;
+	}
 }

@@ -220,6 +220,7 @@ public class Humain extends Joueur {
 		System.out.println("### C'est à vous de commencer cette manche, vous "
 				           + "avez le deux de trèfle.\n");
 		
+		// Récupère les cartes dans la main de ce (this) Humain.
 		ArrayList<Carte> mainJoueur = this.getMain();
 		
 		boolean nok;        // Indicateur de mauvaise carte choisie.
