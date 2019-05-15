@@ -32,9 +32,9 @@ public class TestPlateau {
 		paquet.creer();
 		
 		Joueur[] joueurs = new Joueur[4];
-		joueurs[0] = new Humain();
+		joueurs[0] = new Humain("Humain_0");
 		for (int i = 1 ; i < joueurs.length ; i++) {
-			joueurs[i] = new IA();
+			joueurs[i] = new IA("IA_" + i);
 		}
 		
 		paquet.melanger();

@@ -39,9 +39,10 @@ public class Humain extends Joueur {
 	
 	/**
 	 * Création d'un nouveau humain avec les caractéristiques d'un joueur.
+	 * @param pseudo Le pseudo de cet (this) Humain.
 	 */
-	public Humain() {
-		super();
+	public Humain(String pseudo) {
+		super(pseudo);
 	}
 	
 	
@@ -279,13 +280,15 @@ public class Humain extends Joueur {
 		
 		// Demande trois fois de choisir une carte au joueur.
 		for (int i = 0 ; i < aEchanger.length ; i++) {
-			System.out.println("\n### Échange numéro " + (i + 1) + " sur 3.");
+			System.out.println("### Échange numéro " + (i + 1) + " sur 3.");
 			
 			// Demande une carte et la stocke dans la case courante.
 			aEchanger[i] = this.jouerCarte();
 			
 			// Retire la carte sélectionnée de la main du joueur.
 			this.retirerCarte(aEchanger[i]);
+			
+			cls();
 		}
 		
 		// Renvoie le tableau contenant les trois cartes à échanger.

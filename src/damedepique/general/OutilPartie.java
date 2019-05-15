@@ -7,7 +7,9 @@ package damedepique.general;
 
 /**
  * <p>
- *   TODO Faire la description de cette classe.
+ *   Cette classe contient des méthodes utilitaires pour gérer une partie de 
+ *   dame de pique. Elle comporte des outils pour détecter la fin d'une partie 
+ *   et la fin d'une manche, la vérification de la cloche de bois.
  * </p>
  * 
  * @author Julien B.

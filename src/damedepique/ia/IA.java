@@ -40,9 +40,10 @@ public class IA extends Joueur {
 	
 	/**
 	 * Création d'une nouvelle IA avec les caractéristiques d'un joueur.
+	 * @param pseudo Le pseudo de cette (this) IA.
 	 */
-	public IA() {
-		super();
+	public IA(String pseudo) {
+		super(pseudo);
 		this.cartesJouees = new ArrayList<>(NB_CARTES_PAQUET);
 	}
 	

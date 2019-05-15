@@ -11,9 +11,9 @@ import java.util.ArrayList;
  * <p>
  *   Cette classe contient tous les éléments qui caractérisent un joueur 
  *   jouant au jeu de la dame de pique. Un joueur est caractérisé par un pseudo 
- *   non modifiable qui lui est assigné par défaut, un nombre de points totaux 
- *   qui évolue au cours de la partie et d'une main dans laquelle le joueur 
- *   possède les cartes qu'il peut jouer durant une manche.
+ *   modifiable, un nombre de points totaux qui évolue au cours de la partie et 
+ *   d'une main dans laquelle le joueur possède les cartes qu'il peut jouer 
+ *   durant une manche.
  * </p>
  * 
  * @author Julien B.
@@ -30,7 +30,7 @@ public abstract class Joueur {
 	
 	
 	/** Pseudo de ce (this) Joueur. */
-	private Pseudo pseudo;
+	private String pseudo;
 	
 	
 	/** Nombre de points totaux de ce (this) Joueur. */
@@ -46,12 +46,13 @@ public abstract class Joueur {
 	
 	
 	/**
-	 * Création d'un nouveau joueur auquel est associé un pseudonyme généré 
-	 * aléatoirement parmi une liste de pseudonymes prédéfinis, un nombre de 
-	 * point nul et d'un ensemble de cartes constituant sa main.
+	 * Création d'un nouveau joueur auquel est associé un pseudonyme spécifié 
+	 * en argument, un nombre de point nul (points totaux et points de manche) 
+	 * et d'un ensemble de cartes constituant sa main.
+	 * @param pseudo Le pseudo de ce (this) Joueur.
 	 */
-	public Joueur() {
-		this.affectationPseudo();    // Affecte un pseudo par défaut.
+	public Joueur(String pseudo) {
+		this.pseudo = pseudo;
 		this.pointsTot = 0;
 		this.pointsManche = 0;
 		this.main = new ArrayList<>(NB_CARTES_MAIN_MAX);
@@ -66,7 +67,7 @@ public abstract class Joueur {
 	 * Récupère le pseudonyme de ce (this) Joueur.
 	 * @return Le pseudonyme du joueur.
 	 */
-	public Pseudo getPseudo() {
+	public String getPseudo() {
 		return this.pseudo;
 	}
 	
@@ -75,29 +76,8 @@ public abstract class Joueur {
 	 * Met à jour le pseudonyme de ce (this) Joueur.
 	 * @param pseudo Le nouveau pseudonyme du joueur.
 	 */
-	public void setPseudo(Pseudo pseudo) {
+	public void setPseudo(String pseudo) {
 		this.pseudo = pseudo;
-	}
-	
-	
-	/**
-	 * Génère et affecte un pseudonyme aléatoire pour ce (this) Joueur.
-	 * Les pseudonymes générés aléatoirement sont prédéfinis. Il n'est pas 
-	 * possible pour le joueur de changer son pseudonyme.
-	 * @see damedepique.general.Pseudo
-	 */
-	private void affectationPseudo() {
-		// Stocke dans un tableau tous les pseudonymes prédéfinis.
-		Pseudo[] pseudos = Pseudo.values();
-		
-		// Indice généré aléatoirement pour la recherche d'un pseudonyme.
-		int indiceAleatoire;
-		
-		// Génération d'un indice correspondant à un pseudonyme.
-		indiceAleatoire = (int) Math.floor(Math.random() * pseudos.length);
-		
-		// Attribution du pseudonyme par défaut à ce (this) Joueur.
-		this.pseudo = pseudos[indiceAleatoire];
 	}
 	
 	

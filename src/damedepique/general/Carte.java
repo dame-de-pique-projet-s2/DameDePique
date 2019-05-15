@@ -67,7 +67,7 @@ public class Carte {
 	
 	@Override
 	public String toString() {
-		return this.valeur.getValeur() + " " + this.symbole.getSymbole();
+		return this.valeur.getValeur() + " de " + this.symbole.getSymbole();
 	}
 	
 	

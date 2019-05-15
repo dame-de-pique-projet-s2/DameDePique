@@ -13,7 +13,8 @@ import damedepique.ia.IA;
 
 /**
  * <p>
- *   TODO Faire la description de cette classe.
+ *   Cette classe permet de lancer l'application <i>DameDePique</i> pour jouer 
+ *   une partie.
  * </p>
  * 
  * @author Julien B.
@@ -35,6 +36,8 @@ public class DameDePique {
 	 */
 	public static void main(String[] args) {
 		
+		cls();    // Nettoyage de la console texte.
+		
 		// Instantiation d'un paquet de cartes à jouer.
 		Paquet paquet = new Paquet();
 		
@@ -52,12 +55,29 @@ public class DameDePique {
 		Joueur[] joueurs = new Joueur[NB_JOUEURS];
 		
 		// Création d'un joueur humain.
-		joueurs[0] = new Humain();
+		joueurs[0] = new Humain("Humain_0");
 		
 		// Création de trois joueurs intelligences artificielles indépendantes.
 		for (int i = 1 ; i < NB_JOUEURS ; i++) {
-			joueurs[i] = new IA();
+			joueurs[i] = new IA("IA_" + i);
 		}
+		
+		/* 
+		 * Demande au joueur humain si il veut modifier son pseudo et le 
+		 * pseudo des IA.
+		 */
+		changerPseudos(joueurs);
+		
+		cls();    // Nettoyage de la console texte.
+		
+		// Affichage des joueurs de la partie autour d'un plateau.
+		afficherJoueurs(joueurs);
+		
+		/* 
+		 * Demande au joueur humain d'appuyer sur entrée pour 
+		 * continuer la partie en cours.
+		 */
+		continuer();
 		
 		/* 
 		 * Le numéro de la manche pour se repérer dans la partie. Cet 
@@ -89,9 +109,6 @@ public class DameDePique {
 		// Mémorise le symbole de la première carte posée sur le plateau.
 		Symbole symboleDebut;
 		
-		// Affiche la liste des pseudonymes des joueurs de la partie.
-		afficherJoueurs(joueurs);
-		
 		while (!finPartie(joueurs)) {
 			noTour = 0;    // Remise à zéro du compteur de tour.
 			
@@ -113,16 +130,28 @@ public class DameDePique {
 			 */
 			echangerCartes(joueurs, noManche);
 			
+			/* 
+			 * Demande au joueur humain d'appuyer sur entrée pour 
+			 * continuer la partie en cours.
+			 */
+			continuer();
+			
+			// Affiche le numéro de la manche pour en informer le joueur.
 			afficherNumeroManche(noManche);
 			
 			while (!finManche(joueurs[0])) {
+				// Affiche le numéro du tour pour en informer le joueur.
 				afficherNumeroTour(noTour);
 
 				if (noTour == 0) {
+					// Recherche de l'indice du joueur ayant le deux de trèfle.
 					premier = rechercherCarte(joueurs, Symbole.Trefle, 
 							                           Valeur.Deux);
+					
+					// Demande au joueur ayant le deux de trèfle de jouer.
 					aJouer = joueurs[premier].jouerDeuxTrefle();
 				} else {
+					// Demande au joueur perdant de commencer le tour.
 					aJouer = joueurs[premier].jouerCarte(coeurDefausse);
 				}
 				
@@ -134,44 +163,91 @@ public class DameDePique {
 				
 				// Jeu dans le sens des aiguilles d'une montre.
 				for (int i = premier + 1 ; i != premier ; i++) {
+					
+					/* 
+					 * Remise de l'indice à zéro pour faire une boucle.
+					 * Ceci permet de faire jouer les joueurs dans le sens des 
+					 * aiguilles d'une montre (ex: 2 - 3 - 0 - 1).
+					 */
 					if (i == NB_JOUEURS) { i = 0; }
-						
+					
+					// Vérifie si le joueur courant est un humain.
 					if (joueurs[i] instanceof Humain) {
-						afficherPlateauActuel(plateau);
+						
+						// Affichage du plateau de cartes pour aider l'humain.
+						afficherPlateau(plateau, joueurs);
 					}
 					
+					/* 
+					 * Demande au joueur courant de jouer une carte selon un 
+					 * symbole demandé au début du tour et le numéro du tour.
+					 */
 					aJouer = joueurs[i].jouerCarte(symboleDebut, noTour);
 					
 					// Pose la carte jouée sur le plateau.
 					plateau.ajouterCarte(aJouer);
 					
-					// TODO A améliorer.
+					/*
+					 * Si le premier joueur à commencer un tour est le joueur 
+					 * humain et que l'indice courant est égal à 3 alors on met 
+					 * à jour l'indice à -1 pour que la condition d'arrêt de 
+					 * la boucle soit fausse. Cela évite d'avoir une boucle 
+					 * infinie.
+					 */
 					if (premier == 0 && i == 3) { i = -1; };
 				}
 				
-				afficherPlateauFinal(plateau);
+				cls();    // Nettoyage de la console texte.
 				
+				// Affichage du plateau final au joueur humain.
+				afficherPlateau(plateau, joueurs);
+				
+				// Vérifie si un coeur a été défaussé durant ce tour.
 				coeurDefausse = plateau.avecCoeur();
 				
+				// Récupération de l'indice du joueur perdant.
 				premier = plateau.getPerdant(joueurs);
 				
+				// Ajout des points aux points de la manche pour chaque joueur.
 				plateau.ajouterPointsTour(joueurs);
 				
+				// Retire les cartes jouées. Vidage du plateau.
 				plateau.retirerCartesJouees(joueurs);
 				
+				// Affichage d'un récapitulatif de la manche en cours.
 				afficherRecapManche(joueurs, noTour, premier);
 				
 				noTour++;    // Incrémente le numéro du tour.
+				
+				/* 
+				 * Demande au joueur humain d'appuyer sur entrée pour 
+				 * continuer la partie en cours.
+				 */
+				continuer();
 			}
 			
+			/* 
+			 * Ajout des points de la manche précédente aux points totaux de 
+			 * chaque joueurs de la partie.
+			 */
 			ajouterPointsTot(joueurs);
 			
-			afficherRecapPartie(joueurs, noManche);
+			// Affichage d'un récapitulatif de la partie en cours.
+			afficherRecapPartie(joueurs);
 			
 			noManche++;    // Incrémente le numéro de la manche.
 
+			/* 
+			 * Demande au joueur humain d'appuyer sur entrée pour 
+			 * continuer la partie en cours.
+			 */
+			continuer();
 		}
 		
+		/* 
+		 * Recherche le gagnant et affichage d'un message de félicitation pour 
+		 * annoncer le(s) gagnant(s) de la partie avec le nombre de points.
+		 */
 		getGagnant(joueurs);
 
 	}

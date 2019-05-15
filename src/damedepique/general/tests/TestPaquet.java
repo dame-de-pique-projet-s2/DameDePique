@@ -75,7 +75,7 @@ public class TestPaquet {
 		// Instantiation et initialisation de quatre joueurs.
 		Joueur[] joueurs = new Joueur[4];
 		for (int i = 0 ; i < joueurs.length ; i++) {
-			joueurs[i] = new IA();
+			joueurs[i] = new IA("IA_" + i);
 		}
 		
 		// Création du nouveau paquet de cartes.

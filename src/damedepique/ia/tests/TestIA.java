@@ -33,7 +33,7 @@ public class TestIA {
 	    // Instantiation et initialisation de quatre joueurs.
 	    Joueur[] joueurs = new Joueur[4];
 	    for (int i = 0 ; i < joueurs.length ; i++) {
-		    joueurs[i] = new IA();
+		    joueurs[i] = new IA("IA_" + i);
 	    }
 			
 	    // Création du nouveau paquet de cartes.
@@ -53,8 +53,6 @@ public class TestIA {
 		
 	    // Création du tableau de carte qui contiendra les choix de l'I.A pour l'échange.
         Carte[] echange = new Carte[3];
-        
-    	// echange = ((IA) joueurs[0]).carteEchange();
     	
     	// Affichage du résultat donné par la méthode
 	    System.out.println("Cartes à échanger : ");
