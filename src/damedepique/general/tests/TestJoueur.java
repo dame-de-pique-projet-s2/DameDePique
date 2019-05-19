@@ -11,7 +11,7 @@ import damedepique.ia.IA;
 
 /**
  * <p>
- *   Cette classe contient toutes les méthodes de test de la classe Joueur.
+ *   Cette classe contient toutes les méthodes de ordreEchange de la classe Joueur.
  * </p>
  *   
  * @author Loïc B. | Julien B. | Margaux B. | Justine R.
@@ -55,7 +55,7 @@ public class TestJoueur {
 	
 	
 	/**
-	 * Lancement des méthodes de test de la classe Joueur.
+	 * Lancement des méthodes de ordreEchange de la classe Joueur.
 	 * @param args Non utilisé.
 	 */
 	public static void main(String[] args) {

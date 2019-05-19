@@ -35,7 +35,6 @@ public class DameDePique {
 	 * @param args Non utilisé.
 	 */
 	public static void main(String[] args) {
-		
 		cls();    // Nettoyage de la console texte.
 		
 		// Instantiation d'un paquet de cartes à jouer.
@@ -201,6 +200,11 @@ public class DameDePique {
 				
 				// Affichage du plateau final au joueur humain.
 				afficherPlateau(plateau, joueurs);
+				
+				// TODO Récupération des cartes jouées sur le plateau pour les IA.
+				for (int i = 1 ; i < NB_JOUEURS ; i++) {
+					((IA) joueurs[i]).memoriserCartes(plateau);
+				}
 				
 				// Vérifie si un coeur a été défaussé durant ce tour.
 				coeurDefausse = plateau.avecCoeur();

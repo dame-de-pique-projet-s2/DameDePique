@@ -25,7 +25,6 @@ package damedepique.general;
  */
 public enum Symbole {
 
-	/** Liste des symboles (couleurs) qui composent un jeu de cartes. */
 	Trefle("trefle"), Carreau("carreau"), Pique("pique"), Coeur("coeur");
 	
 	

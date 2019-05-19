@@ -102,19 +102,21 @@ public class OutilAffichage {
 	
 	/**
 	 * Affiche des messages indiquant au joueur humain le sens des échanges.
-	 * <li>
-	 *   Quand le numéro est égal à 0 alors les messages d'échange vers le 
-	 *   joueur à gauche sont affichés.
-	 * </li>
-	 * <li>
-	 *   Quand le numéro est égal à 1 alors les messages d'échange vers le 
-	 *   joueur à droite sont affichés.
-	 * </li>
-	 * <li>
-	 *   Quand le numéro est différent des valeurs précédemment citées 
-	 *   alors les messages d'échange vers le joueur positionné en face sont 
-	 *   affichés.
-	 * </li>
+	 * <ul>  
+	 *   <li>
+	 *     Quand le numéro est égal à 0 alors les messages d'échange vers le 
+	 *     joueur à gauche sont affichés.
+	 *   </li>
+	 *   <li>
+	 *     Quand le numéro est égal à 1 alors les messages d'échange vers le 
+	 *     joueur à droite sont affichés.
+	 *   </li>
+	 *   <li>
+	 *     Quand le numéro est différent des valeurs précédemment citées 
+	 *     alors les messages d'échange vers le joueur positionné en face sont 
+	 *     affichés.
+	 *   </li>
+	 * </ul>
 	 * 
 	 * @param joueurs Les joueurs de la partie.
 	 * @param numero Le numéro à indiquer pour connaître le message à afficher.
@@ -154,6 +156,11 @@ public class OutilAffichage {
 	}
 	
 	
+	/**
+	 * Affiche les quatre joueurs de la partie en cercle pour matérialiser 
+	 * une table de jeu.
+	 * @param joueurs Les joueurs de la partie.
+	 */
 	public static void afficherJoueurs(Joueur[] joueurs) {
 		System.out.println("Les joueurs de la partie : \n");
 		
@@ -284,22 +291,40 @@ public class OutilAffichage {
 	 * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 	
 	/**
-	 * 
+	 * Demande au joueur humain d'entrer une option.
 	 * @param message Le message à afficher pour inviter le joueur à entrer 
 	 *                une option.
 	 * @return L'option valide choisie par le joueur.
 	 */
 	public static char lireOption(String message) {
-		boolean nok;
-		String reponse;
-		char option;
+		boolean nok;       // Indicateur de mauvaise option choisie.
+		String reponse;    // Réponse saisie par le joueur humain.
+		char option;       // Option qui est déduite de l'option saisie.
 		
+		/*
+		 * Demande au joueur d'entrer une option. Cette option est 
+		 * systématiquement (O = oui) ou (N = non). Si l'option saisie n'est 
+		 * pas l'une des options précédemment dites alors la saisie d'une 
+		 * nouvelle option est recommencée. 
+		 */
 		do {
+			// Affichage d'un message demandant d'entrer une option.
 			System.out.print(message);
+			
+			// Demande et stockage de la réponse du joueur humain à la requête.
 			reponse = sc.next() + sc.nextLine();
+			
+			// Détermination de l'option saisie par le joueur.
 			option = reponse.toUpperCase().charAt(0);
 			
+			// Vérification de la validité de l'option entrée.
 			nok = (reponse.length() != 1 || (option != 'O' && option != 'N'));
+			
+			/* 
+			 * Si une mauvaise option a été saisie alors un message 
+			 * d'avertissement est affiché au joueur pour lui indiquer les 
+			 * options possibles et la saisie est recommencée.
+			 */
 			if (nok) {
 				System.out.println("\nVous devez entrer une option correcte.\n"
 						           + "Vous avez le choix entre (O = oui) et "
@@ -307,31 +332,71 @@ public class OutilAffichage {
 			}
 		} while (nok);
 		
-		return option;
+		return option;    // Retourne l'option valide saisie par le joueur.
 	}
 	
 	
+	/**
+	 * Change le pseudo des joueurs de la partie. Cette décision peut seulement 
+	 * être prise par le joueur humain.
+	 * @param joueurs Les joueurs de la partie.
+	 */
 	public static void changerPseudos(Joueur[] joueurs) {
-		String pseudo;
-		char optionChoisie;
+		String pseudo;         // Stocke un pseudo entré par le joueur humain.
+		char optionChoisie;    // L'option valide saisie par le joueur humain.
 		
-		optionChoisie = lireOption("Votre pseudo actuel est (" + joueurs[0].getPseudo() + "). Voulez-vous le changer ? (O/N) : ");
+		/*
+		 * Demande une option au joueur pour savoir si il veut changer son 
+		 * propre pseudonyme ou non.
+		 */
+		optionChoisie = lireOption("Votre pseudo actuel est (" 
+		                           + joueurs[0].getPseudo() 
+		                           + "). Voulez-vous le changer ? (O/N) : ");
 		
+		/* 
+		 * Si le joueur répond a répondu positivement à la requête précédemment 
+		 * faite alors on lui demande d'entrer un nouveau pseudo qu'il va 
+		 * devoir garder durant tout le déroulement de la partie.
+		 */
 		if (optionChoisie == 'O') {
 			System.out.print("Entrez votre nouveau pseudo : ");
+			
+			// Demande et stocke le pseudo choisi par le joueur.
 			pseudo = sc.next() + sc.nextLine();
+			
+			// Met à jour le pseudonyme du joueur humain.
 			joueurs[0].setPseudo(pseudo);
 			
+			// Affichage d'un message de confirmation.
 			System.out.println("\nVotre pseudo a bien été changé.\n");
 		}
 		
-		optionChoisie = lireOption("Voulez-vous changer le pseudo des IA ? (O/N) : ");
-		
+		/* 
+		 * Demande d'une option au joueur pour savoir si il veut changer le 
+		 * pseudonyme des trois IA ou non.
+		 */
+		optionChoisie = lireOption("Voulez-vous changer le pseudo des IA ? "
+				                   + "(O/N) : ");
+		/* 
+		 * Si le joueur répond a répondu positivement à la requête précédemment 
+		 * faite alors on lui demande d'entrer un nouveau pseudo pour chaque 
+		 * intelligence artificielle (IA).
+		 */
 		if (optionChoisie == 'O') {
+			
+			// Parcours des trois IA de la partie.
 			for (int i = 1 ; i < joueurs.length ; i++) {
-				System.out.print("Le pseudo actuel de l'IA numéro " + i + " est (" + joueurs[i].getPseudo() + ").\nEntrez un nouveau pseudo : ");
+				System.out.print("Le pseudo actuel de l'IA numéro " + i 
+						         + " est (" + joueurs[i].getPseudo() 
+						         + ").\nEntrez un nouveau pseudo : ");
+				
+				// Demande et stocke le pseudo choisi par le joueur.
 				pseudo = sc.next() + sc.nextLine();
+				
+				// Met à jour le pseudonyme du joueur courant.
 				joueurs[i].setPseudo(pseudo);
+				
+				// Affichage d'un message de confirmation.
 				System.out.println("\nLe pseudo a bien été changé.\n");
 			}
 		}

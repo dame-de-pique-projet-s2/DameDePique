@@ -7,7 +7,7 @@ package damedepique.general.tests;
 
 /**
  * <p>
- *   Cette classe contient toutes les méthodes de test de la classe Humain.
+ *   Cette classe contient toutes les méthodes de ordreEchange de la classe Humain.
  * </p>
  *   
  * @author Loïc B. | Julien B. | Margaux B. | Justine R.
@@ -16,7 +16,7 @@ package damedepique.general.tests;
 public class TestHumain {
 	
 	/**
-	 * Lancement des méthodes de test de la classe Humain.
+	 * Lancement des méthodes de ordreEchange de la classe Humain.
 	 * @param args Non utilisé.
 	 */
 	public static void main(String[] args) {

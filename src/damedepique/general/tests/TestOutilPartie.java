@@ -7,7 +7,7 @@ package damedepique.general.tests;
 
 /**
  * <p>
- *   Cette classe contient les méthodes de test de la classe OutilPartie.
+ *   Cette classe contient les méthodes de ordreEchange de la classe OutilPartie.
  * </p>
  * 
  * @author Loïc B. | Julien B. | Margaux B. | Justine R.
@@ -48,7 +48,7 @@ public class TestOutilPartie {
 	
 	
 	/**
-	 * Lancement des méthodes de test de la classe OutilPartie.
+	 * Lancement des méthodes de ordreEchange de la classe OutilPartie.
 	 * @param args Non utilisé.
 	 */
 	public static void main(String[] args) {

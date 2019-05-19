@@ -11,8 +11,10 @@ import damedepique.general.Carte;
 import damedepique.general.Joueur;
 import damedepique.general.Plateau;
 import damedepique.general.Symbole;
+import damedepique.general.Valeur;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 
 /**
  * <p>
@@ -57,7 +59,9 @@ public class IA extends Joueur {
 		// Cartes jouables dans la main de l'IA.
 		ArrayList<Carte> cartesJouables = this.getMain();
 		
-		// TODO Faire un réseau neuronal pour complexifier.
+		cartesJouables.sort(ordreEchange);
+		
+		// TODO Faire le cas : ne pas échanger la carte trèfle la plus grande.
 		
 		return cartesJouables.get(0);
 	}
@@ -90,6 +94,10 @@ public class IA extends Joueur {
 				                                                noTour);
 		
 		// TODO Faire un réseau neuronal pour complexifier.
+		/* 
+		 * TODO Si premier tour alors jouer la carte trèfle la plus grande dans 
+		 * la main de l'IA (si elle a une carte trèfle).
+		 */
 		
 		return cartesJouables.get(0);
 	}
@@ -133,12 +141,76 @@ public class IA extends Joueur {
 	 * @param plateau Le plateau de la partie.
 	 */
 	public void memoriserCartes(Plateau plateau) {
-		// Parcours des cartes présentes sur le plateau de jeu.
-		for (Carte carte : plateau.getCartes()) {
-			
-			// Ajout de la carte courante dans la mémoire.
-			this.cartesJouees.add(carte);
-		}
+		// Ajout des cartes posées sur le plateau dans la mémoire.
+		this.cartesJouees.addAll(plateau.getCartes());
 	}
+	
+	
+	/**
+	 * Vide la mémoire de cette (this) IA. Cette méthode est utile lors de la 
+	 * fin d'une manche, pour repartir d'une liste de cartes jouées vide.
+	 */
+	public void viderMemoire() {
+		this.cartesJouees.clear();
+	}
+	
+	
+	/**
+	 * Création d'un comparateur pour trier les cartes dans un ordre optimisé 
+	 * pour l'échange des cartes. Ce tri est réalisé par rapport à la position 
+	 * des symboles et des valeurs dans les énumérations Symbole et Valeur.
+	 * @see damedepique.general.Symbole
+	 * @see damedepique.general.Valeur
+	 */
+	public static Comparator<Carte> ordreEchange = new Comparator<>() {
+
+		/**
+		 * Compare les deux arguments pour les ordonner.
+		 * @param carte1 La carte à comparer avec la seconde carte.
+		 * @param carte2 La carte à comparer avec la première carte.
+		 * @return Renvoie un entier négatif (-1) ou positif (1) si le premier 
+		 *         argument est inférieur ou supérieur au second. 
+		 *         L'entier renvoyé ne peut pas être nul (0) car toutes 
+		 *         les cartes ont une référence unique dans un même paquet.
+		 */
+		public int compare(Carte carte1, Carte carte2) {
+			
+			// Récupère le symbole de la première carte passée en paramètre.
+			Symbole carte1Symbole = carte1.getSymbole();
+						
+			// Récupère le symbole de la seconde carte passée en paramètre.
+			Symbole carte2Symbole = carte2.getSymbole();
+						
+			// Récupère la valeur de la première carte passée en paramètre.
+			Valeur carte1Valeur = carte1.getValeur();
+						
+			// Récupère la valeur de la seconde carte passée en paramètre.
+			Valeur carte2Valeur = carte2.getValeur();
+			
+			/*
+			 * Compare cet objet (carte1Symbole) avec l'objet spécifié pour la 
+			 * commande (carte2Symbole). Retourne un entier négatif, nul ou 
+			 * positif si cet objet est inférieur, égal ou supérieur à l'objet 
+			 * spécifié. 
+			 */
+			int symboleDiff = carte1Symbole.compareTo(carte2Symbole);
+			
+			/*
+			 * Compare cet objet (carte1Valeur) avec l'objet spécifié pour la 
+			 * commande (carte2Valeur). Retourne un entier négatif, nul ou 
+			 * positif si cet objet est inférieur, égal ou supérieur à l'objet 
+			 * spécifié.
+			 */
+			int valeurDiff = carte1Valeur.compareTo(carte2Valeur);
+			
+			/*
+			 * 
+			 */
+			return valeurDiff < 0 
+				   || (valeurDiff == 0 && symboleDiff < 0) ? 1 : -1;
+			
+		}
+		
+	};
 	
 }

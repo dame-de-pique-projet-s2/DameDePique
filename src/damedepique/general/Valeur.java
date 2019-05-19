@@ -31,7 +31,6 @@ package damedepique.general;
  */
 public enum Valeur {
 	
-	/** Liste des valeurs qui composent un jeu de cartes. */
 	Deux("2"), Trois("3"), Quatre("4"), Cinq("5"), Six("6"), Sept("7"), 
 	Huit("8"), Neuf("9"), Dix("10"), Valet("Valet"), Dame("Dame"), 
 	Roi("Roi"), As("As");

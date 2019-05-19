@@ -5,14 +5,16 @@
 
 package damedepique.ia.tests;
 
+import static damedepique.general.OutilAffichage.*;
+import static damedepique.general.OutilCarte.*;
+
 import damedepique.general.Carte;
-import damedepique.general.Joueur;
 import damedepique.general.Paquet;
 import damedepique.ia.IA;
 
 /**
  * <p>
- *   Cette classe contient toutes les méthodes de test de la classe IA.
+ *   Cette classe contient toutes les méthodes de ordreEchange de la classe IA.
  * </p>
  *   
  * @author Loïc B. | Julien B. | Margaux B. | Justine R.
@@ -21,54 +23,47 @@ import damedepique.ia.IA;
 public class TestIA {
 	
 	/**
-	 * Test de la méthode carteEchange
+	 * Test de la méthode IA.jouerCarte()
 	 */
-	public static void testcarteEchange() {
-		System.out.println("IA.carteEchange()\n"
-	                + "------------------");
-
-	    // Instantiation d'un nouveau paquet de cartes.
-	    Paquet paquet = new Paquet();
-			
-	    // Instantiation et initialisation de quatre joueurs.
-	    Joueur[] joueurs = new Joueur[4];
-	    for (int i = 0 ; i < joueurs.length ; i++) {
-		    joueurs[i] = new IA("IA_" + i);
-	    }
-			
-	    // Création du nouveau paquet de cartes.
-	    paquet.creer();
-			
-	    // Mélange du paquet précédemment crée. 
-	    paquet.melanger();
-			
-	    // Distribution du paquet de cartes entre les quatre joueurs.
-	    paquet.distribuer(joueurs);
-	
-	    // Tri de la main pour le joueur I.A du test.
-	    joueurs[0].trierMain();
-	
-	    // Affichage de la main du joueur
-        System.out.println("\n" + joueurs[0]);
+	public static void testJouerCarte() {
+		Paquet paquet = new Paquet();
+		paquet.creer();
 		
-	    // Création du tableau de carte qui contiendra les choix de l'I.A pour l'échange.
-        Carte[] echange = new Carte[3];
-    	
-    	// Affichage du résultat donné par la méthode
-	    System.out.println("Cartes à échanger : ");
-    	for (Carte carte : echange) {
-		    System.out.println(carte.toString());
-    	}
+		IA[] joueurs = new IA[4];
+		
+		for (int i = 0 ; i < joueurs.length ; i++) {
+			joueurs[i] = new IA("IA_" + i);
+		}
+		
+		joueurs[0].trierMain();
+		
+		for (int i = 0 ; i < joueurs.length ; i++) {
+			afficherCartes(joueurs[i].getMain(), "Main de l'IA numéro " + i);
+		}
+		
+		paquet.melanger();
+		paquet.distribuer(joueurs);
+		
+		trierMains(joueurs);
+		
+		for (int i = 0 ; i < joueurs.length ; i++) {
+			Carte[] aEchanger = joueurs[i].choisirCartesAEchanger();
+			System.out.println("\nJoueur numéro " + i);
+			for (int j = 0 ; j < aEchanger.length ; j++) {
+				System.out.println(aEchanger[j]);
+			}
+		}
 		
 	}
 	
+	
 	/**
-	 * Lancement des méthodes de test de la classe IA.
+	 * Lancement des méthodes de ordreEchange de la classe IA.
 	 * @param args Non utilisé.
 	 */
 	public static void main(String[] args) {
 		
-		testcarteEchange();
+		// testJouerCarte();
 
 	}
 

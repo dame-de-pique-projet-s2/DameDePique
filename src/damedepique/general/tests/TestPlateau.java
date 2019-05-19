@@ -16,7 +16,7 @@ import damedepique.ia.IA;
 
 /**
  * <p>
- *   Cette classe contient toutes les méthodes de test de la classe Plateau.
+ *   Cette classe contient toutes les méthodes de ordreEchange de la classe Plateau.
  * </p>
  *   
  * @author Loïc B. | Julien B. | Margaux B. | Justine R.
@@ -63,7 +63,7 @@ public class TestPlateau {
 	
 	
 	/**
-	 * Lancement des méthodes de test de la classe Plateau.
+	 * Lancement des méthodes de ordreEchange de la classe Plateau.
 	 * @param args Non utilisé.
 	 */
 	public static void main(String[] args) {

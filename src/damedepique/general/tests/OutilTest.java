@@ -20,7 +20,7 @@ import java.util.Scanner;
  *   </li>
  *   <li>
  *     La méthode continuer() permet de marquer un temps d'arrêt entre deux 
- *     algorithmes de test.
+ *     algorithmes de ordreEchange.
  *   </li>
  *   <li>
  *     La méthode afficherResultat(int, int) permet d'afficher le nombre de 
@@ -58,11 +58,11 @@ public class OutilTest {
 	 * @param nbTestCorrect Le nombre de tests réussis.
 	 */
 	public static void afficherResultat(int nbTestTotal, int nbTestCorrect) {
-		System.out.println(nbTestCorrect + " test(s) ont réussi sur un total " 
+		System.out.println(nbTestCorrect + " ordreEchange(s) ont réussi sur un total " 
 	                       + "de " + nbTestTotal + " tests réalisés.\n    => " 
 				           + ((nbTestCorrect == nbTestTotal) 
 				               ? "Tous les tests sont corrects." 
-				               : "Au moins un test a échoué.") + "\n");
+				               : "Au moins un ordreEchange a échoué.") + "\n");
 	}
 	
 }

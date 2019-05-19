@@ -11,7 +11,7 @@ import damedepique.general.Symbole;
 
 /**
  * <p>
- *   Cette classe contient toutes les méthodes de test de la classe Carte.
+ *   Cette classe contient toutes les méthodes de ordreEchange de la classe Carte.
  * </p>
  *   
  * @author Loïc B. | Julien B. | Margaux B. | Justine R.
@@ -54,7 +54,7 @@ public class TestCarte {
 	
 	
 	/**
-	 * Lancement des méthodes de test de la classe Carte.
+	 * Lancement des méthodes de ordreEchange de la classe Carte.
 	 * @param args Non utilisé.
 	 */
 	public static void main(String[] args) {
