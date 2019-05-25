@@ -1,5 +1,5 @@
 /*
- * TestPlateau.java                                                  25/04/2019
+ * TestPlateau.java                                                  24/05/2019
  * Projet de la dame de pique | IUT de Rodez | 2018 - 2019
  */
 
@@ -16,10 +16,14 @@ import damedepique.ia.IA;
 
 /**
  * <p>
- *   Cette classe contient toutes les méthodes de ordreEchange de la classe Plateau.
+ *   Cette classe contient toutes les méthodes de test de la classe Plateau.
  * </p>
  *   
- * @author Loïc B. | Julien B. | Margaux B. | Justine R.
+ * @author Julien B.
+ * @author Loïc B.
+ * @author Margaux B.
+ * @author Justine R.
+ * 
  * @version 1.0
  */
 public class TestPlateau {
@@ -28,6 +32,9 @@ public class TestPlateau {
 	 * Test de la méthode Plateau.getPerdant(Joueur[])
 	 */
 	public static void testGetPerdant() {
+		System.out.println("Plateau.getPerdant(Joueur[])\n"
+                           + "----------------------------");
+		
 		Paquet paquet = new Paquet();
 		paquet.creer();
 		
@@ -59,14 +66,19 @@ public class TestPlateau {
 		System.out.println(joueurs[plateau.getPerdant(joueurs)]);
 		
 		plateau.vider();
+		
+		OutilTest.continuer();
 	}
 	
 	
 	/**
-	 * Lancement des méthodes de ordreEchange de la classe Plateau.
+	 * Lancement des méthodes de test de la classe Plateau.
 	 * @param args Non utilisé.
 	 */
 	public static void main(String[] args) {
+		System.out.println("-------------------------------------\n"
+                           + "|     TEST DE LA CLASSE PLATEAU     |\n"
+                           + "-------------------------------------\n");
 		
 		testGetPerdant();
 

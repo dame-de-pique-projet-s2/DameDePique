@@ -11,10 +11,8 @@ import damedepique.general.Carte;
 import damedepique.general.Joueur;
 import damedepique.general.Plateau;
 import damedepique.general.Symbole;
-import damedepique.general.Valeur;
 
 import java.util.ArrayList;
-import java.util.Comparator;
 
 /**
  * <p>
@@ -37,7 +35,7 @@ public class IA extends Joueur {
 	
 	
 	/** Stocke les cartes jouées pendant les tours d'une manche. */
-	private ArrayList<Carte> cartesJouees;
+	private ArrayList<Carte> memoire;
 	
 	
 	/**
@@ -46,7 +44,36 @@ public class IA extends Joueur {
 	 */
 	public IA(String pseudo) {
 		super(pseudo);
-		this.cartesJouees = new ArrayList<>(NB_CARTES_PAQUET);
+		this.memoire = new ArrayList<>(NB_CARTES_PAQUET);
+	}
+	
+	
+	/**
+	 * Récupère la mémoire de cette (this) IA.
+	 * @return La liste de cartes présente dans la mémoire de cette (this) IA.
+	 */
+	public ArrayList<Carte> getMemoire() {
+		return this.memoire;
+	}
+	
+	
+	/**
+	 * Mémorise les cartes jouées présentes sur le plateau.
+	 * @param plateau Le plateau de la partie.
+	 */
+	public void memoriserCartes(Plateau plateau) {
+		// Ajout des cartes posées sur le plateau dans la mémoire.
+		this.memoire.addAll(plateau.getCartes());
+	}
+	
+	
+	/**
+	 * Vide la mémoire de cette (this) IA. Cette méthode est utile lors de la 
+	 * fin d'une manche, pour repartir d'une liste de cartes jouées vide.
+	 */
+	public void viderMemoire() {
+		// Vidage complet de la mémoire de cette (this) IA.
+		this.memoire.clear();
 	}
 	
 	
@@ -59,9 +86,25 @@ public class IA extends Joueur {
 		// Cartes jouables dans la main de l'IA.
 		ArrayList<Carte> cartesJouables = this.getMain();
 		
-		cartesJouables.sort(ordreEchange);
+		/* 
+		 * Tri les cartes jouables lors de l'échange dans le sens le plus 
+		 * préférable pour le joueur afin d'avoir les "grosses" cartes au début 
+		 * de cette liste de cartes, donc à échanger en priorité.
+		 */
+		cartesJouables.sort(OutilStrategieIA.ordreEchange);
 		
-		// TODO Faire le cas : ne pas échanger la carte trèfle la plus grande.
+		/*
+		 * Vérifie si la première la carte des cartes jouables du joueur est un 
+		 * trèfle. Si c'est le cas alors on saute d'un indice pour ne pas jouer 
+		 * la plus grosse carte de trèfle et la garder pour jouer le premier 
+		 * tour d'une manche. Lors d'un premier tour d'une manche on sait qu'on 
+		 * ne peut quasiment jamais gagner des points (sauf exception).
+		 */
+		if (cartesJouables.get(0).getSymbole().equals(Symbole.Trefle)) {
+			
+			// On retourne la carte après l'occurrence de trèfle.
+			return cartesJouables.get(1);
+		}
 		
 		return cartesJouables.get(0);
 	}
@@ -98,6 +141,13 @@ public class IA extends Joueur {
 		 * TODO Si premier tour alors jouer la carte trèfle la plus grande dans 
 		 * la main de l'IA (si elle a une carte trèfle).
 		 */
+		// FIXME Temporaire.
+		// Joue le carte demandée la plus haute.
+		// Si le joueur possède du trèfle alors tant mieux sinon il joue une 
+		// carte élevée (autre que du trèfle) qu'il n'aura pas à jouer à un autre tour.
+		if (noTour == 0) {
+			return cartesJouables.get(cartesJouables.size() - 1);
+		}
 		
 		return cartesJouables.get(0);
 	}
@@ -134,83 +184,5 @@ public class IA extends Joueur {
 		// Renvoie le tableau contenant les trois cartes à échanger.
 		return aEchanger;
     }
-	
-	
-	/**
-	 * Mémorise les cartes jouées présentes sur le plateau.
-	 * @param plateau Le plateau de la partie.
-	 */
-	public void memoriserCartes(Plateau plateau) {
-		// Ajout des cartes posées sur le plateau dans la mémoire.
-		this.cartesJouees.addAll(plateau.getCartes());
-	}
-	
-	
-	/**
-	 * Vide la mémoire de cette (this) IA. Cette méthode est utile lors de la 
-	 * fin d'une manche, pour repartir d'une liste de cartes jouées vide.
-	 */
-	public void viderMemoire() {
-		this.cartesJouees.clear();
-	}
-	
-	
-	/**
-	 * Création d'un comparateur pour trier les cartes dans un ordre optimisé 
-	 * pour l'échange des cartes. Ce tri est réalisé par rapport à la position 
-	 * des symboles et des valeurs dans les énumérations Symbole et Valeur.
-	 * @see damedepique.general.Symbole
-	 * @see damedepique.general.Valeur
-	 */
-	public static Comparator<Carte> ordreEchange = new Comparator<>() {
-
-		/**
-		 * Compare les deux arguments pour les ordonner.
-		 * @param carte1 La carte à comparer avec la seconde carte.
-		 * @param carte2 La carte à comparer avec la première carte.
-		 * @return Renvoie un entier négatif (-1) ou positif (1) si le premier 
-		 *         argument est inférieur ou supérieur au second. 
-		 *         L'entier renvoyé ne peut pas être nul (0) car toutes 
-		 *         les cartes ont une référence unique dans un même paquet.
-		 */
-		public int compare(Carte carte1, Carte carte2) {
-			
-			// Récupère le symbole de la première carte passée en paramètre.
-			Symbole carte1Symbole = carte1.getSymbole();
-						
-			// Récupère le symbole de la seconde carte passée en paramètre.
-			Symbole carte2Symbole = carte2.getSymbole();
-						
-			// Récupère la valeur de la première carte passée en paramètre.
-			Valeur carte1Valeur = carte1.getValeur();
-						
-			// Récupère la valeur de la seconde carte passée en paramètre.
-			Valeur carte2Valeur = carte2.getValeur();
-			
-			/*
-			 * Compare cet objet (carte1Symbole) avec l'objet spécifié pour la 
-			 * commande (carte2Symbole). Retourne un entier négatif, nul ou 
-			 * positif si cet objet est inférieur, égal ou supérieur à l'objet 
-			 * spécifié. 
-			 */
-			int symboleDiff = carte1Symbole.compareTo(carte2Symbole);
-			
-			/*
-			 * Compare cet objet (carte1Valeur) avec l'objet spécifié pour la 
-			 * commande (carte2Valeur). Retourne un entier négatif, nul ou 
-			 * positif si cet objet est inférieur, égal ou supérieur à l'objet 
-			 * spécifié.
-			 */
-			int valeurDiff = carte1Valeur.compareTo(carte2Valeur);
-			
-			/*
-			 * 
-			 */
-			return valeurDiff < 0 
-				   || (valeurDiff == 0 && symboleDiff < 0) ? 1 : -1;
-			
-		}
-		
-	};
 	
 }

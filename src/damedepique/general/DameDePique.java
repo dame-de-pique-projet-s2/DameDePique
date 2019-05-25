@@ -1,5 +1,5 @@
 /*
- * DameDePique.java                                                  12/05/2019
+ * DameDePique.java                                                  24/05/2019
  * Projet de la dame de pique | IUT de Rodez | 2018 - 2019
  */
 
@@ -7,6 +7,7 @@ package damedepique.general;
 
 import static damedepique.general.OutilAffichage.*;
 import static damedepique.general.OutilCarte.*;
+import static damedepique.general.OutilEchange.*;
 import static damedepique.general.OutilPartie.*;
 
 import damedepique.ia.IA;
@@ -31,7 +32,9 @@ public class DameDePique {
 	
 	
 	/**
-	 * Point d'entrée de l'application de la dame de pique.
+	 * Point d'entrée de l'application de la dame de pique. Elle définie les 
+	 * enchaînements dans la partie entre les différentes phases de jeu 
+	 * (distribution, mélange, ...).
 	 * @param args Non utilisé.
 	 */
 	public static void main(String[] args) {
@@ -122,7 +125,12 @@ public class DameDePique {
 			
 			// Tri des mains des joueurs.
 			trierMains(joueurs);
-
+			
+			// TODO A retirer.
+			for (Joueur j : joueurs) {
+				afficherCartes(j.getMain(), j.getPseudo());
+			}
+			
 			/* 
 			 * Échange des trois cartes entre les joueurs de la partie selon 
 			 * le numéro du tour courant.
@@ -201,7 +209,7 @@ public class DameDePique {
 				// Affichage du plateau final au joueur humain.
 				afficherPlateau(plateau, joueurs);
 				
-				// TODO Récupération des cartes jouées sur le plateau pour les IA.
+				// Récupération des cartes jouées sur le plateau pour les IA.
 				for (int i = 1 ; i < NB_JOUEURS ; i++) {
 					((IA) joueurs[i]).memoriserCartes(plateau);
 				}
@@ -238,6 +246,11 @@ public class DameDePique {
 			
 			// Affichage d'un récapitulatif de la partie en cours.
 			afficherRecapPartie(joueurs);
+			
+			// Vidage de la mémoire des IA pour une prochaine manche.
+			for (int i = 1 ; i < NB_JOUEURS ; i++) {
+				((IA) joueurs[i]).viderMemoire();
+			}
 			
 			noManche++;    // Incrémente le numéro de la manche.
 

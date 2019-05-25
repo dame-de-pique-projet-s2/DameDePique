@@ -1,5 +1,5 @@
 /*
- * Humain.java                                                       11/05/2019
+ * Humain.java                                                       24/05/2019
  * Projet de la dame de pique | IUT de Rodez | 2018 - 2019
  */
 

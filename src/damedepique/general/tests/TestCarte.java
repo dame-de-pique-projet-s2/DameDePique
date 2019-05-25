@@ -1,5 +1,5 @@
 /*
- * TestCarte.java                                                    25/04/2019
+ * TestCarte.java                                                    24/05/2019
  * Projet de la dame de pique | IUT de Rodez | 2018 - 2019
  */
 
@@ -11,10 +11,14 @@ import damedepique.general.Symbole;
 
 /**
  * <p>
- *   Cette classe contient toutes les méthodes de ordreEchange de la classe Carte.
+ *   Cette classe contient toutes les méthodes de test de la classe Carte.
  * </p>
- *   
- * @author Loïc B. | Julien B. | Margaux B. | Justine R.
+ * 
+ * @author Julien B.
+ * @author Loïc B.
+ * @author Margaux B.
+ * @author Justine R.
+ * 
  * @version 1.0
  */
 public class TestCarte {
@@ -28,6 +32,9 @@ public class TestCarte {
 		
 		// Instantiation d'une nouvelle carte de jeu.
 		Carte carte = new Carte(Symbole.Coeur, Valeur.Roi);
+		
+		// Affichage de la carte de jeu précédemment créée.
+		System.out.println(carte);
 		
 		// Affichage du symbole de la carte créée auparavant.
 		System.out.println("Symbole = " + carte.getSymbole());
@@ -46,6 +53,9 @@ public class TestCarte {
 		// Instantiation d'une nouvelle carte de jeu.
 		Carte carte = new Carte(Symbole.Pique, Valeur.Dame);
 		
+		// Affichage de la carte de jeu précédemment créée.
+		System.out.println(carte);
+		
 		// Affichage de la valeur de la carte créée auparavant.
 		System.out.println("Valeur = " + carte.getValeur());
 		
@@ -54,7 +64,7 @@ public class TestCarte {
 	
 	
 	/**
-	 * Lancement des méthodes de ordreEchange de la classe Carte.
+	 * Lancement des méthodes de test de la classe Carte.
 	 * @param args Non utilisé.
 	 */
 	public static void main(String[] args) {

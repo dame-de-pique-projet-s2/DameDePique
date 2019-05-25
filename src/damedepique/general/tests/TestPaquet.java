@@ -1,5 +1,5 @@
 /*
- * TestPaquet.java                                                   25/04/2019
+ * TestPaquet.java                                                   24/05/2019
  * Projet de la dame de pique | IUT de Rodez | 2018 - 2019
  */
 
@@ -11,10 +11,14 @@ import damedepique.ia.IA;
 
 /**
  * <p>
- *   Cette classe contient toutes les méthodes de ordreEchange de la classe Paquet.
+ *   Cette classe contient toutes les méthodes de test de la classe Paquet.
  * </p>
  *   
- * @author Loïc B. | Julien B. | Margaux B. | Justine R.
+ * @author Julien B.
+ * @author Loïc B.
+ * @author Margaux B.
+ * @author Justine R.
+ * 
  * @version 1.0
  */
 public class TestPaquet {
@@ -52,7 +56,7 @@ public class TestPaquet {
 		// Création du nouveau paquet de cartes.
 		paquet.creer();
 		
-		// Mélange du paquet précédemment crée. 
+		// Mélange du paquet précédemment créée. 
 		paquet.melanger();
 		
 		// Affichage du nouveau paquet de cartes après le mélange.
@@ -81,7 +85,7 @@ public class TestPaquet {
 		// Création du nouveau paquet de cartes.
 		paquet.creer();
 		
-		// Mélange du paquet précédemment crée. 
+		// Mélange du paquet précédemment créée. 
 		paquet.melanger();
 		
 		// Distribution du paquet de cartes entre les quatre joueurs.
@@ -97,7 +101,7 @@ public class TestPaquet {
 	
 	
 	/**
-	 * Lancement des méthodes de ordreEchange de la classe Paquet.
+	 * Lancement des méthodes de test de la classe Paquet.
 	 * @param args Non utilisé.
 	 */
 	public static void main(String[] args) {

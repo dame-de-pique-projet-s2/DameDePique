@@ -5,8 +5,6 @@
 
 package damedepique.general;
 
-import static damedepique.general.OutilAffichage.*;
-
 import java.util.ArrayList;
 
 /**
@@ -24,7 +22,9 @@ import java.util.ArrayList;
 public class OutilCarte {
 	
 	/**
-	 * Recherche l'indice d'un joueur ayant une carte spécifique.
+	 * Recherche l'indice d'un joueur ayant une carte spécifique. Cette méthode 
+	 * est utile pour par exemple la recherche de l'indice du joueur possédant 
+	 * le deux de trèfle pour qu'il joue en premier lors du premier tour.
 	 * @param joueurs Les joueurs de la partie.
 	 * @param symbole Le symbole de la carte recherchée.
 	 * @param valeur La valeur de la carte recherchée.
@@ -37,7 +37,12 @@ public class OutilCarte {
 		// Mémoire qui stocke les cartes dans la main du joueur courant.
 		ArrayList<Carte> mainJoueurCourant;
 		
-		// Parcours des joueurs de la partie excepté le premier joueur.
+		/* 
+		 * Parcours des joueurs de la partie excepté le premier joueur car si 
+		 * aucune occurrence de la carte cherchée n'est trouvée lors du 
+		 * parcours de la main des joueurs alors le premier joueur sera assuré 
+		 * de posséder la carte spécifiée.
+		 */
 		for (int i = 1 ; i < joueurs.length ; i++) {
 			
 			// Stocke les cartes du joueur courant.
@@ -74,7 +79,10 @@ public class OutilCarte {
 	
 	/**
 	 * Récupère les cartes jouables par un joueur en prenant en compte si un 
-	 * coeur a déjà été défaussé ou non.
+	 * coeur a déjà été défaussé ou non. Cette méthode est utile pour aider le 
+	 * premier joueur d'un tour car il élimine toutes les cartes possédant le 
+	 * symbole coeur de ses cartes jouables tant qu'un coeur n'a pas été 
+	 * défaussé pendant une manche.
 	 * @param joueur Le joueur à vérifier.
 	 * @param coeurDefausse Vrai si un coeur a déjà été défaussé sinon faux.
 	 * @return La liste des cartes pouvant être jouées par le joueur.
@@ -160,39 +168,75 @@ public class OutilCarte {
 			}
 		}
 		
-		// Vérifie si le numéro du tour passé en argument est égal à 0.
-		if (noTour == 0) {
-			
-			/*
-			 * Si le numéro du tour spécifié est 0, ou autrement dit si c'est 
-			 * le premier tour d'une manche, alors le joueur spécifié a 
-			 * interdiction de poser une carte comportant un symbole coeur ou 
-			 * la dame de pique. On fait donc le parcours de sa main pour 
-			 * trouver une ou plusieurs occurrences.
-			 */
-			for (Carte carteJouable : cartesJouables) {
-				
-				/*
-				 * On vérifie que la carte courante vérifié est une carte 
-				 * interdite au premier tour d'une manche.
-				 */
-				if (carteJouable.getSymbole().equals(Symbole.Coeur) 
-					|| (carteJouable.getSymbole().equals(Symbole.Pique) 
-						&& carteJouable.getValeur().equals(Valeur.Dame))) {
-					
-					// On retire la carte courante si elle est interdite.
-					cartesJouables.remove(carteJouable);
-				}
-			}
-		}
-		
 		/*
 		 * Si le joueur ne possède aucune carte ayant un symbole équivalent au 
 		 * symbole demandé alors il peut jouer toutes les cartes présentes dans 
-		 * sa main.
+		 * sa main à l'exception du premier tour où les cartes comportant du 
+		 * coeur et la dame de pique sont exclu des cartes jouables (sauf 
+		 * cas spéciaux).
 		 */
 		if (cartesJouables.isEmpty()) {
-			return mainJoueur;
+			
+			/* 
+			 * On vérifie que le numéro du tour est égal à 0 (premier tour) 
+			 * pour savoir si des cartes doivent être supprimées des cartes 
+			 * jouables du joueur spécifié.
+			 */
+			if (noTour == 0) {
+				
+				/*
+				 * Si le numéro du tour spécifié est 0, ou autrement dit si 
+				 * c'est le premier tour d'une manche, alors le joueur spécifié 
+				 * a interdiction de poser une carte comportant un symbole 
+				 * coeur ou la dame de pique. On fait donc le parcours de sa 
+				 * main pour trouver une ou plusieurs occurrences afin de les 
+				 * supprimer.
+				 */
+				for (Carte carteCourante : joueur.getMain()) {
+					
+					/*
+					 * On vérifie que la carte courante vérifiée n'est pas une 
+					 * carte interdite au premier tour d'une manche.
+					 */
+					if (!carteCourante.getSymbole().equals(Symbole.Coeur) 
+						&& !(carteCourante.getSymbole().equals(Symbole.Pique) 
+						&& carteCourante.getValeur().equals(Valeur.Dame))) {
+						
+						/* 
+						 * Si la carte courante n'est pas une carte interdite 
+						 * au premier tour d'un manche alors elle est ajoutée 
+						 * aux cartes jouables par le joueur spécifié.
+						 */
+						cartesJouables.add(carteCourante);
+					}
+				}
+				
+				/*
+				 * Après la vérification précédente il ce peut dans des cas 
+				 * très particuliers que le joueur spécifié ne possède que des 
+				 * cartes contenant un symbole coeur avec la dame de pique par 
+				 * exemple. Dans un de ces cas, on vérifie si la liste des 
+				 * cartes jouables pour ce joueur est toujours vide alors le 
+				 * joueur a la possibilité de jouer n'importe quelle carte dans 
+				 * sa main car sinon il aurait été bloqué.
+				 */
+				if (cartesJouables.isEmpty()) {
+					
+					// Retourne la liste des cartes dans la main du joueur.
+					return mainJoueur;
+				}
+			
+			/*
+			 * Sinon si le joueur ne possède aucune carte ayant un symbole 
+			 * équivalent au symbole demandé et que ce n'est pas le premier 
+			 * tour d'une manche alors il peut jouer toutes les cartes 
+			 * présentes dans sa main.
+			 */
+			} else {
+				
+				// Retourne la liste des cartes dans la main du joueur.
+				return mainJoueur;
+			}
 		}
 		
 		/* 
@@ -200,185 +244,6 @@ public class OutilCarte {
 		 * symbole demandé et le numéro tour.
 		 */
 		return cartesJouables;
-	}
-	
-	
-	/**
-	 * Échange les trois cartes choisies par les joueurs entre eux.
-	 * Dans cette méthode, l'échange se fait vers la gauche.
-	 * @param joueurs Les joueurs de la partie.
-	 */
-	public static void echangeGauche(Joueur[] joueurs) {
-		// Demande et stocke les cartes à échanger du premier joueur.
-		Carte[] cartesJ0 = joueurs[0].choisirCartesAEchanger();
-		
-		// Demande et stocke les cartes à échanger du second joueur.
-		Carte[] cartesJ1 = joueurs[1].choisirCartesAEchanger();
-		
-		// Demande et stocke les cartes à échanger du troisième joueur.
-		Carte[] cartesJ2 = joueurs[2].choisirCartesAEchanger();
-
-		// Demande et stocke les cartes à échanger du quatrième joueur.
-		Carte[] cartesJ3 = joueurs[3].choisirCartesAEchanger();
-		
-		// Parcours des tableaux de cartes à échanger.
-		for (int i = 0 ; i < cartesJ0.length ; i++) {
-			// joueurs[0] donne les cartes au joueurs[1].
-			joueurs[1].ajouterCarte(cartesJ0[i]);
-			
-			// joueurs[1] donne les cartes au joueurs[2].
-			joueurs[2].ajouterCarte(cartesJ1[i]);
-			
-			// joueurs[2] donne les cartes au joueurs[3].
-			joueurs[3].ajouterCarte(cartesJ2[i]);
-			
-			// joueurs[3] donne les cartes au joueurs[0].
-			joueurs[0].ajouterCarte(cartesJ3[i]);
-		}
-		
-		// Affiche un message pour voir qui échange les cartes à qui.
-		afficherEchanges(joueurs, 0);
-	}
-	
-	
-	/**
-	 * Échange les trois cartes choisies par les joueurs entre eux.
-	 * Dans cette méthode, l'échange se fait vers la droite.
-	 * @param joueurs Les joueurs de la partie.
-	 */
-	public static void echangeDroit(Joueur[] joueurs) {
-		// Demande et stocke les cartes à échanger du premier joueur.
-		Carte[] cartesJ0 = joueurs[0].choisirCartesAEchanger();
-		
-		// Demande et stocke les cartes à échanger du second joueur.
-		Carte[] cartesJ1 = joueurs[1].choisirCartesAEchanger();
-		
-		// Demande et stocke les cartes à échanger du troisième joueur.
-		Carte[] cartesJ2 = joueurs[2].choisirCartesAEchanger();
-		
-		// Demande et stocke les cartes à échanger du quatrième joueur.
-		Carte[] cartesJ3 = joueurs[3].choisirCartesAEchanger();
-		
-		// Parcours des tableaux de cartes à échanger.
-		for (int i = 0 ; i < cartesJ0.length ; i++) {
-			// joueurs[0] donne les cartes au joueurs[3].
-			joueurs[3].ajouterCarte(cartesJ0[i]);
-			
-			// joueurs[3] donne les cartes au joueurs[2].
-			joueurs[2].ajouterCarte(cartesJ3[i]);
-			
-			// joueurs[2] donne les cartes au joueurs[1].
-			joueurs[1].ajouterCarte(cartesJ2[i]);
-			
-			// joueurs[1] donne les cartes au joueurs[0].
-			joueurs[0].ajouterCarte(cartesJ1[i]);
-		}
-		
-		// Affiche un message pour voir qui échange les cartes à qui.
-		afficherEchanges(joueurs, 1);
-	}
-	
-	
-	/**
-	 * Échange les trois cartes choisies par les joueurs entre eux.
-	 * Dans cette méthode, l'échange se fait en face.
-	 * @param joueurs Les joueurs de la partie.
-	 */
-	public static void echangeFace(Joueur[] joueurs) {
-		// Demande et stocke les cartes à échanger du premier joueur.
-		Carte[] cartesJ0 = joueurs[0].choisirCartesAEchanger();
-		
-		// Demande et stocke les cartes à échanger du second joueur.
-		Carte[] cartesJ1 = joueurs[1].choisirCartesAEchanger();
-		
-		// Demande et stocke les cartes à échanger du troisième joueur.
-		Carte[] cartesJ2 = joueurs[2].choisirCartesAEchanger();
-		
-		// Demande et stocke les cartes à échanger du quatrième joueur.
-		Carte[] cartesJ3 = joueurs[3].choisirCartesAEchanger();
-		
-		// Parcours des tableaux de cartes à échanger.
-		for (int i = 0 ; i < cartesJ0.length ; i++) {
-			// joueurs[0] donne les cartes au joueurs[2].
-			joueurs[2].ajouterCarte(cartesJ0[i]);
-			
-			// joueurs[2] donne les cartes au joueurs[0].
-			joueurs[0].ajouterCarte(cartesJ2[i]);
-			
-			// joueurs[3] donne les cartes au joueurs[1].
-			joueurs[1].ajouterCarte(cartesJ3[i]);
-			
-			// joueurs[1] donne les cartes au joueurs[3].
-			joueurs[3].ajouterCarte(cartesJ1[i]);
-		}
-		
-		// Affiche un message pour voir qui échange les cartes à qui.
-		afficherEchanges(joueurs, 2);
-	}
-	
-	
-	/**
-	 * Échange les cartes suivant le numéro de la manche courante.
-	 * Le sens des échanges sont définis par rapport au numéro de la manche.
-	 * @param joueurs Les joueurs de la partie.
-	 * @param noManche Le numéro de la manche de la partie.
-	 */
-	public static void echangerCartes(Joueur[] joueurs, int noManche) {
-		if (noManche % 4 == 0) {
-			// Affichage d'un message montrant que l'échange commence.
-			System.out.println(DEBUT_ECHANGE);
-			
-			// Échange des cartes vers le joueur positionné à gauche. 
-			echangeGauche(joueurs);
-			
-			// Annonce que l'échange est terminé.
-			finEchange(joueurs);
-		} else if (noManche % 4 == 1) {
-			// Affichage d'un message montrant que l'échange commence.
-			System.out.println(DEBUT_ECHANGE);
-			
-			// Échange des cartes vers le joueur positionné à droite.
-			echangeDroit(joueurs);
-			
-			// Annonce que l'échange est terminé.
-			finEchange(joueurs);
-		} else if (noManche % 4 == 2) {
-			// Affichage d'un message montrant que l'échange commence.
-			System.out.println(DEBUT_ECHANGE);
-			
-			// Échange des cartes vers le joueur positionné en face.
-			echangeFace(joueurs);
-			
-			// Annonce que l'échange est terminé.
-			finEchange(joueurs);
-		} else {
-			
-			/* 
-			 * Affichage d'un message signalant qu'il n'y a d'échange à ce 
-			 * tour. Ce phénomène se produit tous les quatre tour.
-			 */
-			System.out.println(PAS_ECHANGE);
-		}
-	}
-	
-	
-	/**
-	 * Annonce la fin d'un échange de cartes. Après cet échange, un algorithme 
-	 * tri les cartes dans la main de tous les joueurs, puis montre les cartes 
-	 * dans la main du joueur humain et affiche un message précisant que 
-	 * l'échange est bel et bien fini.
-	 * @param joueurs Les joueurs de la partie.
-	 */
-	private static void finEchange(Joueur[] joueurs) {
-		// Tri la main du joueur après l'échange des cartes.
-		trierMains(joueurs);
-		 
-		// Affichage des nouvelles cartes présentes dans la main.
-		afficherCartes(joueurs[0].getMain(), 
-					   "### Votre nouvelle main après l'échange : ");
-		
-		// Affichage d'un message signalant la fin de l'échange des cartes.
-		System.out.println(FIN_ECHANGE);
 	}
 	
 	

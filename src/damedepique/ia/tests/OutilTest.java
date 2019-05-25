@@ -3,7 +3,7 @@
  * Projet de la dame de pique | IUT de Rodez | 2018 - 2019
  */
 
-package damedepique.general.tests;
+package damedepique.ia.tests;
 
 import java.util.Scanner;
 
