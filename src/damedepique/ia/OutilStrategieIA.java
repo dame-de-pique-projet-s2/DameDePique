@@ -9,6 +9,8 @@ import java.util.ArrayList;
 import java.util.Comparator;
 
 import damedepique.general.Carte;
+import damedepique.general.Joueur;
+import damedepique.general.Plateau;
 import damedepique.general.Symbole;
 import damedepique.general.Valeur;
 
@@ -26,6 +28,19 @@ import damedepique.general.Valeur;
  */
 public class OutilStrategieIA {
 
+	public static void remplissageMemoiresGlobales(Joueur[] joueurs, Plateau plateau) {
+		for (int i = 1 ; i < joueurs.length ; i++) {
+			((IA) joueurs[i]).setMemoireGlobale(plateau);
+		}
+	}
+	
+	
+	public static void remplissageMemoiresPlateau(Joueur[] joueurs, Plateau plateau) {
+		for (int i = 1 ; i < joueurs.length ; i++) {
+			((IA) joueurs[i]).setMemoirePlateau(plateau);
+		}
+	}
+	
 	/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 	 * * * * * * * * * * * * * * PARTIE ECHANGE* * * * * * * * * * * * * * *
 	 * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
@@ -35,6 +50,9 @@ public class OutilStrategieIA {
 	// n'a pas un symbole identique à celui trouvé pour la longue (on récupère que la première longue)
 	// Si le symbole identique alors on saute d'un indice et on prend la carte suivante
 	// (avec vérification que le symbole ne soit pas le même).
+	public static void recuperationPlateau(Plateau plateau) {
+		plateau.getCartes();
+	}
 	
 	
 	/**
@@ -44,7 +62,7 @@ public class OutilStrategieIA {
 	 * @see damedepique.general.Symbole
 	 * @see damedepique.general.Valeur
 	 */
-	public static Comparator<Carte> ordreEchange = new Comparator<>() {
+	public static Comparator<Carte> ordreJeu = new Comparator<>() {
 
 		/**
 		 * Compare les deux arguments pour les ordonner.
@@ -152,7 +170,7 @@ public class OutilStrategieIA {
 	 *         cartes non jouées du symbole sinon faux.
 	 */
 	public static boolean dernieresCartes(IA ia, Symbole symboleDonne) {
-		int cartesRestantes = cartesRestantes(symboleDonne, ia.getMemoire());
+		int cartesRestantes = cartesRestantes(symboleDonne, ia.getMemoireGlobale());
 		int cartesRestantesMain = cartesRestantes(symboleDonne, ia.getMain());
 		
 		if (cartesRestantes + cartesRestantesMain == 13) {

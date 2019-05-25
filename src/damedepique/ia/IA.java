@@ -34,8 +34,16 @@ public class IA extends Joueur {
 	private static final int NB_CARTES_PAQUET = 52;
 	
 	
+	/** Nombre de cartes qu'un plateau peut contenir au maximum. */
+	private static final int NB_CARTES_PLATEAU = 4;
+	
+	
 	/** Stocke les cartes jouées pendant les tours d'une manche. */
-	private ArrayList<Carte> memoire;
+	private ArrayList<Carte> memoireGlobale;
+	
+	
+	/** Stocke les cartes jouées sur le plateau pendant un tour. */
+	private ArrayList<Carte> memoirePlateau;
 	
 	
 	/**
@@ -44,26 +52,31 @@ public class IA extends Joueur {
 	 */
 	public IA(String pseudo) {
 		super(pseudo);
-		this.memoire = new ArrayList<>(NB_CARTES_PAQUET);
+		this.memoireGlobale = new ArrayList<>(NB_CARTES_PAQUET);
+		this.memoirePlateau = new ArrayList<>(NB_CARTES_PLATEAU);
 	}
 	
 	
+	/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+	 * * * * * * * * * * * * PARTIE MEMOIRE GLOBALE* * * * * * * * * * * * *
+	 * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
+	
 	/**
-	 * Récupère la mémoire de cette (this) IA.
+	 * Récupère la mémoire globale de cette (this) IA.
 	 * @return La liste de cartes présente dans la mémoire de cette (this) IA.
 	 */
-	public ArrayList<Carte> getMemoire() {
-		return this.memoire;
+	public ArrayList<Carte> getMemoireGlobale() {
+		return this.memoireGlobale;
 	}
 	
 	
 	/**
-	 * Mémorise les cartes jouées présentes sur le plateau.
+	 * Mémorise les cartes jouées présentes sur le plateau pendant un tour.
 	 * @param plateau Le plateau de la partie.
 	 */
-	public void memoriserCartes(Plateau plateau) {
-		// Ajout des cartes posées sur le plateau dans la mémoire.
-		this.memoire.addAll(plateau.getCartes());
+	public void setMemoireGlobale(Plateau plateau) {
+		// Ajout des cartes posées sur le plateau dans la mémoire globale.
+		this.memoireGlobale.addAll(plateau.getCartes());
 	}
 	
 	
@@ -71,11 +84,34 @@ public class IA extends Joueur {
 	 * Vide la mémoire de cette (this) IA. Cette méthode est utile lors de la 
 	 * fin d'une manche, pour repartir d'une liste de cartes jouées vide.
 	 */
-	public void viderMemoire() {
-		// Vidage complet de la mémoire de cette (this) IA.
-		this.memoire.clear();
+	public void viderMemoireGlobale() {
+		// Vidage complet de la mémoire globale de cette (this) IA.
+		this.memoireGlobale.clear();
 	}
 	
+	
+	/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+	 * * * * * * * * * * * * PARTIE MEMOIRE PLATEAU* * * * * * * * * * * * *
+	 * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
+	
+	public ArrayList<Carte> getMemoirePlateau() {
+		return this.memoirePlateau;
+	}
+	
+	
+	public void setMemoirePlateau(Plateau plateau) {
+		this.memoirePlateau.addAll(plateau.getCartes());
+	}
+	
+	
+	public void viderMemoirePlateau() {
+		this.memoirePlateau.clear();
+	}
+	
+	
+	/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+	 * * * * * * * * * * * * * * PARTIE ACTION * * * * * * * * * * * * * * *
+	 * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 	
 	/**
 	 * Choisie et joue une carte sans restriction, il faut juste que la carte 
@@ -91,7 +127,7 @@ public class IA extends Joueur {
 		 * préférable pour le joueur afin d'avoir les "grosses" cartes au début 
 		 * de cette liste de cartes, donc à échanger en priorité.
 		 */
-		cartesJouables.sort(OutilStrategieIA.ordreEchange);
+		cartesJouables.sort(OutilStrategieIA.ordreJeu);
 		
 		/*
 		 * Vérifie si la première la carte des cartes jouables du joueur est un 
@@ -113,15 +149,27 @@ public class IA extends Joueur {
 	/**
 	 * Choisie et joue une carte en vérifiant qu'un coeur a été défaussé ou 
 	 * non. Si un coeur n'a jamais été défaussé alors l'IA ne peut pas 
-	 * commencer par une carte comportant du coeur.
+	 * commencer par une carte comportant du coeur. Cette méthode est utile 
+	 * pour le joueur commençant un tour (excepté le premier).
 	 */
 	public Carte jouerCarte(boolean coeurDefausse) {
 		// Cartes jouables dans la main de l'IA.
 		ArrayList<Carte> cartesJouables = cartesPossibles(this, coeurDefausse);
-		
-		// TODO Faire un réseau neuronal pour complexifier.
 
-		return cartesJouables.get(0);
+		/* 
+		 * Tri les cartes jouables dans un ordre décroissant pour les valeurs.
+		 * Cela permet de retrouver les "petites" cartes à la fin de la liste 
+		 * ce qui permet de jouer les plus "petites" cartes lorqu'on commence 
+		 * un tour, pour avoir le moins de chance possible de le perdre.
+		 */
+		cartesJouables.sort(OutilStrategieIA.ordreJeu);
+		
+		/* 
+		 * Lorsqu'un tour commence, alors l'IA joue la plus petite car possible 
+		 * présente dans sa main pour voir une probabilité de gagner le tour 
+		 * courant plus faible que si elle aurait joué une "grosse" carte.
+		 */
+		return cartesJouables.get(cartesJouables.size() - 1);
 	}
 	
 	
@@ -136,18 +184,20 @@ public class IA extends Joueur {
 		ArrayList<Carte> cartesJouables = cartesPossibles(this, symboleDemande, 
 				                                                noTour);
 		
-		// TODO Faire un réseau neuronal pour complexifier.
-		/* 
-		 * TODO Si premier tour alors jouer la carte trèfle la plus grande dans 
-		 * la main de l'IA (si elle a une carte trèfle).
-		 */
-		// FIXME Temporaire.
-		// Joue le carte demandée la plus haute.
-		// Si le joueur possède du trèfle alors tant mieux sinon il joue une 
-		// carte élevée (autre que du trèfle) qu'il n'aura pas à jouer à un autre tour.
+		// Vérifie si le numéro du tour est égal à 0 (premier tour).
 		if (noTour == 0) {
+			
+			/*
+			 * Si c'est le premier tour alors on se débarrasse de la carte 
+			 * la plus grande que l'on a avec le symbole demandé (plus grande 
+			 * carte trèfle sauf en cas d'exception). Si on n'a pas de trèfle 
+			 * dans les cartes jouables alors on défausse la plus grande carte 
+			 * d'un autre symbole.
+			 */
 			return cartesJouables.get(cartesJouables.size() - 1);
 		}
+		
+		// TODO Faire le jouer carte 3.
 		
 		return cartesJouables.get(0);
 	}

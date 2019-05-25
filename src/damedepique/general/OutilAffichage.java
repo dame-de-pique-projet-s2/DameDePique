@@ -80,19 +80,29 @@ public class OutilAffichage {
 	 * Affiche une liste de cartes avec les indices associés. Cette méthode est 
 	 * utile quand une joueur doit donner un indice de carte pour la jouer.
 	 * @param cartes Une liste de cartes à afficher.
+	 * @param cartesJouables Les cartes jouables parmi les la liste spécifiée.
 	 * @param message Le message à afficher avec la liste de cartes.
 	 */
 	public static void afficherCartesIndice(ArrayList<Carte> cartes, 
+			                                ArrayList<Carte> cartesJouables,
 			                                String message) {
 		
 		// Affichage d'un message précisant le rôle de la liste de cartes.
 		System.out.println(message);
 		
+		int compteur = 0;
+		
 		// Parcours des cartes dans la liste spécifiée en argument.
-		for (Carte carte : cartes) {
-			
-			// Affichage de la carte courante avec son indice associé.
-			System.out.println("(" + cartes.indexOf(carte) + ") => " + carte);
+		for (int i = 0 ; i < cartes.size() ; i++) {
+			// Vérifie si la carte courante est jouable.
+			if (cartesJouables.contains(cartes.get(i))) {
+				
+				// Affichage de la carte courante avec son indice associé.
+				System.out.println("(" + compteur + ") => " + cartes.get(i) + " *");
+				compteur++;
+			} else {
+				System.out.println("=> " + cartes.get(i));
+			}
 		}
 		
 		// Saut d'une ligne pour aérer l'affichage de la liste de cartes.

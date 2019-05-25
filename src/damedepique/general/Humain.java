@@ -59,7 +59,7 @@ public class Humain extends Joueur {
 		int indiceCarte;    // Indice de la carte choisie.
 		
 		// Affichage des cartes jouables dans la main de cet (this) Humain.
-		afficherCartesIndice(cartesJouables, 
+		afficherCartesIndice(cartesJouables, cartesJouables,
 				             "\n### Les cartes que vous pouvez échanger : ");
 		
 		do {
@@ -111,12 +111,9 @@ public class Humain extends Joueur {
 		
 		boolean nok;        // Indicateur de mauvaise carte choisie.
 		int indiceCarte;    // Indice de la carte choisie.
-		
-		// Affichage les cartes présentes dans la main du joueur.
-		afficherCartes(this.getMain(), "### Votre main actuelle : ");
 	    
 		// Affichage des cartes jouables dans la main de cet (this) Humain.
-		afficherCartesIndice(cartesJouables, 
+		afficherCartesIndice(this.getMain(), cartesJouables,
 				             "### Les cartes que vous pouvez jouer : ");
 		
 		do {
@@ -170,11 +167,8 @@ public class Humain extends Joueur {
 		boolean nok;        // Indicateur de mauvaise carte choisie.
 		int indiceCarte;    // Indice de la carte choisie.
 		
-		// Affichage les cartes présentes dans la main du joueur.
-		afficherCartes(this.getMain(), "### Votre main actuelle : ");
-		
 		// Affichage les cartes possibles pour jouer dans la main du jouer.
-		afficherCartesIndice(cartesJouables, 
+		afficherCartesIndice(this.getMain(), cartesJouables,
 				             "### Les cartes que vous pouvez jouer : ");
 		
 		do {
@@ -230,8 +224,12 @@ public class Humain extends Joueur {
 		// Stockage de l'indice du deux de trèfle.
 		int indiceDeuxTrefle = indiceDeuxTrefle(this);
 		
+		ArrayList<Carte> d = new ArrayList<>();
+		d.add(mainJoueur.get(indiceDeuxTrefle));
+		
 		// Affichage des cartes dans la main de cet (this) Humain.
-		afficherCartesIndice(mainJoueur, 
+		// TODO A modifier en ajoutant une ArrayList
+		afficherCartesIndice(mainJoueur, d,
 				             "### Les cartes que vous pouvez jouer : ");
 		
 		/*

@@ -5,7 +5,10 @@
 
 package damedepique.general.tests;
 
+import damedepique.general.Humain;
 import damedepique.general.Joueur;
+import damedepique.general.OutilAffichage;
+import damedepique.general.OutilCarte;
 import damedepique.general.Paquet;
 import damedepique.ia.IA;
 
@@ -22,49 +25,6 @@ import damedepique.ia.IA;
  * @version 1.0
  */
 public class TestPaquet {
-
-	/**
-	 * Test de la méthode Paquet.creer()
-	 */
-	public static void testCreer() {
-		System.out.println("Paquet.creer()\n"
-		                   + "--------------");
-		
-		// Instantiation d'un nouveau paquet de cartes.
-		Paquet paquet = new Paquet();
-		
-		// Création du nouveau paquet de cartes.
-		paquet.creer();
-		
-		// Affichage du nouveau paquet de cartes.
-		System.out.println(paquet.toString());
-		
-		OutilTest.continuer();
-	}
-	
-	
-	/**
-	 * Test de la méthode Paquet.melanger()
-	 */
-	public static void testMelanger() {
-		System.out.println("Paquet.melanger()\n"
-                           + "-----------------");
-		
-		// Instantiation d'un nouveau paquet de cartes.
-		Paquet paquet = new Paquet();
-				
-		// Création du nouveau paquet de cartes.
-		paquet.creer();
-		
-		// Mélange du paquet précédemment créée. 
-		paquet.melanger();
-		
-		// Affichage du nouveau paquet de cartes après le mélange.
-		System.out.println(paquet.toString());
-		
-		OutilTest.continuer();
-	}
-	
 	
 	/**
 	 * Test de la méthode Paquet.distribuer()
@@ -76,24 +36,33 @@ public class TestPaquet {
 		// Instantiation d'un nouveau paquet de cartes.
 		Paquet paquet = new Paquet();
 		
-		// Instantiation et initialisation de quatre joueurs.
-		Joueur[] joueurs = new Joueur[4];
-		for (int i = 0 ; i < joueurs.length ; i++) {
-			joueurs[i] = new IA("IA_" + i);
-		}
-		
-		// Création du nouveau paquet de cartes.
+		// Création du paquet de 52 cartes pour jouer.
 		paquet.creer();
 		
-		// Mélange du paquet précédemment créée. 
-		paquet.melanger();
+		// Création d'un groupe de quatre joueurs.
+		Joueur[] joueurs = new Joueur[4];
+					
+		// Création d'un joueur humain.
+		joueurs[0] = new Humain("Humain_0");
+					
+		// Création de trois joueurs intelligences artificielles.
+		joueurs[1] = new IA("IA_1");
+		joueurs[2] = new IA("IA_2");
+		joueurs[3] = new IA("IA_3");
 		
-		// Distribution du paquet de cartes entre les quatre joueurs.
+		// Mélange du paquet de cartes.
+		paquet.melanger();
+					
+		// Distribution du paquet entre les quatre joueurs de la partie.
 		paquet.distribuer(joueurs);
 		
+		// Tri des mains des joueurs de la partie.
+		OutilCarte.trierMains(joueurs);
+		
 		// Affichage des mains de tous les joueurs de la partie.
-		for (int j = 0 ; j < joueurs.length ; j++) {
-			System.out.println(joueurs[j] + "\n");
+		for (Joueur joueur : joueurs) {
+			OutilAffichage.afficherCartes(joueur.getMain(), 
+					                      "La main de " + joueur.getPseudo());
 		}
 		
 		OutilTest.continuer();
@@ -109,8 +78,6 @@ public class TestPaquet {
                            + "|     TEST DE LA CLASSE PAQUET     |\n"
                            + "------------------------------------\n");
 		
-		// testCreer();
-		// testMelanger();
 		// testDistribuer();
 
 	}

@@ -126,11 +126,6 @@ public class DameDePique {
 			// Tri des mains des joueurs.
 			trierMains(joueurs);
 			
-			// TODO A retirer.
-			for (Joueur j : joueurs) {
-				afficherCartes(j.getMain(), j.getPseudo());
-			}
-			
 			/* 
 			 * Échange des trois cartes entre les joueurs de la partie selon 
 			 * le numéro du tour courant.
@@ -211,7 +206,7 @@ public class DameDePique {
 				
 				// Récupération des cartes jouées sur le plateau pour les IA.
 				for (int i = 1 ; i < NB_JOUEURS ; i++) {
-					((IA) joueurs[i]).memoriserCartes(plateau);
+					((IA) joueurs[i]).setMemoireGlobale(plateau);
 				}
 				
 				// Vérifie si un coeur a été défaussé durant ce tour.
@@ -249,7 +244,7 @@ public class DameDePique {
 			
 			// Vidage de la mémoire des IA pour une prochaine manche.
 			for (int i = 1 ; i < NB_JOUEURS ; i++) {
-				((IA) joueurs[i]).viderMemoire();
+				((IA) joueurs[i]).viderMemoireGlobale();
 			}
 			
 			noManche++;    // Incrémente le numéro de la manche.
