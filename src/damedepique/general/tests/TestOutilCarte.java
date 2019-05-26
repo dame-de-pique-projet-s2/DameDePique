@@ -18,58 +18,6 @@ package damedepique.general.tests;
  * @version 1.0
  */
 public class TestOutilCarte {
-
-	/**
-	 * Test de la méthode OutilCarte.rechercherCarte(Joueur[], Symbole, Valeur)
-	 */
-	public static void testRechercherCarte() {
-		System.out.println("OutilCarte.rechercherCarte(Joueur[], Symbole, Valeur)\n"
-                           + "-----------------------------------------------------");
-
-		// TODO A compléter.
-
-		OutilTest.continuer();
-	}
-	
-	
-	/**
-	 * Test de la méthode OutilCarte.cartesPossibles(Joueur, boolean)
-	 */
-	public static void testCartesPossiblesDefausse() {
-		System.out.println("OutilCarte.cartesPossibles(Joueur, boolean)\n"
-                           + "-------------------------------------------");
-
-		// TODO A compléter.
-
-		OutilTest.continuer();
-	}
-	
-	
-	/**
-	 * Test de la méthode OutilCarte.cartesPossibles(Joueur, Symbole, int)
-	 */
-	public static void testCartesPossiblesSymbole() {
-		System.out.println("OutilCarte.cartesPossibles(Joueur, Symbole, int)\n"
-                           + "------------------------------------------------");
-
-		// TODO A compléter.
-
-		OutilTest.continuer();
-	}
-	
-	
-	/**
-	 * Test de la méthode OutilCarte.indiceDeuxTrefle(Joueur)
-	 */
-	public static void testIndiceDeuxTrefle() {
-		System.out.println("OutilCarte.indiceDeuxTrefle(Joueur)\n"
-                           + "-----------------------------------");
-
-		// TODO A compléter.
-
-		OutilTest.continuer();
-	}
-	
 	
 	/**
 	 * Test de la méthode OutilCarte.trierMains(Joueur[])
@@ -93,11 +41,7 @@ public class TestOutilCarte {
                            + "|     TEST DE LA CLASSE OUTILCARTE     |\n"
                            + "----------------------------------------\n");
 		
-		testRechercherCarte();
-		// testCartesPossiblesDefausse();
-		// testCartesPossiblesSymbole();
-		// testIndiceDeuxTrefle();
-		// testTrierMains();
+		testTrierMains();
 
 	}
 

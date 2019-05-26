@@ -78,7 +78,7 @@ public class TestPaquet {
                            + "|     TEST DE LA CLASSE PAQUET     |\n"
                            + "------------------------------------\n");
 		
-		// testDistribuer();
+		testDistribuer();
 
 	}
 

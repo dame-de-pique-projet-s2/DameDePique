@@ -57,12 +57,12 @@ public class DameDePique {
 		Joueur[] joueurs = new Joueur[NB_JOUEURS];
 		
 		// Création d'un joueur humain.
-		joueurs[0] = new Humain("Humain_0");
+		joueurs[0] = new Humain("Julien");
 		
 		// Création de trois joueurs intelligences artificielles indépendantes.
-		for (int i = 1 ; i < NB_JOUEURS ; i++) {
-			joueurs[i] = new IA("IA_" + i);
-		}
+		joueurs[1] = new IA("Margaux");
+		joueurs[2] = new IA("Loic");
+		joueurs[3] = new IA("Justine");
 		
 		/* 
 		 * Demande au joueur humain si il veut modifier son pseudo et le 
@@ -178,6 +178,14 @@ public class DameDePique {
 						
 						// Affichage du plateau de cartes pour aider l'humain.
 						afficherPlateau(plateau, joueurs);
+					} else {
+						
+						/* 
+						 * Si ce n'est pas un joueur humain alors en rempli la 
+						 * mémoire de l'IA courante pour l'aider à jouer durant 
+						 * le tour.
+						 */
+						((IA) joueurs[i]).setMemoire(plateau);
 					}
 					
 					/* 
@@ -204,13 +212,13 @@ public class DameDePique {
 				// Affichage du plateau final au joueur humain.
 				afficherPlateau(plateau, joueurs);
 				
-				// Récupération des cartes jouées sur le plateau pour les IA.
-				for (int i = 1 ; i < NB_JOUEURS ; i++) {
-					((IA) joueurs[i]).setMemoireGlobale(plateau);
-				}
-				
 				// Vérifie si un coeur a été défaussé durant ce tour.
 				coeurDefausse = plateau.avecCoeur();
+				
+				// Vide la mémoire des IA pour commencer un nouveau tour.
+				for (int j = 1 ; j < NB_JOUEURS ; j++) {
+					((IA) joueurs[j]).viderMemoire();
+				}
 				
 				// Récupération de l'indice du joueur perdant.
 				premier = plateau.getPerdant(joueurs);
@@ -241,11 +249,6 @@ public class DameDePique {
 			
 			// Affichage d'un récapitulatif de la partie en cours.
 			afficherRecapPartie(joueurs);
-			
-			// Vidage de la mémoire des IA pour une prochaine manche.
-			for (int i = 1 ; i < NB_JOUEURS ; i++) {
-				((IA) joueurs[i]).viderMemoireGlobale();
-			}
 			
 			noManche++;    // Incrémente le numéro de la manche.
 

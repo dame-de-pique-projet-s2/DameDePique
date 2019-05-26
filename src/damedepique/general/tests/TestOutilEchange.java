@@ -91,7 +91,7 @@ public class TestOutilEchange {
                            + "|     TEST DE LA CLASSE OUTILECHANGE     |\n"
                            + "------------------------------------------\n");
 		
-		// testEchangerCartes();
+		testEchangerCartes();
 		
 	}
 	

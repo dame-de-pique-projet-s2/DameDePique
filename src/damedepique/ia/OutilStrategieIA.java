@@ -5,18 +5,17 @@
 
 package damedepique.ia;
 
-import java.util.ArrayList;
 import java.util.Comparator;
 
 import damedepique.general.Carte;
-import damedepique.general.Joueur;
-import damedepique.general.Plateau;
 import damedepique.general.Symbole;
 import damedepique.general.Valeur;
 
 /**
  * <p>
- *   TODO A faire.
+ *   Cette classe contient toutes les méthodes concernant la stratégie d'une 
+ *   IA comme par exemple un tri des cartes dans un bon ordre pour que 
+ *   l'IA puisse mieux jouer.
  * </p>
  * 
  * @author Julien B.
@@ -28,33 +27,6 @@ import damedepique.general.Valeur;
  */
 public class OutilStrategieIA {
 
-	public static void remplissageMemoiresGlobales(Joueur[] joueurs, Plateau plateau) {
-		for (int i = 1 ; i < joueurs.length ; i++) {
-			((IA) joueurs[i]).setMemoireGlobale(plateau);
-		}
-	}
-	
-	
-	public static void remplissageMemoiresPlateau(Joueur[] joueurs, Plateau plateau) {
-		for (int i = 1 ; i < joueurs.length ; i++) {
-			((IA) joueurs[i]).setMemoirePlateau(plateau);
-		}
-	}
-	
-	/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
-	 * * * * * * * * * * * * * * PARTIE ECHANGE* * * * * * * * * * * * * * *
-	 * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
-	
-	// TODO Vérifie si une IA possède 5 ou plus cartes comportant un même symbole.
-	// Si c'est vrai alors on vérifie que la première carte à échanger .get(0)
-	// n'a pas un symbole identique à celui trouvé pour la longue (on récupère que la première longue)
-	// Si le symbole identique alors on saute d'un indice et on prend la carte suivante
-	// (avec vérification que le symbole ne soit pas le même).
-	public static void recuperationPlateau(Plateau plateau) {
-		plateau.getCartes();
-	}
-	
-	
 	/**
 	 * Création d'un comparateur pour trier les cartes dans un ordre optimisé 
 	 * pour l'échange des cartes. Ce tri est réalisé par rapport à la position 
@@ -132,52 +104,72 @@ public class OutilStrategieIA {
 	};
 	
 	
-	/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
-	 * * * * * * * * * * * * * * * PARTIE JEU* * * * * * * * * * * * * * * *
-	 * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
-	
 	/**
-	 * Méthode qui compte le nombre de cartes d'un symbole donné dans une liste 
-	 * de cartes donnée.
-	 * @param symboleDonne Le symbole dont on cherche des occurrences.
-	 * @param aTester La liste de cartes dans laquelle on cherche les 
-	 *                occurrences avec le symbole donné.
-	 * @return Un entier correspondant au nombre de cartes du symbole donné 
-	 *         comptabilisées dans la liste spécifiée.
+	 * Récupère les cartes valides (avec le même symbole demandé) dans 
+	 * la mémoire de l'IA spécifiée en paramètre.
+	 * @param ia L'IA concernée par la vérification.
+	 * @param symboleDemande Le symbole demandé au début d'un tour.
+	 * @return Le nombre de suppressions effectuées dans la mémoire.
 	 */
-	public static int cartesRestantes(Symbole symboleDonne, 
-			                          ArrayList<Carte> aTester) {
-		int nbCartes;
+	public static int recuperationCartesValides(IA ia, 
+			                                    Symbole symboleDemande) {
 		
-		nbCartes = 0;
-		for (int i = 0 ; i < aTester.size() ; i++) {
-			if (aTester.get(i).getSymbole().equals(symboleDonne)) {
-				nbCartes++;
+		// Stocke la taille de la mémoire de l'IA spécifiée.
+		int tailleMemoire = ia.getMemoire().size();
+		
+		// Nombre de cartes supprimées dans la mémoire de l'IA.
+		int nbSupp = 0;
+		
+		// Parcours des cartes dans la mémoire de l'IA spécifiée.
+		for (int i = 0 ; i < tailleMemoire ; i++) {
+			
+			// Vérifie que la carte courante possède le symbole demandé.
+			if (!ia.getMemoire().get(i - nbSupp).getSymbole()
+					                            .equals(symboleDemande)) {
+				
+				/*
+				 * Retire de la mémoire si la carte courante ne possède pas 
+				 * le symbole demandé au début d'un tour.
+				 * Attention, cette instruction modifie l'état de la mémoire.
+				 */
+				ia.getMemoire().remove(i - nbSupp);
+				nbSupp++;    // Incrémente le nombre de suppressions.
 			}
 		}
 		
-		return nbCartes;
+		/* 
+		 * Ordonne les cartes de la mémoire dans un ordre stratégique.
+		 * Cet ordre a pour but de mettre les plus "grosses" cartes au début.
+		 * Attention, cette instruction modifie l'état de la mémoire.
+		 */
+		ia.getMemoire().sort(ordreJeu);
+		
+		return nbSupp;    // Retourne le nombre de suppressions effectuées.
 	}
 	
 	
 	/**
-	 * Méthode qui vérifie qu'une IA possède ou non la totalité des cartes qui 
-	 * n'ont pas encore été jouées dans un symbole donné. Renvoie vrai si l'IA 
-	 * possède bien toutes les cartes restantes de ce symbole.
-	 * @param ia L'IA qui est concernée par la vérification.
-	 * @param symboleDonne Le symbole dont on cherche des occurrences.
-	 * @return Un booléen égal à vrai si l'IA spécifiée possède toutes les 
-	 *         cartes non jouées du symbole sinon faux.
+	 * Vérifie si une IA possède ou non un symbole spécifique.
+	 * @param ia L'IA concernée par la vérification.
+	 * @param symboleDemande Le symbole demandé au début d'un tour.
+	 * @return Un booléen égal à vrai si l'IA mentionnée possède au moins un 
+	 *         carte possédant le symbole demandé sinon faux.
 	 */
-	public static boolean dernieresCartes(IA ia, Symbole symboleDonne) {
-		int cartesRestantes = cartesRestantes(symboleDonne, ia.getMemoireGlobale());
-		int cartesRestantesMain = cartesRestantes(symboleDonne, ia.getMain());
+	public static boolean possedeSymboleDemande(IA ia, 
+			                                    Symbole symboleDemande) {
 		
-		if (cartesRestantes + cartesRestantesMain == 13) {
-			return true;
+		// Parcours des cartes dans la main de l'IA spécifiée.
+		for (Carte carte : ia.getMain()) {
+			
+			// Vérifie si la carte courante possède le symbole demandé.
+			if (carte.getSymbole().equals(symboleDemande)) {
+				
+				// Retourne vrai à la première occurrence trouvée.
+				return true;
+			}
 		}
 		
-		return false;
+		return false;    // Retourne faux si aucune occurrence n'a été trouvée.
 	}
 	
 }

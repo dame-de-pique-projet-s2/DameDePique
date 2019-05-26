@@ -5,10 +5,11 @@
 
 package damedepique.ia.tests;
 
-import static damedepique.general.OutilAffichage.*;
-import static damedepique.general.OutilCarte.*;
-
 import damedepique.general.Carte;
+import damedepique.general.Humain;
+import damedepique.general.Joueur;
+import damedepique.general.OutilAffichage;
+import damedepique.general.OutilCarte;
 import damedepique.general.Paquet;
 import damedepique.general.tests.OutilTest;
 import damedepique.ia.IA;
@@ -27,6 +28,48 @@ import damedepique.ia.IA;
  */
 public class TestIA {
 	
+	/** Paquet de cartes permettant de jouer au jeu. */
+	private static Paquet paquet;
+	
+	
+	/** Joueurs de la partie créée pour les tests. */
+	private static Joueur[] joueurs;
+	
+	
+	/**
+	 * Méthode permettant d'initialiser une partie de jeu afin de pouvoir 
+	 * lancer les tests et ne pas a avoir à recréer une partie à chaque fois 
+	 * (factorisation).
+	 */
+	private static void initialisation() {
+		// Instantiation d'un paquet de cartes à jouer.
+		paquet = new Paquet();
+								
+		// Création du paquet de 52 cartes pour jouer.
+		paquet.creer();
+								
+		// Création d'un groupe de quatre joueurs.
+		joueurs = new Joueur[4];
+								
+		// Création d'un joueur humain.
+		joueurs[0] = new Humain("Humain_0");
+								
+		// Création de trois joueurs intelligences artificielles.
+		joueurs[1] = new IA("IA_1");
+		joueurs[2] = new IA("IA_2");
+		joueurs[3] = new IA("IA_3");
+					
+		// Mélange du paquet de cartes.
+		paquet.melanger();
+					
+		// Distribution du paquet entre les quatre joueurs de la partie.
+		paquet.distribuer(joueurs);
+		
+		// Tri des mains des joueurs de la partie.
+		OutilCarte.trierMains(joueurs);
+	}
+	
+	
 	/**
 	 * Test de la méthode IA.jouerCarte()
 	 */
@@ -34,35 +77,32 @@ public class TestIA {
 		System.out.println("IA.jouerCarte()\n"
                            + "---------------");
 		
-		Paquet paquet = new Paquet();
-		paquet.creer();
+		int numeroTest;    // Compteur de tests.
 		
-		IA[] joueurs = new IA[4];
-		
-		for (int i = 0 ; i < joueurs.length ; i++) {
-			joueurs[i] = new IA("IA_" + i);
+		numeroTest = 0;    // Mise à zéro du compteur de tests.
+		while (numeroTest < OutilTest.NB_TESTS) {
+			
+			// Initialisation d'une partie de dame de pique.
+			initialisation();
+			
+			// Affichage de la main de l'IA concernée par les tests.
+			OutilAffichage.afficherCartes(joueurs[1].getMain(), 
+					                      "Main de l'" + joueurs[1].getPseudo() 
+					                      + " : ");
+			
+			// Demande et stocke une carte à jouer.
+			Carte carteJouee = joueurs[1].jouerCarte();
+						
+			// Affichage de la carte précédemment jouée.
+			System.out.println("La carte que l'IA a jouée : " + carteJouee);
+						
+			// Nettoyage de la console texte après chaque échange.
+			OutilAffichage.cls();
+			
+			numeroTest++;    // Incrémente le numéro du test.
+			
+			OutilTest.continuer();
 		}
-		
-		joueurs[0].trierMain();
-		
-		for (int i = 0 ; i < joueurs.length ; i++) {
-			afficherCartes(joueurs[i].getMain(), "Main de l'IA numéro " + i);
-		}
-		
-		paquet.melanger();
-		paquet.distribuer(joueurs);
-		
-		trierMains(joueurs);
-		
-		for (int i = 0 ; i < joueurs.length ; i++) {
-			Carte[] aEchanger = joueurs[i].choisirCartesAEchanger();
-			System.out.println("\nJoueur numéro " + i);
-			for (int j = 0 ; j < aEchanger.length ; j++) {
-				System.out.println(aEchanger[j]);
-			}
-		}
-		
-		OutilTest.continuer();
 	}
 	
 	
@@ -73,35 +113,32 @@ public class TestIA {
 		System.out.println("IA.jouerCarte(boolean)\n"
                            + "----------------------");
 		
-		// TODO A compléter.
+		int numeroTest;    // Compteur de tests.
 		
-		OutilTest.continuer();
-	}
-	
-	
-	/**
-	 * Test de la méthode IA.jouerCarte(Symbole, int)
-	 */
-	public static void testJouerCarteSymbole() {
-		System.out.println("IA.jouerCarte(Symbole, int)\n"
-                           + "---------------------------");
-		
-		// TODO A compléter.
-		
-		OutilTest.continuer();
-	}
-	
-	
-	/**
-	 * Test de la méthode IA.jouerDeuxTrefle()
-	 */
-	public static void testJouerDeuxTrefle() {
-		System.out.println("IA.jouerDeuxTrefle()\n"
-                           + "--------------------");
-		
-		// TODO A compléter.
-		
-		OutilTest.continuer();
+		numeroTest = 0;    // Mise à zéro du compteur de tests.
+		while (numeroTest < OutilTest.NB_TESTS) {
+			
+			// Initialisation d'une partie de dame de pique.
+			initialisation();
+			
+			// Affichage de la main de l'IA concernée par les tests.
+			OutilAffichage.afficherCartes(joueurs[1].getMain(), 
+					                      "Main de l'" + joueurs[1].getPseudo() 
+					                      + " : ");
+			
+			// Demande et stocke une carte à jouer.
+			Carte carteJouee = joueurs[1].jouerCarte(false);
+			
+			// Affichage de la carte précédemment jouée.
+			System.out.println("La carte que l'IA a jouée : " + carteJouee);
+						
+			// Nettoyage de la console texte après chaque échange.
+			OutilAffichage.cls();
+			
+			numeroTest++;    // Incrémente le numéro du test.
+			
+			OutilTest.continuer();
+		}
 	}
 	
 	
@@ -112,9 +149,35 @@ public class TestIA {
 		System.out.println("IA.choisirCartesAEchanger()\n"
                            + "---------------------------");
 		
-		// TODO A compléter.
+		int numeroTest;    // Compteur de tests.
 		
-		OutilTest.continuer();
+		numeroTest = 0;    // Mise à zéro du compteur de tests.
+		while (numeroTest < OutilTest.NB_TESTS) {
+			
+			// Initialisation d'une partie de dame de pique.
+			initialisation();
+			
+			// Affichage de la main de l'IA concernée par les tests.
+			OutilAffichage.afficherCartes(joueurs[1].getMain(), 
+					                      "Main de l'" + joueurs[1].getPseudo() 
+					                      + " : ");
+			
+			// Demande et stocke les cartes pour échanger.
+			Carte[] aEchanger = joueurs[1].choisirCartesAEchanger();
+						
+			// Affiche les cartes choisies pour échanger.
+			System.out.println("Les cartes à échanger : ");
+			for (Carte carte : aEchanger) {
+				System.out.println("=> " + carte);
+			}
+						
+			// Nettoyage de la console texte après chaque échange.
+			OutilAffichage.cls();
+			
+			numeroTest++;    // Incrémente le numéro du test.
+			
+			OutilTest.continuer();
+		}
 	}
 	
 	
@@ -128,10 +191,8 @@ public class TestIA {
                            + "--------------------------------\n");
 		
 		testJouerCarte();
-		// testJouerCarteDefausse();
-		// testJouerCarteSymbole();
-		// testJouerDeuxTrefle();
-		// testChoisirCartesAEchanger();
+		testJouerCarteDefausse();
+		testChoisirCartesAEchanger();
 
 	}
 

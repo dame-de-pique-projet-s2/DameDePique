@@ -6,11 +6,13 @@
 package damedepique.ia;
 
 import static damedepique.general.OutilCarte.*;
+import static damedepique.ia.OutilStrategieIA.*;
 
 import damedepique.general.Carte;
 import damedepique.general.Joueur;
 import damedepique.general.Plateau;
 import damedepique.general.Symbole;
+import damedepique.general.Valeur;
 
 import java.util.ArrayList;
 
@@ -30,20 +32,12 @@ import java.util.ArrayList;
  */
 public class IA extends Joueur {
 
-	/** Nombre de cartes qu'un paquet traditionnel contient. */
-	private static final int NB_CARTES_PAQUET = 52;
-	
-	
 	/** Nombre de cartes qu'un plateau peut contenir au maximum. */
 	private static final int NB_CARTES_PLATEAU = 4;
 	
 	
-	/** Stocke les cartes jouées pendant les tours d'une manche. */
-	private ArrayList<Carte> memoireGlobale;
-	
-	
 	/** Stocke les cartes jouées sur le plateau pendant un tour. */
-	private ArrayList<Carte> memoirePlateau;
+	private ArrayList<Carte> memoire;
 	
 	
 	/**
@@ -52,60 +46,37 @@ public class IA extends Joueur {
 	 */
 	public IA(String pseudo) {
 		super(pseudo);
-		this.memoireGlobale = new ArrayList<>(NB_CARTES_PAQUET);
-		this.memoirePlateau = new ArrayList<>(NB_CARTES_PLATEAU);
+		this.memoire = new ArrayList<>(NB_CARTES_PLATEAU);
 	}
 	
 	
 	/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
-	 * * * * * * * * * * * * PARTIE MEMOIRE GLOBALE* * * * * * * * * * * * *
+	 * * * * * * * * * * * * * PARTIE MEMOIRE TOUR * * * * * * * * * * * * *
 	 * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 	
 	/**
-	 * Récupère la mémoire globale de cette (this) IA.
-	 * @return La liste de cartes présente dans la mémoire de cette (this) IA.
+	 * Récupère la liste de cartes présente dans la mémoire de cette (this) IA.
+	 * @return La liste de cartes en mémoire.
 	 */
-	public ArrayList<Carte> getMemoireGlobale() {
-		return this.memoireGlobale;
+	public ArrayList<Carte> getMemoire() {
+		return this.memoire;
 	}
 	
 	
 	/**
-	 * Mémorise les cartes jouées présentes sur le plateau pendant un tour.
+	 * Met à jour les cartes dans la mémoire de cette (this) IA.
 	 * @param plateau Le plateau de la partie.
 	 */
-	public void setMemoireGlobale(Plateau plateau) {
-		// Ajout des cartes posées sur le plateau dans la mémoire globale.
-		this.memoireGlobale.addAll(plateau.getCartes());
+	public void setMemoire(Plateau plateau) {
+		this.memoire.addAll(plateau.getCartes());
 	}
 	
 	
 	/**
-	 * Vide la mémoire de cette (this) IA. Cette méthode est utile lors de la 
-	 * fin d'une manche, pour repartir d'une liste de cartes jouées vide.
+	 * Vide la mémoire de cette (this) IA.
 	 */
-	public void viderMemoireGlobale() {
-		// Vidage complet de la mémoire globale de cette (this) IA.
-		this.memoireGlobale.clear();
-	}
-	
-	
-	/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
-	 * * * * * * * * * * * * PARTIE MEMOIRE PLATEAU* * * * * * * * * * * * *
-	 * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
-	
-	public ArrayList<Carte> getMemoirePlateau() {
-		return this.memoirePlateau;
-	}
-	
-	
-	public void setMemoirePlateau(Plateau plateau) {
-		this.memoirePlateau.addAll(plateau.getCartes());
-	}
-	
-	
-	public void viderMemoirePlateau() {
-		this.memoirePlateau.clear();
+	public void viderMemoire() {
+		this.memoire.clear();
 	}
 	
 	
@@ -127,7 +98,7 @@ public class IA extends Joueur {
 		 * préférable pour le joueur afin d'avoir les "grosses" cartes au début 
 		 * de cette liste de cartes, donc à échanger en priorité.
 		 */
-		cartesJouables.sort(OutilStrategieIA.ordreJeu);
+		cartesJouables.sort(ordreJeu);
 		
 		/*
 		 * Vérifie si la première la carte des cartes jouables du joueur est un 
@@ -162,7 +133,7 @@ public class IA extends Joueur {
 		 * ce qui permet de jouer les plus "petites" cartes lorqu'on commence 
 		 * un tour, pour avoir le moins de chance possible de le perdre.
 		 */
-		cartesJouables.sort(OutilStrategieIA.ordreJeu);
+		cartesJouables.sort(ordreJeu);
 		
 		/* 
 		 * Lorsqu'un tour commence, alors l'IA joue la plus petite car possible 
@@ -184,6 +155,8 @@ public class IA extends Joueur {
 		ArrayList<Carte> cartesJouables = cartesPossibles(this, symboleDemande, 
 				                                                noTour);
 		
+		cartesJouables.sort(ordreJeu);
+		
 		// Vérifie si le numéro du tour est égal à 0 (premier tour).
 		if (noTour == 0) {
 			
@@ -194,12 +167,92 @@ public class IA extends Joueur {
 			 * dans les cartes jouables alors on défausse la plus grande carte 
 			 * d'un autre symbole.
 			 */
-			return cartesJouables.get(cartesJouables.size() - 1);
+			return cartesJouables.get(0);
 		}
 		
-		// TODO Faire le jouer carte 3.
+		/*
+		 * Récupération des cartes valides, c'est-à-dire des cartes possédant 
+		 * le même symbole demandé car les coupes n'ont aucun impact direct 
+		 * sur la détermination du perdant du tour. On récupère aussi le nombre 
+		 * de suppressions effectuées pour savoir combien il y a de cartes 
+		 * non valides dans la mémoire de cette (this) IA.
+		 */
+		int nbSupp = recuperationCartesValides(this, symboleDemande);
 		
-		return cartesJouables.get(0);
+		// Récupération de la plus grosse carte jouable par cette (this) IA.
+		Carte carteMaxJouable = cartesJouables.get(0);
+		
+		// Récupération de la plus petite carte jouable par cette (this) IA.
+		Carte carteMinJouable = cartesJouables.get(cartesJouables.size() - 1);
+		
+		/* 
+		 * Récupère la valeur maximale de la mémoire courante de cette (this) 
+		 * IA pour pouvoir la comparer avec la valeur minimale des cartes 
+		 * jouables de cette (this) IA.
+		 */
+		Valeur valeurMaxMemoire = getMemoire().get(0).getValeur();
+		
+		// Récupère la valeur minimale des cartes jouables par cette (this) IA.
+		Valeur valeurMinJouable = carteMinJouable.getValeur();
+		
+		/*
+		 * Vérifie que la carte la plus haute dans la mémoire de cette (this) 
+		 * IA est strictement supérieure à la valeur minimale jouable par 
+		 * cette (this) IA.
+		 */
+		if (valeurMaxMemoire.compareTo(valeurMinJouable) > 0) {
+			
+			/*
+			 * Si cette (this) IA ne possède aucune cartes de même symbole que 
+			 * celui demandé alors il peut jouer une "grosse" carte pour 
+			 * pouvoir s'en débarrasser et ne pas l'avoir à jouer dans la 
+			 * suite de la manche.
+			 */
+			if (!possedeSymboleDemande(this, symboleDemande)) {
+				
+				/*
+				 * Retourne une "grosse" carte car cette (this) IA est assurée 
+				 * de ne pas remporter le tour.
+				 */
+				return carteMaxJouable;
+			}
+			
+			/*
+			 * Au contraire, si cette (this) IA possède au moins une carte du 
+			 * même symbole demandé alors elle joue sa plus petite carte de ses 
+			 * cartes jouables et s'assure de ne pas perdre le tour.
+			 */
+			return carteMinJouable;
+		
+		/*
+		 * Sinon la carte la plus haute dans la mémoire de cette (this) IA est 
+		 * strictement inférieure à la valeur minimale jouable par l'IA.
+		 */
+		} else {
+			
+			/*
+			 * Vérifie si cette (this) IA est la dernière à jouer durant un 
+			 * tour (en regardant si il y a trois cartes sur le plateau). Si 
+			 * c'est le cas alors elle joue sa plus "grosse" carte car elle ne 
+			 * pourra pas gagner le tour quoi qu'il arrive puisque toutes ses 
+			 * cartes jouables sont supérieures à la valeur maximale de la 
+			 * mémoire. Elle se débarrasse donc d'une grosse carte en sachant 
+			 * qu'elle a perdue le tour.
+			 */
+			if (getMemoire().size() + nbSupp == 3) {
+				
+				// Retourne la plus grosse carte jouable par cette (this) IA.
+				return carteMaxJouable;
+			}
+			
+			/*
+			 * Si ce n'est pas le dernier joueur du tour et si la plus grosse 
+			 * carte jouable a une valeur supérieure à celle maximale de la 
+			 * mémoire alors elle joue sa plus petite carte en espérant que les 
+			 * joueurs suivants vont jouer une valeur plus grande.
+			 */
+			return carteMinJouable;
+		}
 	}
 	
 	

@@ -80,7 +80,7 @@ public class OutilAffichage {
 	 * Affiche une liste de cartes avec les indices associés. Cette méthode est 
 	 * utile quand une joueur doit donner un indice de carte pour la jouer.
 	 * @param cartes Une liste de cartes à afficher.
-	 * @param cartesJouables Les cartes jouables parmi les la liste spécifiée.
+	 * @param cartesJouables Les cartes jouables parmi la liste spécifiée.
 	 * @param message Le message à afficher avec la liste de cartes.
 	 */
 	public static void afficherCartesIndice(ArrayList<Carte> cartes, 
@@ -90,17 +90,31 @@ public class OutilAffichage {
 		// Affichage d'un message précisant le rôle de la liste de cartes.
 		System.out.println(message);
 		
+		// Compteur pour connaître l'avancement des cartes jouables.
 		int compteur = 0;
 		
 		// Parcours des cartes dans la liste spécifiée en argument.
 		for (int i = 0 ; i < cartes.size() ; i++) {
+			
 			// Vérifie si la carte courante est jouable.
 			if (cartesJouables.contains(cartes.get(i))) {
 				
-				// Affichage de la carte courante avec son indice associé.
-				System.out.println("(" + compteur + ") => " + cartes.get(i) + " *");
-				compteur++;
+				/*
+				 * Si la carte courante est jouable alors on indice son rang 
+				 * (indice) dans la liste des cartes jouables, la carte jouable 
+				 * ainsi qu'une petite étoile signifiant qu'elle est bien 
+				 * jouable. 
+				 */
+				System.out.println("(" + compteur + ") => " 
+				                   + cartes.get(i) + " *");
+				
+				compteur++;    // Incrémente l'indice des cartes jouables.
 			} else {
+				
+				/*
+				 * Sinon si la carte n'est pas jouable alors on affiche une 
+				 * carte normale sans l'indice et sans l'étoile.
+				 */
 				System.out.println("=> " + cartes.get(i));
 			}
 		}

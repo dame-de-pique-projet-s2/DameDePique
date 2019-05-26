@@ -114,7 +114,7 @@ public class Humain extends Joueur {
 	    
 		// Affichage des cartes jouables dans la main de cet (this) Humain.
 		afficherCartesIndice(this.getMain(), cartesJouables,
-				             "### Les cartes que vous pouvez jouer : ");
+				             "### Les cartes que vous pouvez jouer (*) : ");
 		
 		do {
 			// Affichage d'un message demandant l'indice de la carte à jouer.
@@ -169,7 +169,7 @@ public class Humain extends Joueur {
 		
 		// Affichage les cartes possibles pour jouer dans la main du jouer.
 		afficherCartesIndice(this.getMain(), cartesJouables,
-				             "### Les cartes que vous pouvez jouer : ");
+				             "### Les cartes que vous pouvez jouer (*) : ");
 		
 		do {
 			// Affichage d'un message demandant l'indice de la carte à jouer.
@@ -218,19 +218,21 @@ public class Humain extends Joueur {
 		// Récupère les cartes dans la main de ce (this) Humain.
 		ArrayList<Carte> mainJoueur = this.getMain();
 		
+		// Liste contenant seulement le deux de trèfle pour l'affichage.
+		ArrayList<Carte> deuxTrefle = new ArrayList<>();
+		
 		boolean nok;        // Indicateur de mauvaise carte choisie.
 		int indiceCarte;    // Indice de la carte choisie.
 		
 		// Stockage de l'indice du deux de trèfle.
 		int indiceDeuxTrefle = indiceDeuxTrefle(this);
 		
-		ArrayList<Carte> d = new ArrayList<>();
-		d.add(mainJoueur.get(indiceDeuxTrefle));
+		// Ajoute le deux de trèfle dans la liste spéciale.
+		deuxTrefle.add(mainJoueur.get(indiceDeuxTrefle));
 		
 		// Affichage des cartes dans la main de cet (this) Humain.
-		// TODO A modifier en ajoutant une ArrayList
-		afficherCartesIndice(mainJoueur, d,
-				             "### Les cartes que vous pouvez jouer : ");
+		afficherCartesIndice(mainJoueur, deuxTrefle,
+				             "### Les cartes que vous pouvez jouer (*) : ");
 		
 		/*
 		 * Si le joueur entre un indice différent de celui du deux 

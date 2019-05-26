@@ -72,8 +72,8 @@ public class TestCarte {
                            + "|     TEST DE LA CLASSE CARTE     |\n"
                            + "-----------------------------------\n");
 		
-		// testGetSymbole();
-		// testGetValeur();
+		testGetSymbole();
+		testGetValeur();
 
 	}
 
